@@ -970,6 +970,31 @@
     }
 
     @media (max-width: 900px) {
+      /* Pull the left-center image content into the mobile viewport */
+      .hero-bg { object-position: 30% 15%; }
+
+      /* Soften side gradient — bottom gradient handles text readability on mobile */
+      .hero-grad-lr {
+        background: linear-gradient(
+          to right,
+          rgba(13,12,7,0.82) 0%,
+          rgba(13,12,7,0.48) 28%,
+          rgba(13,12,7,0.12) 58%,
+          rgba(13,12,7,0.0) 100%
+        );
+      }
+
+      /* Strengthen bottom gradient so text stays readable without the side gradient */
+      .hero-grad-bt {
+        background: linear-gradient(
+          to top,
+          rgba(13,12,7,1) 0%,
+          rgba(13,12,7,0.88) 22%,
+          rgba(13,12,7,0.45) 48%,
+          transparent 68%
+        );
+      }
+
       nav { display: none; }
       .header-inner { height: 64px; padding: 0 20px; }
       .logo-group span { font-size: 20px; }
