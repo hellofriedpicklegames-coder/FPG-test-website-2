@@ -970,9 +970,6 @@
     }
 
     @media (max-width: 900px) {
-      /* Pull the left-center image content into the mobile viewport */
-      .hero-bg { object-position: 30% 15%; }
-
       /* Soften side gradient — bottom gradient handles text readability on mobile */
       .hero-grad-lr {
         background: linear-gradient(
@@ -1215,12 +1212,10 @@
 
     <!-- Slide 0: Brand intro -->
     <div class="hero-slide active" id="hero-slide-0">
-      <img
-        src="brand_assets/3.png"
-        alt=""
-        class="hero-bg"
-        aria-hidden="true"
-      />
+      <picture>
+        <source media="(max-width: 900px)" srcset="brand_assets/bucersmobile.png"/>
+        <img src="brand_assets/3.png" alt="" class="hero-bg" aria-hidden="true"/>
+      </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
       <div class="hero-content">
@@ -1236,12 +1231,10 @@
 
     <!-- Slide 1: Fart of War -->
     <div class="hero-slide" id="hero-slide-1">
-      <img
-        src="brand_assets/base1.png"
-        alt=""
-        class="hero-bg"
-        aria-hidden="true"
-      />
+      <picture>
+        <source media="(max-width: 900px)" srcset="brand_assets/2.png"/>
+        <img src="brand_assets/base1.png" alt="" class="hero-bg" aria-hidden="true"/>
+      </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
       <div class="hero-content">
@@ -1258,13 +1251,10 @@
 
     <!-- Slide 2: Dispelled -->
     <div class="hero-slide" id="hero-slide-2">
-      <img
-        src="brand_assets/PRODUCTION%20(1).png"
-        alt=""
-        class="hero-bg"
-        aria-hidden="true"
-        style="object-position: center top;"
-      />
+      <picture>
+        <source media="(max-width: 900px)" srcset="dispelledmobile.png"/>
+        <img src="brand_assets/PRODUCTION%20(1).png" alt="" class="hero-bg" aria-hidden="true" style="object-position: center top;"/>
+      </picture>
       <div class="hero-grad-lr" aria-hidden="true" style="background: linear-gradient(to right, rgba(8,12,17,0.97) 0%, rgba(8,12,17,0.82) 38%, rgba(8,12,17,0.35) 65%, rgba(8,12,17,0) 100%);"></div>
       <div class="hero-grad-bt" aria-hidden="true" style="background: linear-gradient(to top, rgba(8,12,17,1) 0%, rgba(8,12,17,0.65) 18%, transparent 45%);"></div>
       <div class="hero-content">
@@ -1280,12 +1270,10 @@
 
     <!-- Slide 3: Fart of War Expansion Pack -->
     <div class="hero-slide" id="hero-slide-3">
-      <img
-        src="brand_assets/expnew.png"
-        alt=""
-        class="hero-bg"
-        aria-hidden="true"
-      />
+      <picture>
+        <source media="(max-width: 900px)" srcset="brand_assets/EXPmobile.png"/>
+        <img src="brand_assets/expnew.png" alt="" class="hero-bg" aria-hidden="true"/>
+      </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
       <div class="hero-content">
