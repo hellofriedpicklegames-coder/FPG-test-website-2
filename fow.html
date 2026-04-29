@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fart of War — Fried Pickle Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0c07; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    /* ── Header ── */
+    #site-header {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(13,12,7,0.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(153,153,101,0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    #site-header.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
+    .header-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 48px;
+      height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo-group { display: flex; align-items: center; gap: 11px; text-decoration: none; flex-shrink: 0; }
+    .logo-group img { width: 52px; height: 52px; object-fit: contain; border-radius: 50%; background: #e7e8e6; padding: 5px; }
+    .logo-group span { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.09em; color: #e7e8e6; white-space: nowrap; }
+    nav { display: flex; align-items: center; gap: 36px; }
+    nav a { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.13em; color: rgba(231,232,230,0.65); text-decoration: none; transition: color 0.2s ease; }
+    nav a:hover { color: #e7e8e6; }
+    .btn-header {
+      font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em;
+      background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px;
+      display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .btn-header:hover { background: #1bc07c; transform: translateY(-1px); }
+
+    /* ── Hero ── */
+    .game-hero {
+      position: relative; width: 100%; height: 90vh; min-height: 560px; overflow: hidden;
+      display: flex; align-items: flex-end;
+    }
+    .game-hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 15%;
+    }
+    .game-hero-grad-lr {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to right, rgba(13,12,7,0.97) 0%, rgba(13,12,7,0.82) 38%, rgba(13,12,7,0.35) 65%, transparent 100%);
+    }
+    .game-hero-grad-bt {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(13,12,7,1) 0%, rgba(13,12,7,0.65) 18%, transparent 45%);
+    }
+    .game-hero-content {
+      position: relative; z-index: 2;
+      max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 48px 88px;
+    }
+    .game-hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(43,235,154,0.1); border: 1px solid rgba(43,235,154,0.3);
+      color: #2beb9a; font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px; letter-spacing: 0.2em; padding: 5px 14px; margin-bottom: 22px;
+    }
+    .game-hero-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 8vw, 108px);
+      letter-spacing: -0.025em; line-height: 0.9; color: #e7e8e6; margin-bottom: 22px;
+      filter: drop-shadow(0 6px 28px rgba(0,0,0,0.75));
+    }
+    .game-hero-tagline { font-size: clamp(16px, 1.8vw, 20px); font-weight: 500; color: rgba(231,232,230,0.88); margin-bottom: 10px; max-width: 480px; }
+    .game-hero-desc { font-size: 15px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; max-width: 420px; margin-bottom: 36px; }
+    .game-hero-btns { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.09em;
+      background: #ede090; color: #0d0c07; padding: 0 36px; height: 54px;
+      display: inline-flex; align-items: center; text-decoration: none;
+      transition: background 0.2s ease, transform 0.18s ease;
+    }
+    .btn-primary:hover { background: #f5eba8; transform: translateY(-2px); }
+    .btn-ghost {
+      font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.09em;
+      background: rgba(231,232,230,0.07); color: #e7e8e6; border: 1px solid rgba(231,232,230,0.22);
+      padding: 0 30px; height: 54px; display: inline-flex; align-items: center; text-decoration: none;
+      transition: background 0.2s ease, transform 0.18s ease;
+    }
+    .btn-ghost:hover { background: rgba(231,232,230,0.14); transform: translateY(-1px); }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      background: #141209; border-top: 2px solid rgba(153,153,101,0.28);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item { padding: 28px 24px; border-right: 1px solid rgba(153,153,101,0.1); text-align: center; }
+    .stat-item:last-child { border-right: none; }
+    .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: #ede090; letter-spacing: -0.01em; line-height: 1; margin-bottom: 5px; }
+    .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: rgba(153,153,101,0.6); }
+
+    /* ── Section base ── */
+    .section-inner { max-width: 1440px; margin: 0 auto; padding: 72px 48px; }
+    .section-eyebrow {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.22em;
+      color: rgba(153,153,101,0.5); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.12); }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.02em; color: #e7e8e6; margin-bottom: 40px; }
+
+    /* ── Card gallery ── */
+    .card-gallery { background: #0d0c07; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .gallery-card {
+      aspect-ratio: 5/7; border-radius: 8px; overflow: hidden; position: relative;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease;
+    }
+    .gallery-card:hover { transform: scale(1.04); box-shadow: 0 12px 40px rgba(0,0,0,0.7); }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-card-info {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,12,7,0.92) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.24s ease;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 12px;
+    }
+    .gallery-card:hover .gallery-card-info { opacity: 1; }
+    .gallery-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; color: #e7e8e6; }
+    .gallery-card-sub { font-size: 11px; color: rgba(231,232,230,0.55); margin-top: 2px; }
+
+    /* ── How to play ── */
+    .how-section { background: #141209; border-top: 1px solid rgba(153,153,101,0.1); border-bottom: 1px solid rgba(153,153,101,0.1); }
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .how-visual { position: relative; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 12px 48px rgba(0,0,0,0.55); }
+    .how-visual iframe { width: 100%; height: 100%; display: block; border: none; }
+    .how-steps { display: flex; flex-direction: column; gap: 30px; }
+    .how-step { display: flex; gap: 22px; align-items: flex-start; }
+    .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: rgba(153,153,101,0.18); line-height: 1; flex-shrink: 0; width: 44px; text-align: right; }
+    .step-body h3 { font-family: 'Bebas Neue', sans-serif; font-size: 23px; letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 7px; }
+    .step-body p { font-size: 14px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; }
+
+    /* ── Footer ── */
+    footer { background: #080706; border-top: 1px solid rgba(153,153,101,0.1); }
+    .footer-inner { max-width: 1440px; margin: 0 auto; padding: 52px 48px 32px; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0; gap: 48px; }
+    .footer-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 14px; }
+    .footer-brand img { width: 46px; height: 46px; object-fit: contain; border-radius: 50%; background: #e7e8e6; padding: 6px; }
+    .footer-brand-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.09em; color: #e7e8e6; display: block; }
+    .footer-brand-sub { font-size: 12px; color: rgba(153,153,101,0.55); }
+    .footer-tagline { font-size: 13px; font-weight: 300; color: rgba(231,232,230,0.3); max-width: 260px; line-height: 1.65; }
+    .footer-nav { display: flex; gap: 56px; flex-shrink: 0; }
+    .footer-col h4 { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: rgba(153,153,101,0.6); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: rgba(231,232,230,0.48); text-decoration: none; margin-bottom: 9px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: #e7e8e6; }
+    .footer-socials { display: flex; gap: 12px; padding: 28px 0 32px; border-top: 1px solid rgba(153,153,101,0.1); flex-wrap: wrap; margin-top: 40px; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em;
+      color: rgba(231,232,230,0.65); border: 1px solid rgba(153,153,101,0.28);
+      padding: 0 20px; height: 44px; text-decoration: none; border-radius: 2px;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .social-btn:hover { background: rgba(153,153,101,0.12); color: #e7e8e6; border-color: rgba(153,153,101,0.55); transform: translateY(-1px); }
+    .social-btn svg { flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s ease; }
+    .social-btn:hover svg { opacity: 1; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; border-top: 1px solid rgba(153,153,101,0.08); }
+    .footer-copy { font-size: 12px; color: rgba(231,232,230,0.25); }
+    .footer-sig { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.18em; color: rgba(153,153,101,0.28); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .header-inner { height: 64px; padding: 0 20px; }
+      .logo-group span { font-size: 20px; }
+      nav { display: none; }
+      .game-hero-content { padding: 0 20px 72px; }
+      .section-inner { padding: 52px 20px; }
+      .how-grid { grid-template-columns: 1fr; gap: 36px; }
+      .footer-inner { padding: 40px 20px 24px; }
+      .footer-top { flex-direction: column; gap: 24px; }
+      .footer-nav { gap: 36px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .game-hero-bg { object-position: 30% 15%; }
+      .game-hero-grad-lr { background: linear-gradient(to right, rgba(13,12,7,0.82) 0%, rgba(13,12,7,0.48) 28%, rgba(13,12,7,0.12) 58%, transparent 100%); }
+      .game-hero-grad-bt { background: linear-gradient(to top, rgba(13,12,7,1) 0%, rgba(13,12,7,0.88) 22%, rgba(13,12,7,0.45) 48%, transparent 68%); }
+    }
+    @media (max-width: 600px) {
+      .logo-group span { font-size: 17px; }
+      .btn-header { font-size: 13px; padding: 0 14px; height: 34px; }
+      .stat-value { font-size: 30px; }
+      .stat-item { padding: 18px 12px; }
+      .footer-nav { flex-wrap: wrap; gap: 24px 40px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .card-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+    @media (max-width: 430px) {
+      .logo-group span { display: none; }
+      .section-inner { padding: 40px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-group" aria-label="Fried Pickle Games home">
+        <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt=""/>
+        <span>FRIED PICKLE GAMES</span>
+      </a>
+      <nav aria-label="Primary">
+        <a href="index.html#games">GAMES</a>
+        <a href="index.html#how-to-play">HOW TO PLAY</a>
+        <a href="index.html#makers">ABOUT</a>
+        <a href="mailto:hello.friedpicklegames@gmail.com">CONTACT</a>
+      </nav>
+      <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-header">SHOP SOON</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="game-hero">
+    <picture>
+      <source media="(max-width: 900px)" srcset="brand_assets/2.png"/>
+      <img src="brand_assets/base1.png" alt="" class="game-hero-bg"/>
+    </picture>
+    <div class="game-hero-grad-lr"></div>
+    <div class="game-hero-grad-bt"></div>
+    <div class="game-hero-content">
+      <div class="game-hero-badge">★ &nbsp;AVAILABLE NOW</div>
+      <div class="game-hero-title">FART<br/><span style="color:#ede090;">OF WAR</span></div>
+      <p class="game-hero-tagline">Can you smell the victory?</p>
+      <p class="game-hero-desc">Deploy hilarious farts! Battle your friends with incense, beans, and protein! When the third "Fart of War" card is drawn, have the strongest fart army.</p>
+      <div class="game-hero-btns">
+        <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-primary">BUY NOW</a>
+        <a href="#how-to-play" class="btn-ghost">▶ &nbsp;HOW TO PLAY</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-value">2–4</div><div class="stat-label">Players</div></div>
+    <div class="stat-item"><div class="stat-value">20</div><div class="stat-label">Minutes</div></div>
+    <div class="stat-item"><div class="stat-value">8+</div><div class="stat-label">Ages</div></div>
+    <div class="stat-item"><div class="stat-value">110</div><div class="stat-label">Cards</div></div>
+  </div>
+
+  <!-- Card gallery -->
+  <section class="card-gallery">
+    <div class="section-inner">
+      <div class="section-eyebrow">THE ARSENAL</div>
+      <div class="section-title">THE CARDS</div>
+      <div class="card-grid">
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Butt%20Burner.jpg" alt="Butt Burner"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">BUTT BURNER</div><div class="gallery-card-sub">You know exactly what this does.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Dutch%20Oven.jpg" alt="Dutch Oven"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">DUTCH OVEN</div><div class="gallery-card-sub">Close quarters. No escape.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">AIRPLANE FART</div><div class="gallery-card-sub">High altitude. Maximum dread.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/GasMaskCard.jpg" alt="Gas Mask"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">GAS MASK</div><div class="gallery-card-sub">Defense when the air turns ugly.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/BEANSMODIFIER.jpg" alt="Beans"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">BEANS</div><div class="gallery-card-sub">+2 power. You know exactly why.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/CheekLiftAction.jpg" alt="Cheek Lift"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">CHEEK LIFT</div><div class="gallery-card-sub">A precision tactical maneuver.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Dried-Fruit1-_MODIFIER-CARD_.jpg" alt="Dried Fruit"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">DRIED FRUIT</div><div class="gallery-card-sub">Takes a turn. Worth it.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Car-Fart1-_FC_.jpg" alt="Car Fart"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">CAR FART</div><div class="gallery-card-sub">No escape once the windows go up.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Fart%20of%20War_Sample_Cards_EN_V2-0511%20(1).jpg" alt="Sample Cards"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">THE FULL ARSENAL</div><div class="gallery-card-sub">The whole deck, all at once.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to play -->
+  <section id="how-to-play" class="how-section">
+    <div class="section-inner">
+      <div class="section-eyebrow">FART OF WAR</div>
+      <div class="section-title" style="font-size: clamp(48px, 7vw, 88px); margin-bottom: 48px;">HOW TO PLAY</div>
+      <div class="how-grid">
+        <div class="how-visual">
+          <iframe src="https://www.youtube.com/embed/4olooi1JqsI" title="Fart of War — How to Play" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <h3>BUILD YOUR BARRACKS</h3>
+              <p>Shuffle 25 Fart Character cards and deal 3 face-up to each player — those are your soldiers. Draw your hand from the Gas Station deck: 7 cards for 2 players, down to 5 for 4+.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <h3>DRAW, PLAY, OR BOTH</h3>
+              <p>Each turn, choose: Draw &amp; Play 1 card, Draw Twice, or Play Twice. Deploy Fart Characters, stack Modifiers on your fighters, or drop a Special Action on whoever's getting too comfortable.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <h3>MODIFIER MADNESS</h3>
+              <p>Each Fart Character holds up to 4 Modifier cards. Cancel out equal-opposite Modifiers to wipe them both out — a +2 Can of Beans erases a -2 Peppermint Oil and frees the slot.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <h3>BEWARE THE FART OF WAR</h3>
+              <p>Drawing a Fart of War card ends your turn. Play a Tighty Whitey to cancel it. When the 3rd Fart of War drops uncancelled, the game ends — highest total points wins, and earns a legendary victory toot.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">
+            <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt="Fried Pickle Games"/>
+            <div>
+              <span class="footer-brand-name">FRIED PICKLE GAMES</span>
+              <span class="footer-brand-sub">Seriously fun card games</span>
+            </div>
+          </div>
+          <p class="footer-tagline">Games you and your pals can play anywhere.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>GAMES</h4>
+            <a href="fow.html">Fart of War</a>
+            <a href="expansion.html">Fart of War: Expansion</a>
+            <a href="dispelled.html">Dispelled</a>
+          </div>
+          <div class="footer-col">
+            <h4>COMPANY</h4>
+            <a href="index.html#makers">About Us</a>
+            <a href="mailto:hello.friedpicklegames@gmail.com">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-socials">
+        <a href="#" target="_blank" rel="noopener" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          INSTAGRAM
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+          YOUTUBE
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          FACEBOOK
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Fried Pickle Games. All rights reserved.</span>
+        <span class="footer-sig">NO PICKLES WERE HARMED</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 12); }, { passive: true });
+  </script>
+</body>
+</html>

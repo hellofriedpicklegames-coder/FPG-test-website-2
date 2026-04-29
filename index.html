@@ -411,7 +411,7 @@
       text-transform: uppercase;
     }
 
-    /* ===================== GAMES SECTION (Netflix Rows) ===================== */
+    /* ===================== GAMES SECTION ===================== */
     .games-section {
       background: #0d0c07;
       padding: 56px 0 80px;
@@ -434,22 +434,6 @@
       height: 1px;
       background: rgba(153,153,101,0.12);
     }
-
-    .row-group { margin-bottom: 52px; }
-    .row-header {
-      max-width: 1440px;
-      margin: 0 auto 14px;
-      padding: 0 48px;
-      display: flex;
-      align-items: baseline;
-      gap: 13px;
-    }
-    .row-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 27px;
-      letter-spacing: 0.04em;
-      color: #e7e8e6;
-    }
     .badge-live {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 11px;
@@ -469,134 +453,79 @@
       padding: 3px 10px;
     }
 
-    /* Scroll row with right fade */
-    .row-scroll-wrap {
+    .games-grid {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .game-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #141209;
+      border: 1px solid rgba(153,153,101,0.12);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 4px 16px rgba(153,153,101,0.1);
+      border-color: rgba(153,153,101,0.3);
+    }
+    .game-card:focus-visible { outline: 2px solid #999965; outline-offset: 3px; }
+    .game-card-img-wrap {
       position: relative;
-    }
-    .row-scroll-wrap::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 120px;
-      background: linear-gradient(to right, transparent, #0d0c07);
-      pointer-events: none;
-      z-index: 3;
-    }
-    .cards-scroll {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      /* overflow-y: clip lets vertical hover expansion show without creating a y-scroll container */
-      overflow-y: clip;
-      padding: 52px 48px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(153,153,101,0.25) transparent;
-    }
-    .cards-scroll::-webkit-scrollbar { height: 3px; }
-    .cards-scroll::-webkit-scrollbar-track { background: transparent; }
-    .cards-scroll::-webkit-scrollbar-thumb {
-      background: rgba(153,153,101,0.25);
-      border-radius: 2px;
-    }
-
-    /* Landscape card */
-    .card-l {
-      flex-shrink: 0;
-      width: 290px;
       aspect-ratio: 16/9;
-      position: relative;
       overflow: hidden;
-      border-radius: 8px;
-      cursor: pointer;
-      scroll-snap-align: start;
-      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.32s ease;
     }
-    .card-l:hover { transform: scale(1.35); z-index: 20; box-shadow: 0 16px 56px rgba(0,0,0,0.75); }
-    .card-l:focus-visible { outline: 2px solid #999965; outline-offset: 3px; }
-    .card-l img {
+    .game-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: filter 0.3s ease;
+      object-position: center top;
+      transition: transform 0.5s ease, filter 0.3s ease;
     }
-    .card-l:hover img { filter: brightness(0.82) saturate(1.1); }
-
-    /* Portrait card — game cards */
-    .card-p {
-      flex-shrink: 0;
-      width: 160px;
-      aspect-ratio: 5/7;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      cursor: pointer;
-      scroll-snap-align: start;
-      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.32s ease;
+    .game-card:hover .game-card-img {
+      transform: scale(1.04);
+      filter: brightness(0.88) saturate(1.1);
     }
-    .card-p:hover { transform: scale(1.35); z-index: 20; box-shadow: 0 16px 56px rgba(0,0,0,0.75); }
-    .card-p:focus-visible { outline: 2px solid #95cae0; outline-offset: 3px; }
-    .card-p img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: filter 0.3s ease;
-    }
-    .card-p:hover img { filter: brightness(0.8) saturate(1.1); }
-
-    /* Expansion placeholder card */
-    .card-p.card-placeholder {
-      background: linear-gradient(135deg, #1a1813 0%, #141209 100%);
-      border: 1px solid rgba(153,153,101,0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .card-p.card-placeholder::before {
-      content: '✦';
-      font-size: 24px;
-      color: rgba(153,153,101,0.3);
-    }
-    .card-p.card-placeholder::after {
-      content: 'COMING SOON';
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: rgba(153,153,101,0.35);
-    }
-
-    /* Card overlay (appears on hover) */
-    .card-info {
+    .game-card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(13,12,7,0.94) 0%, rgba(13,12,7,0.35) 55%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.26s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 14px;
+      background: linear-gradient(to top, rgba(13,12,7,0.72) 0%, rgba(13,12,7,0.1) 50%, transparent 100%);
     }
-    .card-l:hover .card-info,
-    .card-p:hover .card-info { opacity: 1; }
-    .card-info-title {
+    .game-card-body { padding: 22px 24px 28px; }
+    .game-card-badges { margin-bottom: 12px; }
+    .game-card-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 17px;
-      letter-spacing: 0.06em;
+      font-size: clamp(26px, 2.6vw, 38px);
+      letter-spacing: 0.04em;
       color: #e7e8e6;
-      margin-bottom: 2px;
+      line-height: 1;
+      margin-bottom: 8px;
     }
-    .card-info-sub {
-      font-size: 11px;
-      font-weight: 400;
-      color: rgba(231,232,230,0.6);
-      line-height: 1.4;
+    .game-card-tagline {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(231,232,230,0.55);
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
+    .game-card-cta {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.14em;
+      color: #999965;
+      transition: color 0.2s ease, letter-spacing 0.2s ease;
+    }
+    .game-card:hover .game-card-cta {
+      color: #c4c47e;
+      letter-spacing: 0.2em;
+    }
+
 
     /* ===================== HOW TO PLAY ===================== */
     .how-section {
@@ -614,7 +543,7 @@
       font-size: 12px;
       letter-spacing: 0.22em;
       color: rgba(153,153,101,0.5);
-      margin-bottom: 48px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -624,6 +553,14 @@
       flex: 1;
       height: 1px;
       background: rgba(153,153,101,0.1);
+    }
+    .how-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 7vw, 88px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #e7e8e6;
+      margin-bottom: 48px;
     }
     .how-grid {
       display: grid;
@@ -1012,8 +949,8 @@
       .dispelled-bg { width: 100%; opacity: 0.15; }
       .dispelled-content { padding: 72px 20px 80px; }
 
-      .section-eyebrow, .row-header, .makers-eyebrow, .how-eyebrow { padding: 0 20px; }
-      .cards-scroll { padding: 36px 20px; }
+      .section-eyebrow, .makers-eyebrow, .how-eyebrow { padding: 0 20px; }
+      .games-grid { grid-template-columns: 1fr; padding: 0 20px; gap: 16px; }
 
       .footer-inner { padding: 40px 20px 24px; }
       .footer-nav { gap: 36px; }
@@ -1151,6 +1088,43 @@
     font-size: 14px; color: rgba(231,232,230,0.55); line-height: 1.6;
   }
 
+  /* ── Social buttons ──────────────────────────── */
+  .footer-socials {
+    display: flex;
+    gap: 12px;
+    padding: 28px 0 32px;
+    border-top: 1px solid rgba(153,153,101,0.1);
+    flex-wrap: wrap;
+  }
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: rgba(231,232,230,0.65);
+    border: 1px solid rgba(153,153,101,0.28);
+    padding: 0 20px;
+    height: 44px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .social-btn:hover {
+    background: rgba(153,153,101,0.12);
+    color: #e7e8e6;
+    border-color: rgba(153,153,101,0.55);
+    transform: translateY(-1px);
+  }
+  .social-btn:active { transform: translateY(0); }
+  .social-btn svg { flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s ease; }
+  .social-btn:hover svg { opacity: 1; }
+  @media (max-width: 600px) {
+    .footer-socials { gap: 10px; }
+    .social-btn { font-size: 13px; padding: 0 14px; height: 40px; }
+  }
+
   </style>
 </head>
 
@@ -1214,7 +1188,7 @@
     <div class="hero-slide active" id="hero-slide-0">
       <picture>
         <source media="(max-width: 900px)" srcset="brand_assets/bucersmobile.png"/>
-        <img src="brand_assets/3.png" alt="" class="hero-bg" aria-hidden="true"/>
+        <img src="brand_assets/Firefly.png" alt="" class="hero-bg" aria-hidden="true"/>
       </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
@@ -1317,204 +1291,61 @@
     </div>
   </div>
 
-  <!-- ▓▓▓ GAMES (Netflix Rows) ▓▓▓ -->
+  <!-- ▓▓▓ GAMES ▓▓▓ -->
   <section id="games" class="games-section">
 
     <div class="section-eyebrow">FRIED PICKLE ORIGINALS</div>
 
-    <!-- Row 1 — Fart of War Base Game -->
-    <div class="row-group">
-      <div class="row-header">
-        <span class="row-title">FART OF WAR</span>
-        <span class="badge-live">✦ AVAILABLE NOW</span>
-      </div>
-      <div class="row-scroll-wrap">
-        <div class="cards-scroll">
+    <div class="games-grid">
 
-          <div class="card-p" tabindex="0" aria-label="Butt Burner">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Butt%20Burner.jpg" alt="Butt Burner card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">BUTT BURNER</div>
-              <div class="card-info-sub">You know exactly what this does.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Dutch Oven">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Dutch%20Oven.jpg" alt="Dutch Oven card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">DUTCH OVEN</div>
-              <div class="card-info-sub">Close quarters. No escape.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Airplane Fart">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">AIRPLANE FART</div>
-              <div class="card-info-sub">High altitude. Maximum dread.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Gas Mask">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/GasMaskCard.jpg" alt="Gas Mask card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">GAS MASK</div>
-              <div class="card-info-sub">Defense when the air turns ugly.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Beans Modifier">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/BEANSMODIFIER.jpg" alt="Beans Modifier card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">BEANS</div>
-              <div class="card-info-sub">+2 power. You know exactly why.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Cheek Lift Action">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/CheekLiftAction.jpg" alt="Cheek Lift Action card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">CHEEK LIFT</div>
-              <div class="card-info-sub">A precision tactical maneuver.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Dried Fruit Modifier">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Dried-Fruit1-_MODIFIER-CARD_.jpg" alt="Dried Fruit Modifier card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">DRIED FRUIT</div>
-              <div class="card-info-sub">Modifier — slow but devastating.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Car Fart">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Car-Fart1-_FC_.jpg" alt="Car Fart card"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">CAR FART</div>
-              <div class="card-info-sub">No escape once the windows go up.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Sample Cards">
-            <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Fart%20of%20War_Sample_Cards_EN_V2-0511%20(1).jpg" alt="Fart of War sample cards"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">THE FULL ARSENAL</div>
-              <div class="card-info-sub">The whole deck, all at once.</div>
-            </div>
-          </div>
-
+      <!-- Fart of War -->
+      <a href="fow.html" class="game-card">
+        <div class="game-card-img-wrap">
+          <img src="brand_assets/base1.png" alt="Fart of War" class="game-card-img"/>
+          <div class="game-card-overlay"></div>
         </div>
-      </div>
-    </div>
-
-    <!-- Row 2 — Fart of War Expansion Pack -->
-    <div class="row-group">
-      <div class="row-header">
-        <span class="row-title">FART OF WAR: EXPANSION PACK</span>
-        <span class="badge-soon">⏳ COMING SOON</span>
-      </div>
-      <div class="row-scroll-wrap">
-        <div class="cards-scroll" id="expansion-row">
-
-          <div class="card-p" tabindex="0" aria-label="Expansion card 1">
-            <img
-              src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/1.jpg"
-              alt="Expansion card"
-              onerror="this.style.display='none'; this.closest('.card-p').classList.add('card-placeholder');"
-            />
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">NEW RECRUITS</div>
-              <div class="card-info-sub">More farts join the ranks.</div>
-            </div>
+        <div class="game-card-body">
+          <div class="game-card-badges">
+            <span class="badge-live">✦ AVAILABLE NOW</span>
           </div>
-
-          <div class="card-p" tabindex="0" aria-label="Expansion card 2">
-            <img
-              src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/2.jpg"
-              alt="Expansion card"
-              onerror="this.style.display='none'; this.closest('.card-p').classList.add('card-placeholder');"
-            />
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">NEW MODIFIERS</div>
-              <div class="card-info-sub">Stack higher. Fall harder.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Expansion card 3">
-            <img
-              src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/3.jpg"
-              alt="Expansion card"
-              onerror="this.style.display='none'; this.closest('.card-p').classList.add('card-placeholder');"
-            />
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">SPECIAL ACTIONS</div>
-              <div class="card-info-sub">Chaos, upgraded.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Expansion card 4">
-            <img
-              src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/4.jpg"
-              alt="Expansion card"
-              onerror="this.style.display='none'; this.closest('.card-p').classList.add('card-placeholder');"
-            />
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">MORE FIREPOWER</div>
-              <div class="card-info-sub">Stack it with the base game. You'll see.</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Expansion card 5">
-            <img
-              src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/5.jpg"
-              alt="Expansion card"
-              onerror="this.style.display='none'; this.closest('.card-p').classList.add('card-placeholder');"
-            />
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">COMING SOON</div>
-              <div class="card-info-sub">Stay tuned for the drop.</div>
-            </div>
-          </div>
-
+          <div class="game-card-title">FART OF WAR</div>
+          <p class="game-card-tagline">Can you smell the victory?</p>
+          <div class="game-card-cta">VIEW GAME →</div>
         </div>
-      </div>
-    </div>
+      </a>
 
-    <!-- Row 3 — Dispelled (Coming Soon) -->
-    <div class="row-group">
-      <div class="row-header">
-        <span class="row-title" style="color:#95cae0;">DISPELLED</span>
-        <span class="badge-soon">⏳ COMING SOON</span>
-      </div>
-      <div class="row-scroll-wrap">
-        <div class="cards-scroll">
-
-          <div class="card-p" style="width:230px;" tabindex="0" aria-label="Dispelled key art">
-            <img src="brand_assets/posters_banners/dispelled/back%20of%20card.jpg" alt="Dispelled — the word battle card game"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">DISPELLED</div>
-              <div class="card-info-sub">For those who have a way with words (or not)</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="The Toad Sage">
-            <img src="brand_assets/posters_banners/dispelled/frogwizard.jpg" alt="The Toad Sage patron wizard"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">THE TOAD SAGE</div>
-              <div class="card-info-sub">ribbit, ribbit, ribbit</div>
-            </div>
-          </div>
-
-          <div class="card-p" tabindex="0" aria-label="Wordlebee the Wise">
-            <img src="brand_assets/posters_banners/dispelled/3fe7d1ae-18ce-42aa-8d86-8593693922b3.png" alt="Wordlebee the Wise wizard"/>
-            <div class="card-info" aria-hidden="true">
-              <div class="card-info-title">WORDLEBEE THE WISE</div>
-              <div class="card-info-sub">the most wisest</div>
-            </div>
-          </div>
-
+      <!-- Expansion Pack -->
+      <a href="expansion.html" class="game-card">
+        <div class="game-card-img-wrap">
+          <img src="brand_assets/expnew.png" alt="Fart of War: Expansion Pack" class="game-card-img"/>
+          <div class="game-card-overlay"></div>
         </div>
-      </div>
+        <div class="game-card-body">
+          <div class="game-card-badges">
+            <span class="badge-soon">⏳ COMING SOON</span>
+          </div>
+          <div class="game-card-title">EXPANSION PACK</div>
+          <p class="game-card-tagline">A breath of fresh air.</p>
+          <div class="game-card-cta">VIEW GAME →</div>
+        </div>
+      </a>
+
+      <!-- Dispelled -->
+      <a href="dispelled.html" class="game-card">
+        <div class="game-card-img-wrap">
+          <img src="brand_assets/PRODUCTION (1).png" alt="Dispelled" class="game-card-img"/>
+          <div class="game-card-overlay"></div>
+        </div>
+        <div class="game-card-body">
+          <div class="game-card-badges">
+            <span class="badge-soon" style="color:#95cae0; background:rgba(149,202,224,0.07); border-color:rgba(149,202,224,0.3);">⏳ COMING SOON</span>
+          </div>
+          <div class="game-card-title" style="color:#95cae0;">DISPELLED</div>
+          <p class="game-card-tagline">For people who have a way with words (or not!).</p>
+          <div class="game-card-cta" style="color:#95cae0;">VIEW GAME →</div>
+        </div>
+      </a>
+
     </div>
 
   </section>
@@ -1522,7 +1353,8 @@
   <!-- ▓▓▓ HOW TO PLAY ▓▓▓ -->
   <section id="how-to-play" class="how-section">
     <div class="how-inner">
-      <div class="how-eyebrow">HOW TO PLAY — FART OF WAR</div>
+      <div class="how-eyebrow">FART OF WAR</div>
+      <div class="how-title">HOW TO PLAY</div>
       <div class="how-grid">
         <div class="how-visual">
           <iframe
@@ -1619,7 +1451,7 @@
           </div>
           <div class="maker-body">
             <div class="maker-name">FRIED PICKLE GAMES</div>
-            <div class="maker-role">Est. 2024 · Indie Game Studio</div>
+            <div class="maker-role">Est. 2024</div>
             <div class="maker-quote">Everybody wants epic battles, and we're your outfitter: two twins making games for you and your pals.</div>
           </div>
         </div>
@@ -1645,24 +1477,34 @@
         <div class="footer-nav">
           <div class="footer-col">
             <h4>GAMES</h4>
-            <a href="#">Fart of War</a>
-            <a href="#">Fart of War: Expansion</a>
-            <a href="#">Dispelled</a>
+            <a href="fow.html">Fart of War</a>
+            <a href="expansion.html">Fart of War: Expansion</a>
+            <a href="dispelled.html">Dispelled</a>
           </div>
           <div class="footer-col">
             <h4>COMPANY</h4>
-            <a href="#">About Us</a>
-            <a href="#">Press Kit</a>
+            <a href="#makers">About Us</a>
             <a href="mailto:hello.friedpicklegames@gmail.com">Contact</a>
-          </div>
-          <div class="footer-col">
-            <h4>FOLLOW</h4>
-            <a href="#" target="_blank" rel="noopener">Online Shop (Coming Soon)</a>
-            <a href="#" target="_blank" rel="noopener">Instagram</a>
-            <a href="#" target="_blank" rel="noopener">TikTok</a>
           </div>
         </div>
       </div>
+
+      <!-- Social links -->
+      <div class="footer-socials">
+        <a href="#" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          INSTAGRAM
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+          YOUTUBE
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          FACEBOOK
+        </a>
+      </div>
+
       <div class="footer-bottom">
         <span class="footer-copy">© 2026 Fried Pickle Games. All rights reserved.</span>
         <span class="footer-sig">NO PICKLES WERE HARMED</span>
@@ -1759,6 +1601,20 @@
       });
 
       startTimer();
+
+      // Pause carousel while How to Play is visible
+      const howSection = document.getElementById('how-to-play');
+      if (howSection) {
+        new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              clearInterval(timer);
+            } else {
+              startTimer();
+            }
+          });
+        }, { threshold: 0.2 }).observe(howSection);
+      }
     })();
 
     // ── Email popup ───────────────────────────────

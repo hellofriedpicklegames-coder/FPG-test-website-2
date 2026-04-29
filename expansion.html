@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fart of War: Expansion Pack — Fried Pickle Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0c07; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+    /* Header */
+    #site-header { position: sticky; top: 0; z-index: 200; background: rgba(13,12,7,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(153,153,101,0.15); transition: box-shadow 0.3s ease; }
+    #site-header.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
+    .header-inner { max-width: 1440px; margin: 0 auto; padding: 0 48px; height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo-group { display: flex; align-items: center; gap: 11px; text-decoration: none; flex-shrink: 0; }
+    .logo-group img { width: 52px; height: 52px; object-fit: contain; border-radius: 50%; background: #e7e8e6; padding: 5px; }
+    .logo-group span { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.09em; color: #e7e8e6; white-space: nowrap; }
+    nav { display: flex; align-items: center; gap: 36px; }
+    nav a { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.13em; color: rgba(231,232,230,0.65); text-decoration: none; transition: color 0.2s ease; }
+    nav a:hover { color: #e7e8e6; }
+    .btn-header { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px; display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; transition: background 0.2s ease, transform 0.15s ease; }
+    .btn-header:hover { background: #1bc07c; transform: translateY(-1px); }
+    /* Hero */
+    .game-hero { position: relative; width: 100%; height: 90vh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end; }
+    .game-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+    .game-hero-grad-lr { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(13,12,7,0.97) 0%, rgba(13,12,7,0.82) 38%, rgba(13,12,7,0.35) 65%, transparent 100%); }
+    .game-hero-grad-bt { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(13,12,7,1) 0%, rgba(13,12,7,0.65) 18%, transparent 45%); }
+    .game-hero-content { position: relative; z-index: 2; max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 48px 88px; }
+    .game-hero-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(237,224,144,0.1); border: 1px solid rgba(237,224,144,0.3); color: #ede090; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.2em; padding: 5px 14px; margin-bottom: 22px; }
+    .game-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.8vw, 82px); letter-spacing: -0.025em; line-height: 0.9; color: #e7e8e6; margin-bottom: 22px; filter: drop-shadow(0 6px 28px rgba(0,0,0,0.75)); max-width: 560px; }
+    .game-hero-tagline { font-size: clamp(16px, 1.8vw, 20px); font-weight: 500; color: rgba(231,232,230,0.88); margin-bottom: 10px; max-width: 480px; }
+    .game-hero-desc { font-size: 15px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; max-width: 420px; margin-bottom: 36px; }
+    .game-hero-btns { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn-ghost { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.09em; background: rgba(231,232,230,0.07); color: #e7e8e6; border: 1px solid rgba(231,232,230,0.22); padding: 0 30px; height: 54px; display: inline-flex; align-items: center; gap: 9px; text-decoration: none; transition: background 0.2s ease, transform 0.18s ease; }
+    .btn-ghost:hover { background: rgba(231,232,230,0.14); transform: translateY(-1px); }
+    .btn-notify { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.09em; background: #ede090; color: #0d0c07; padding: 0 36px; height: 54px; display: inline-flex; align-items: center; text-decoration: none; transition: background 0.2s ease, transform 0.18s ease; }
+    .btn-notify:hover { background: #f5eba8; transform: translateY(-2px); }
+    /* Stats */
+    .stats-bar { background: #141209; border-top: 2px solid rgba(153,153,101,0.28); display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item { padding: 28px 24px; border-right: 1px solid rgba(153,153,101,0.1); text-align: center; }
+    .stat-item:last-child { border-right: none; }
+    .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: #ede090; letter-spacing: -0.01em; line-height: 1; margin-bottom: 5px; }
+    .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: rgba(153,153,101,0.6); }
+    /* Sections */
+    .section-inner { max-width: 1440px; margin: 0 auto; padding: 72px 48px; }
+    .section-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.22em; color: rgba(153,153,101,0.5); margin-bottom: 12px; display: flex; align-items: center; gap: 16px; }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.12); }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.02em; color: #e7e8e6; margin-bottom: 40px; }
+    /* Card gallery */
+    .card-gallery { background: #0d0c07; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    .gallery-card { aspect-ratio: 5/7; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; background: linear-gradient(135deg, #1a1813 0%, #141209 100%); border: 1px solid rgba(153,153,101,0.18); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; transition: transform 0.28s ease; }
+    .gallery-card:hover { transform: scale(1.04); }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0; }
+    .gallery-card-placeholder::before { content: '✦'; font-size: 24px; color: rgba(153,153,101,0.3); }
+    .gallery-card-placeholder::after { content: 'COMING SOON'; font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: rgba(153,153,101,0.35); }
+    /* Notify section */
+    .notify-section { background: #141209; border-top: 1px solid rgba(153,153,101,0.1); }
+    .notify-inner { max-width: 640px; margin: 0 auto; padding: 88px 48px; text-align: center; }
+    .notify-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 6vw, 72px); color: #ede090; margin-bottom: 16px; }
+    .notify-desc { font-size: 15px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; margin-bottom: 32px; }
+    /* Footer */
+    footer { background: #080706; border-top: 1px solid rgba(153,153,101,0.1); }
+    .footer-inner { max-width: 1440px; margin: 0 auto; padding: 52px 48px 32px; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 48px; }
+    .footer-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 14px; }
+    .footer-brand img { width: 46px; height: 46px; object-fit: contain; border-radius: 50%; background: #e7e8e6; padding: 6px; }
+    .footer-brand-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.09em; color: #e7e8e6; display: block; }
+    .footer-brand-sub { font-size: 12px; color: rgba(153,153,101,0.55); }
+    .footer-tagline { font-size: 13px; font-weight: 300; color: rgba(231,232,230,0.3); max-width: 260px; line-height: 1.65; }
+    .footer-nav { display: flex; gap: 56px; flex-shrink: 0; }
+    .footer-col h4 { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: rgba(153,153,101,0.6); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: rgba(231,232,230,0.48); text-decoration: none; margin-bottom: 9px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: #e7e8e6; }
+    .footer-socials { display: flex; gap: 12px; padding: 28px 0 32px; border-top: 1px solid rgba(153,153,101,0.1); flex-wrap: wrap; margin-top: 40px; }
+    .social-btn { display: inline-flex; align-items: center; gap: 9px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; color: rgba(231,232,230,0.65); border: 1px solid rgba(153,153,101,0.28); padding: 0 20px; height: 44px; text-decoration: none; border-radius: 2px; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease; }
+    .social-btn:hover { background: rgba(153,153,101,0.12); color: #e7e8e6; border-color: rgba(153,153,101,0.55); transform: translateY(-1px); }
+    .social-btn svg { flex-shrink: 0; opacity: 0.7; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; border-top: 1px solid rgba(153,153,101,0.08); }
+    .footer-copy { font-size: 12px; color: rgba(231,232,230,0.25); }
+    .footer-sig { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.18em; color: rgba(153,153,101,0.28); }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .header-inner { height: 64px; padding: 0 20px; } nav { display: none; }
+      .logo-group span { font-size: 20px; }
+      .game-hero-content { padding: 0 20px 72px; }
+      .section-inner { padding: 52px 20px; }
+      .notify-inner { padding: 64px 20px; }
+      .footer-inner { padding: 40px 20px 24px; }
+      .footer-top { flex-direction: column; gap: 24px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .game-hero-bg { object-position: 30% 15%; }
+    }
+    @media (max-width: 600px) {
+      .logo-group span { font-size: 17px; } .btn-header { font-size: 13px; padding: 0 14px; height: 34px; }
+      .stat-value { font-size: 30px; } .stat-item { padding: 18px 12px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+    @media (max-width: 430px) { .logo-group span { display: none; } .section-inner { padding: 40px 16px; } .notify-inner { padding: 52px 16px; } }
+  </style>
+</head>
+<body>
+
+  <header id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-group">
+        <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt=""/>
+        <span>FRIED PICKLE GAMES</span>
+      </a>
+      <nav>
+        <a href="index.html#games">GAMES</a>
+        <a href="fow.html#how-to-play">HOW TO PLAY</a>
+        <a href="index.html#makers">ABOUT</a>
+        <a href="mailto:hello.friedpicklegames@gmail.com">CONTACT</a>
+      </nav>
+      <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-header">SHOP SOON</a>
+    </div>
+  </header>
+
+  <section class="game-hero">
+    <picture>
+      <source media="(max-width: 900px)" srcset="brand_assets/EXPmobile.png"/>
+      <img src="brand_assets/expnew.png" alt="" class="game-hero-bg"/>
+    </picture>
+    <div class="game-hero-grad-lr"></div>
+    <div class="game-hero-grad-bt"></div>
+    <div class="game-hero-content">
+      <div class="game-hero-badge">💥 &nbsp;EXPANSION PACK</div>
+      <div class="game-hero-title">FART OF WAR<br/><span style="color:#ede090;">EXPANSION PACK</span></div>
+      <p class="game-hero-tagline">A breath of fresh air.</p>
+      <p class="game-hero-desc">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns!</p>
+      <div class="game-hero-btns">
+        <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-notify">NOTIFY ME</a>
+        <a href="fow.html" class="btn-ghost">← &nbsp;BASE GAME</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-value">2–4</div><div class="stat-label">Players</div></div>
+    <div class="stat-item"><div class="stat-value">20</div><div class="stat-label">Minutes</div></div>
+    <div class="stat-item"><div class="stat-value">8+</div><div class="stat-label">Ages</div></div>
+    <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">New Cards</div></div>
+  </div>
+
+  <section class="card-gallery">
+    <div class="section-inner">
+      <div class="section-eyebrow">EXPANSION PACK</div>
+      <div class="section-title">NEW CARDS</div>
+      <div class="card-grid">
+        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/1.jpg" alt="Expansion card 1" onerror="this.remove()"/></div>
+        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/2.jpg" alt="Expansion card 2" onerror="this.remove()"/></div>
+        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/3.jpg" alt="Expansion card 3" onerror="this.remove()"/></div>
+        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/4.jpg" alt="Expansion card 4" onerror="this.remove()"/></div>
+        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/5.jpg" alt="Expansion card 5" onerror="this.remove()"/></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="notify-section">
+    <div class="notify-inner">
+      <div class="section-eyebrow" style="justify-content:center; margin-bottom:16px;">COMING SOON</div>
+      <div class="notify-title">13 NEW CARDS.<br/>CONSIDERABLY MORE CHAOS.</div>
+      <p class="notify-desc">New Fart Characters, Modifiers, and Special Actions. Shuffle it into the base game. Things escalate quickly.</p>
+      <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-notify">NOTIFY ME WHEN IT DROPS</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">
+            <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt="Fried Pickle Games"/>
+            <div><span class="footer-brand-name">FRIED PICKLE GAMES</span><span class="footer-brand-sub">Seriously fun card games</span></div>
+          </div>
+          <p class="footer-tagline">Games you and your pals can play anywhere.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>GAMES</h4>
+            <a href="fow.html">Fart of War</a>
+            <a href="expansion.html">Fart of War: Expansion</a>
+            <a href="dispelled.html">Dispelled</a>
+          </div>
+          <div class="footer-col">
+            <h4>COMPANY</h4>
+            <a href="index.html#makers">About Us</a>
+            <a href="mailto:hello.friedpicklegames@gmail.com">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-socials">
+        <a href="#" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> INSTAGRAM</a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg> YOUTUBE</a>
+        <a href="#" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> FACEBOOK</a>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Fried Pickle Games. All rights reserved.</span>
+        <span class="footer-sig">NO PICKLES WERE HARMED</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 12); }, { passive: true });
+  </script>
+</body>
+</html>
