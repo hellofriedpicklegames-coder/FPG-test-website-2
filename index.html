@@ -982,14 +982,132 @@
       .footer-nav { flex-direction: column; gap: 28px; }
       .hero-dots { bottom: 20px; right: 20px; }
     }
+  /* ── Email Popup ──────────────────────────────── */
+  #popup-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(13,12,7,0.82);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  #popup-overlay.active { opacity: 1; pointer-events: auto; }
+  #popup-modal {
+    position: relative;
+    background: #1a1813;
+    border: 1px solid rgba(153,153,101,0.3);
+    border-radius: 4px;
+    max-width: 420px; width: 100%;
+    padding: 48px 40px 40px;
+    box-shadow: 0 32px 96px rgba(0,0,0,0.72), 0 0 0 1px rgba(153,153,101,0.1);
+    transform: translateY(22px) scale(0.96);
+    transition: transform 0.42s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+    opacity: 0;
+    text-align: center;
+  }
+  #popup-overlay.active #popup-modal { transform: translateY(0) scale(1); opacity: 1; }
+  .popup-stamp {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px; letter-spacing: 0.28em;
+    color: #c0392b; border: 2px solid #c0392b;
+    display: inline-block; padding: 2px 12px;
+    transform: rotate(-2deg);
+    margin-bottom: 22px;
+    opacity: 0.9;
+  }
+  .popup-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(30px,6vw,42px);
+    letter-spacing: 0.04em; color: #ede090;
+    line-height: 1.05; margin-bottom: 14px;
+  }
+  .popup-sub {
+    font-size: 14px; color: rgba(231,232,230,0.65);
+    line-height: 1.65; margin-bottom: 28px;
+  }
+  .popup-form { display: flex; flex-direction: column; gap: 10px; }
+  .popup-input {
+    background: #272419;
+    border: 1px solid rgba(153,153,101,0.35);
+    border-radius: 3px; color: #e7e8e6;
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    padding: 13px 16px; outline: none; width: 100%;
+    transition: border-color 0.2s ease;
+  }
+  .popup-input:focus { border-color: #999965; }
+  .popup-input::placeholder { color: rgba(231,232,230,0.3); }
+  .popup-submit {
+    background: #999965; color: #0d0c07;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; letter-spacing: 0.12em;
+    border: none; border-radius: 3px; padding: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .popup-submit:hover { background: #c4c47e; transform: translateY(-1px); }
+  .popup-submit:active { transform: translateY(0); }
+  .popup-awol {
+    font-size: 12px; color: rgba(231,232,230,0.3);
+    cursor: pointer; background: none; border: none;
+    font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em;
+    margin-top: 4px;
+    transition: color 0.2s ease;
+  }
+  .popup-awol:hover { color: rgba(231,232,230,0.6); }
+  #popup-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none;
+    color: rgba(231,232,230,0.3); font-size: 18px; line-height: 1;
+    cursor: pointer; padding: 4px;
+    transition: color 0.2s ease;
+  }
+  #popup-close:hover { color: rgba(231,232,230,0.75); }
+  #popup-success { display: none; padding: 8px 0 4px; }
+  .popup-success-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 0.04em;
+    color: #2beb9a; margin-bottom: 10px;
+  }
+  .popup-success-sub {
+    font-size: 14px; color: rgba(231,232,230,0.55); line-height: 1.6;
+  }
+
   </style>
 </head>
 
 <body>
 
+  <!-- ▓▓▓ EMAIL POPUP ▓▓▓ -->
+  <div id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-headline-text">
+    <div id="popup-modal">
+      <button id="popup-close" aria-label="Close popup">&#x2715;</button>
+      <div class="popup-stamp">Classified</div>
+      <div class="popup-headline" id="popup-headline-text">Intel Drop<br/>Incoming</div>
+      <p class="popup-sub">The store opens soon. Drop your email and you'll hear about it first.</p>
+      <div id="popup-form-wrap">
+        <!-- ★ Swap YOUR_MAILCHIMP_URL_HERE with your Mailchimp form action URL -->
+        <!-- Get it from: Mailchimp → Audience → Signup forms → Embedded forms → copy the action="..." URL -->
+        <form class="popup-form" action="YOUR_MAILCHIMP_URL_HERE" method="post" id="mc-popup-form" target="_blank" novalidate>
+          <input class="popup-input" type="email" name="EMAIL" placeholder="your@email.com" required autocomplete="email" aria-label="Email address"/>
+          <!-- Mailchimp bot trap — do not remove -->
+          <div style="position:absolute;left:-5000px;" aria-hidden="true">
+            <input type="text" name="b_PLACEHOLDER_HONEYPOT" tabindex="-1" value=""/>
+          </div>
+          <button class="popup-submit" type="submit">ENLIST</button>
+          <button type="button" class="popup-awol" id="popup-dismiss">Go AWOL</button>
+        </form>
+      </div>
+      <div id="popup-success">
+        <div class="popup-success-headline">You're Enlisted.</div>
+        <p class="popup-success-sub">Intel will find you. No spam &mdash; just the good stuff when it matters.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ▓▓▓ ANNOUNCEMENT BAR ▓▓▓ -->
   <div id="announce-bar">
-    💨 FART OF WAR ONLINE SALES COMING SOON — STAY IN THE LOOP
+    💨 FART OF WAR — ONLINE SALES OPENING SOON
     <a href="mailto:hello.friedpicklegames@gmail.com">→ GET NOTIFIED</a>
     <button id="close-announce" aria-label="Dismiss announcement">×</button>
   </div>
@@ -1014,8 +1132,29 @@
   <!-- ▓▓▓ HERO (Rotating Carousel) ▓▓▓ -->
   <section class="hero-section" aria-label="Featured games from Fried Pickle Games">
 
-    <!-- Slide 1: Fart of War -->
+    <!-- Slide 0: Brand intro -->
     <div class="hero-slide active" id="hero-slide-0">
+      <img
+        src="brand_assets/3.png"
+        alt=""
+        class="hero-bg"
+        aria-hidden="true"
+      />
+      <div class="hero-grad-lr" aria-hidden="true"></div>
+      <div class="hero-grad-bt" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">★ &nbsp;EST. 2024</div>
+        <div class="hero-title-text" style="font-size:clamp(44px,6.5vw,96px); color:#e7e8e6;">FRIED PICKLE<br/><span style="color:#ede090;">GAMES</span></div>
+        <p class="hero-tagline">Real, offline, human connection.</p>
+        <p class="hero-desc">Twin teens making card games you and your pals can play anywhere.</p>
+        <div class="hero-btns">
+          <a href="#games" class="btn-hero-primary">SEE OUR GAMES</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 1: Fart of War -->
+    <div class="hero-slide" id="hero-slide-1">
       <img
         src="brand_assets/base1.png"
         alt=""
@@ -1027,8 +1166,8 @@
       <div class="hero-content">
         <div class="hero-badge">★ &nbsp;AVAILABLE NOW</div>
         <div class="hero-title-text">FART<br/><span style="color:#ede090;">OF WAR</span></div>
-        <p class="hero-tagline">The card game of tactical flatulence.</p>
-        <p class="hero-desc">Deploy your arsenal of strategic stench. Outmaneuver, out-stink, and outlast 2–5 players in under an hour.</p>
+        <p class="hero-tagline">Can you smell the victory?</p>
+        <p class="hero-desc">Deploy hilarious farts! Battle your friends with incense, beans, and protein! When the third "Fart of War" card is drawn, have the strongest fart army.</p>
         <div class="hero-btns">
           <a href="#how-to-play" class="btn-hero-primary">HOW TO PLAY</a>
           <a href="#games" class="btn-hero-ghost">▶ &nbsp;SEE THE GAMES</a>
@@ -1037,7 +1176,7 @@
     </div>
 
     <!-- Slide 2: Dispelled -->
-    <div class="hero-slide" id="hero-slide-1">
+    <div class="hero-slide" id="hero-slide-2">
       <img
         src="brand_assets/PRODUCTION%20(1).png"
         alt=""
@@ -1050,8 +1189,8 @@
       <div class="hero-content">
         <div class="hero-badge" style="color:#95cae0; border-color:rgba(149,202,224,0.38); background:rgba(149,202,224,0.1);">✦ &nbsp;COMING SOON</div>
         <div class="hero-title-text" style="color:#e7e8e6;">DIS<span style="color:#95cae0;">PELLED</span></div>
-        <p class="hero-tagline" style="color:rgba(231,232,230,0.88);">Words are your spells. Wizards are your edge.</p>
-        <p class="hero-desc">Choose a patron wizard each round to unlock special powers, then battle opponents with the best words you can conjure.</p>
+        <p class="hero-tagline" style="color:rgba(231,232,230,0.88);">For people who have a way with words (or not!)</p>
+        <p class="hero-desc">Use patron wizards to outwit your friends in this mystic word battle.</p>
         <div class="hero-btns">
           <a href="#" class="btn-hero-ghost" style="border-color:rgba(149,202,224,0.5); color:#95cae0;">✦ &nbsp;COMING SOON</a>
         </div>
@@ -1059,9 +1198,9 @@
     </div>
 
     <!-- Slide 3: Fart of War Expansion Pack -->
-    <div class="hero-slide" id="hero-slide-2">
+    <div class="hero-slide" id="hero-slide-3">
       <img
-        src="brand_assets/exp1.png"
+        src="brand_assets/expnew.png"
         alt=""
         class="hero-bg"
         aria-hidden="true"
@@ -1071,8 +1210,8 @@
       <div class="hero-content">
         <div class="hero-badge">💥 &nbsp;EXPANSION PACK</div>
         <div class="hero-title-text" style="font-size:clamp(44px,5.8vw,82px); max-width:540px;">FART OF WAR<br/><span style="color:#ede090;">EXPANSION PACK</span></div>
-        <p class="hero-tagline">More farts. More chaos. More glory.</p>
-        <p class="hero-desc">New Fart Characters, Modifiers, and Special Actions to supercharge your war. Stack it with the base game for maximum devastation.</p>
+        <p class="hero-tagline">A breath of fresh air.</p>
+        <p class="hero-desc">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns!</p>
         <div class="hero-btns">
           <a href="#" class="btn-hero-ghost">⏳ &nbsp;COMING SOON</a>
         </div>
@@ -1081,7 +1220,8 @@
 
     <!-- Dot indicators -->
     <div class="hero-dots" role="tablist" aria-label="Slide navigation">
-      <button class="hero-dot active" role="tab" aria-selected="true" aria-label="Fart of War"></button>
+      <button class="hero-dot active" role="tab" aria-selected="true" aria-label="Fried Pickle Games"></button>
+      <button class="hero-dot" role="tab" aria-selected="false" aria-label="Fart of War"></button>
       <button class="hero-dot" role="tab" aria-selected="false" aria-label="Dispelled"></button>
       <button class="hero-dot" role="tab" aria-selected="false" aria-label="Fart of War Expansion"></button>
     </div>
@@ -1126,7 +1266,7 @@
             <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Butt%20Burner.jpg" alt="Butt Burner card"/>
             <div class="card-info" aria-hidden="true">
               <div class="card-info-title">BUTT BURNER</div>
-              <div class="card-info-sub">A classic. Devastating. Unstoppable.</div>
+              <div class="card-info-sub">You know exactly what this does.</div>
             </div>
           </div>
 
@@ -1182,7 +1322,7 @@
             <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Car-Fart1-_FC_.jpg" alt="Car Fart card"/>
             <div class="card-info" aria-hidden="true">
               <div class="card-info-title">CAR FART</div>
-              <div class="card-info-sub">Contained. Concentrated. Lethal.</div>
+              <div class="card-info-sub">No escape once the windows go up.</div>
             </div>
           </div>
 
@@ -1190,7 +1330,7 @@
             <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Fart%20of%20War_Sample_Cards_EN_V2-0511%20(1).jpg" alt="Fart of War sample cards"/>
             <div class="card-info" aria-hidden="true">
               <div class="card-info-title">THE FULL ARSENAL</div>
-              <div class="card-info-sub">85 cards of pure chaos.</div>
+              <div class="card-info-sub">The whole deck, all at once.</div>
             </div>
           </div>
 
@@ -1251,7 +1391,7 @@
             />
             <div class="card-info" aria-hidden="true">
               <div class="card-info-title">MORE FIREPOWER</div>
-              <div class="card-info-sub">Your enemies won't know what hit them.</div>
+              <div class="card-info-sub">Stack it with the base game. You'll see.</div>
             </div>
           </div>
 
@@ -1335,7 +1475,7 @@
             <div class="step-num">02</div>
             <div class="step-body">
               <h3>DRAW, PLAY, OR BOTH</h3>
-              <p>Each turn, choose: Draw &amp; Play 1 card, Draw Twice, or Play Twice. Deploy Fart Characters, stack Modifiers on your fighters, or unleash Special Actions to throw chaos into the battlefield.</p>
+              <p>Each turn, choose: Draw &amp; Play 1 card, Draw Twice, or Play Twice. Deploy Fart Characters, stack Modifiers on your fighters, or drop a Special Action on whoever's getting too comfortable.</p>
             </div>
           </div>
           <div class="how-step">
@@ -1370,8 +1510,8 @@
     <div class="dispelled-content">
       <div class="dispelled-eyebrow">NEXT FROM FRIED PICKLE GAMES</div>
       <div class="dispelled-title">DIS<span>PELLED</span></div>
-      <p class="dispelled-tagline">Words are your spells. Wizards are your edge.</p>
-      <p class="dispelled-desc">Like Scrabble, but with patron wizards who grant special powers each round. Play the best words to outspell your rivals. For 2–6 players.</p>
+      <p class="dispelled-tagline">One wizard per round. Best words win.</p>
+      <p class="dispelled-desc">Pick a patron wizard at the start of each round. They give you a special power. Spell the best words, outscore everyone else. 2–6 players, ages 14+.</p>
       <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-dispelled">NOTIFY ME WHEN IT DROPS</a>
     </div>
   </section>
@@ -1455,7 +1595,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2024 Fried Pickle Games. All rights reserved.</span>
+        <span class="footer-copy">© 2026 Fried Pickle Games. All rights reserved.</span>
         <span class="footer-sig">NO PICKLES WERE HARMED</span>
       </div>
     </div>
@@ -1489,12 +1629,18 @@
       let current  = 0;
       let timer;
 
-      // Stats per slide: [FOW Base, Dispelled, FOW Expansion]
+      // Stats per slide: [Brand, FOW Base, Dispelled, FOW Expansion]
       const slideStats = [
+        null,
         { players: '2–4', minutes: '20', ages: '8+',  cards: '110' },
         { players: '2–6', minutes: '30', ages: '14+', cards: '112' },
         { players: '2–4', minutes: '20', ages: '8+',  cards: '13'  },
       ];
+
+      const statsBar = document.querySelector('.stats-bar');
+      statsBar.style.transition = 'opacity 0.35s ease';
+      statsBar.style.opacity = '0';
+      statsBar.style.pointerEvents = 'none';
 
       const statEls = {
         players: document.getElementById('stat-players'),
@@ -1504,6 +1650,13 @@
       };
 
       function updateStats(n) {
+        if (!slideStats[n]) {
+          statsBar.style.opacity = '0';
+          statsBar.style.pointerEvents = 'none';
+          return;
+        }
+        statsBar.style.opacity = '1';
+        statsBar.style.pointerEvents = '';
         const vals = Object.values(statEls);
         vals.forEach(el => { el.style.opacity = '0'; });
         setTimeout(() => {
@@ -1537,6 +1690,69 @@
       });
 
       startTimer();
+    })();
+
+    // ── Email popup ───────────────────────────────
+    (function() {
+      const STORAGE_KEY  = 'fpg_popup_v1';
+      const DISMISS_DAYS = 7;
+
+      function isDismissed() {
+        const val = localStorage.getItem(STORAGE_KEY);
+        return val && Date.now() < parseInt(val, 10);
+      }
+
+      function setDismissed(days) {
+        localStorage.setItem(STORAGE_KEY, Date.now() + days * 86400000);
+      }
+
+      const overlay = document.getElementById('popup-overlay');
+
+      function openPopup() {
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          const inp = overlay.querySelector('input[type="email"]');
+          if (inp) inp.focus();
+        }, 420);
+      }
+
+      function closePopup() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function dismiss() { setDismissed(DISMISS_DAYS); closePopup(); }
+
+      if (!isDismissed()) setTimeout(openPopup, 6000);
+
+      document.getElementById('popup-close').addEventListener('click', dismiss);
+      document.getElementById('popup-dismiss').addEventListener('click', dismiss);
+      overlay.addEventListener('click', function(e) { if (e.target === this) dismiss(); });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) dismiss();
+      });
+
+      document.getElementById('mc-popup-form').addEventListener('submit', function(e) {
+        const email = this.querySelector('input[type="email"]').value.trim();
+        if (!email || !email.includes('@')) {
+          this.querySelector('input[type="email"]').focus();
+          e.preventDefault();
+          return;
+        }
+        // Show success immediately; form posts to Mailchimp in background (_blank target)
+        e.preventDefault();
+        document.getElementById('popup-form-wrap').style.display = 'none';
+        document.getElementById('popup-success').style.display = 'block';
+        setDismissed(30);
+        // Actually submit via hidden iframe so the user stays on the page
+        const iframe = document.createElement('iframe');
+        iframe.name = 'mc_iframe'; iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        this.target = 'mc_iframe';
+        this.submit();
+        setTimeout(closePopup, 3000);
+      });
     })();
   </script>
 
