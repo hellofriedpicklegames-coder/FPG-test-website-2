@@ -27,9 +27,14 @@
     nav a:hover { color: #e7e8e6; }
     .btn-header { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px; display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; transition: background 0.2s ease, transform 0.15s ease; }
     .btn-header:hover { background: #1bc07c; transform: translateY(-1px); }
-    /* Main */
-    .contact-main { min-height: calc(100vh - 80px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 96px 48px; }
-    .contact-inner { max-width: 560px; width: 100%; }
+    /* Main — split layout */
+    .contact-main { min-height: calc(100vh - 80px); display: flex; }
+    .contact-split { display: flex; width: 100%; min-height: calc(100vh - 80px); }
+    .contact-left { flex: 0 0 50%; display: flex; flex-direction: column; justify-content: center; padding: 80px 72px 80px 48px; }
+    .contact-inner { max-width: 520px; width: 100%; }
+    .contact-right { flex: 1; position: relative; overflow: hidden; }
+    .contact-right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+    .contact-right::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, #0d0c07 0%, rgba(13,12,7,0.55) 25%, rgba(13,12,7,0.15) 60%, transparent 100%); }
     .contact-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.22em; color: rgba(153,153,101,0.55); margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
     .contact-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.12); }
     .contact-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 8vw, 96px); letter-spacing: -0.02em; line-height: 0.9; color: #e7e8e6; margin-bottom: 20px; }
@@ -79,7 +84,10 @@
     @media (max-width: 900px) {
       .header-inner { height: 64px; padding: 0 20px; } nav { display: none; }
       .logo-group span { font-size: 20px; }
-      .contact-main { padding: 64px 20px; }
+      .contact-split { flex-direction: column; }
+      .contact-left { flex: none; padding: 56px 20px; }
+      .contact-right { flex: none; height: 240px; }
+      .contact-right::after { background: linear-gradient(to bottom, #0d0c07 0%, transparent 60%, #0d0c07 100%); }
       .footer-inner { padding: 40px 20px 24px; }
       .footer-top { flex-direction: column; gap: 24px; }
     }
@@ -103,6 +111,8 @@
   </header>
 
   <main class="contact-main">
+  <div class="contact-split">
+    <div class="contact-left">
     <div class="contact-inner">
       <div class="contact-eyebrow">FRIED PICKLE GAMES</div>
       <div class="contact-headline">BE<br/><span>FIRST.</span></div>
@@ -129,6 +139,11 @@
         <a href="mailto:hello.friedpicklegames@gmail.com" class="direct-email">hello.friedpicklegames@gmail.com</a>
       </div>
     </div>
+    </div>
+    <div class="contact-right">
+      <img src="brand_assets/posters_banners/fart_of_war/eventwarrooom2.png" alt="" aria-hidden="true"/>
+    </div>
+  </div>
   </main>
 
   <footer>
