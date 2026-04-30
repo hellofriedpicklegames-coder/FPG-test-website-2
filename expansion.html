@@ -57,10 +57,17 @@
     .card-gallery { background: #0d0c07; }
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
     .gallery-card { aspect-ratio: 5/7; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; background: linear-gradient(135deg, #1a1813 0%, #141209 100%); border: 1px solid rgba(153,153,101,0.18); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; transition: transform 0.28s ease; }
-    .gallery-card:hover { transform: scale(1.04); }
-    .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0; }
-    .gallery-card-placeholder::before { content: '✦'; font-size: 24px; color: rgba(153,153,101,0.3); }
-    .gallery-card-placeholder::after { content: 'COMING SOON'; font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: rgba(153,153,101,0.35); }
+    .gallery-card:hover { transform: scale(1.04); box-shadow: 0 12px 40px rgba(0,0,0,0.7); }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-card-info {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,12,7,0.92) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.24s ease;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 12px;
+    }
+    .gallery-card:hover .gallery-card-info { opacity: 1; }
+    .gallery-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; color: #e7e8e6; }
+    .gallery-card-sub { font-size: 11px; color: rgba(231,232,230,0.55); margin-top: 2px; }
     /* Notify section */
     .notify-section { background: #141209; border-top: 1px solid rgba(153,153,101,0.1); }
     .notify-inner { max-width: 640px; margin: 0 auto; padding: 88px 48px; text-align: center; }
@@ -135,7 +142,7 @@
   <section class="game-hero">
     <picture>
       <source media="(max-width: 900px)" srcset="brand_assets/EXPmobile.png"/>
-      <img src="brand_assets/expnew.png" alt="" class="game-hero-bg"/>
+      <img src="brand_assets/posters_banners/expansionpack/FRESHAIRWWW.png" alt="" class="game-hero-bg"/>
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
@@ -163,11 +170,26 @@
       <div class="section-eyebrow">EXPANSION PACK</div>
       <div class="section-title">NEW CARDS</div>
       <div class="card-grid">
-        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/1.jpg" alt="Expansion card 1" onerror="this.remove()"/></div>
-        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/2.jpg" alt="Expansion card 2" onerror="this.remove()"/></div>
-        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/3.jpg" alt="Expansion card 3" onerror="this.remove()"/></div>
-        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/4.jpg" alt="Expansion card 4" onerror="this.remove()"/></div>
-        <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/5.jpg" alt="Expansion card 5" onerror="this.remove()"/></div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/expansionpack/rearadmiral.png" alt="Rear Admiral"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">REAR ADMIRAL</div><div class="gallery-card-sub">Command from the back.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/expansionpack/rosegun.png" alt="Rose Gun"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">ROSE GUN</div><div class="gallery-card-sub">Tactical. Fragrant. Deadly.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/expansionpack/oldegg.png" alt="Old Egg"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">OLD EGG</div><div class="gallery-card-sub">Vintage. Pungent. Unstoppable.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/expansionpack/fartcannon.png" alt="Fart Cannon"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">FART CANNON</div><div class="gallery-card-sub">Maximum range. No survivors.</div></div>
+        </div>
+        <div class="gallery-card">
+          <img src="brand_assets/posters_banners/expansionpack/gasquatch.png" alt="Gasquatch"/>
+          <div class="gallery-card-info"><div class="gallery-card-title">GASQUATCH</div><div class="gallery-card-sub">The elusive. The legendary.</div></div>
+        </div>
       </div>
     </div>
   </section>
