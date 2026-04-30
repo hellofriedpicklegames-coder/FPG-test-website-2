@@ -86,6 +86,14 @@
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; border-top: 1px solid rgba(153,153,101,0.08); }
     .footer-copy { font-size: 12px; color: rgba(231,232,230,0.25); }
     .footer-sig { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.18em; color: rgba(153,153,101,0.28); }
+    /* How to play */
+    .how-section { background: #141209; border-top: 1px solid rgba(153,153,101,0.1); border-bottom: 1px solid rgba(153,153,101,0.1); }
+    .how-note { display: inline-flex; align-items: center; gap: 9px; background: rgba(237,224,144,0.07); border: 1px solid rgba(237,224,144,0.2); color: rgba(237,224,144,0.7); font-size: 13px; font-weight: 400; padding: 9px 18px; margin-bottom: 40px; line-height: 1.5; }
+    .how-steps { display: flex; flex-direction: column; gap: 30px; }
+    .how-step { display: flex; gap: 22px; align-items: flex-start; }
+    .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: rgba(153,153,101,0.18); line-height: 1; flex-shrink: 0; width: 44px; text-align: right; }
+    .step-body h3 { font-family: 'Bebas Neue', sans-serif; font-size: 23px; letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 7px; }
+    .step-body p { font-size: 14px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; }
     /* Responsive */
     @media (max-width: 900px) {
       .header-inner { height: 64px; padding: 0 20px; } nav { display: none; }
@@ -116,9 +124,8 @@
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav>
-        <a href="index.html#games">GAMES</a>
-        <a href="fow.html#how-to-play">HOW TO PLAY</a>
-        <a href="index.html#makers">ABOUT</a>
+        <a href="index.html#games">← ALL GAMES</a>
+        <a href="#how-to-play">HOW TO PLAY</a>
         <a href="mailto:hello.friedpicklegames@gmail.com">CONTACT</a>
       </nav>
       <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-header">SHOP SOON</a>
@@ -161,6 +168,45 @@
         <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/3.jpg" alt="Expansion card 3" onerror="this.remove()"/></div>
         <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/4.jpg" alt="Expansion card 4" onerror="this.remove()"/></div>
         <div class="gallery-card gallery-card-placeholder"><img src="brand_assets/posters_banners/fart_of_war/expansion/exp_cards/5.jpg" alt="Expansion card 5" onerror="this.remove()"/></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to play -->
+  <section id="how-to-play" class="how-section">
+    <div class="section-inner">
+      <div class="section-eyebrow">FART OF WAR: EXPANSION PACK</div>
+      <div class="section-title" style="font-size: clamp(48px, 7vw, 88px); margin-bottom: 24px;">HOW TO PLAY</div>
+      <div class="how-note">Plays exactly like the base game — just shuffle the expansion cards into your deck.</div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>BUILD YOUR BARRACKS</h3>
+            <p>Shuffle 25 Fart Character cards and deal 3 face-up to each player — those are your soldiers. Draw your hand from the Gas Station deck: 7 cards for 2 players, down to 5 for 4+.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>DRAW, PLAY, OR BOTH</h3>
+            <p>Each turn, choose: Draw &amp; Play 1 card, Draw Twice, or Play Twice. Deploy Fart Characters, stack Modifiers on your fighters, or drop a Special Action on whoever's getting too comfortable.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>MODIFIER MADNESS</h3>
+            <p>Each Fart Character holds up to 4 Modifier cards. Cancel out equal-opposite Modifiers to wipe them both out — a +2 Can of Beans erases a -2 Peppermint Oil and frees the slot.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h3>BEWARE THE FART OF WAR</h3>
+            <p>Drawing a Fart of War card ends your turn. Play a Tighty Whitey to cancel it. When the 3rd Fart of War drops uncancelled, the game ends — highest total points wins, and earns a legendary victory toot.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>

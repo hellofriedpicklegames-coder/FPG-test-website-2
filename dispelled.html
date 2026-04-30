@@ -60,6 +60,11 @@
     .wizard-card-body { padding: 16px 18px 20px; }
     .wizard-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 4px; }
     .wizard-card-quote { font-size: 13px; font-weight: 300; font-style: italic; color: rgba(149,202,224,0.55); line-height: 1.55; }
+    /* How to play tease */
+    .how-tease { background: #080c11; border-top: 1px solid rgba(149,202,224,0.1); border-bottom: 1px solid rgba(149,202,224,0.1); }
+    .how-tease-inner { max-width: 640px; margin: 0 auto; padding: 88px 48px; text-align: center; }
+    .how-tease-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 88px); letter-spacing: -0.02em; line-height: 1; color: #e7e8e6; margin-bottom: 20px; }
+    .how-tease-body { font-size: 16px; font-weight: 300; color: rgba(149,202,224,0.6); line-height: 1.8; font-style: italic; }
     /* Notify */
     .notify-section { background: #0a0f15; border-top: 1px solid rgba(149,202,224,0.1); }
     .notify-inner { max-width: 640px; margin: 0 auto; padding: 88px 48px; text-align: center; }
@@ -90,7 +95,7 @@
       .header-inner { height: 64px; padding: 0 20px; } nav { display: none; }
       .logo-group span { font-size: 20px; }
       .game-hero-content { padding: 0 20px 72px; }
-      .section-inner { padding: 52px 20px; } .notify-inner { padding: 64px 20px; }
+      .section-inner { padding: 52px 20px; } .notify-inner { padding: 64px 20px; } .how-tease-inner { padding: 64px 20px; }
       .footer-inner { padding: 40px 20px 24px; } .footer-top { flex-direction: column; gap: 24px; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); } .stat-item:nth-child(2) { border-right: none; }
     }
@@ -111,9 +116,8 @@
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav>
-        <a href="index.html#games">GAMES</a>
-        <a href="fow.html#how-to-play">HOW TO PLAY</a>
-        <a href="index.html#makers">ABOUT</a>
+        <a href="index.html#games">← ALL GAMES</a>
+        <a href="#how-to-play">HOW TO PLAY</a>
         <a href="mailto:hello.friedpicklegames@gmail.com">CONTACT</a>
       </nav>
       <a href="mailto:hello.friedpicklegames@gmail.com" class="btn-header">SHOP SOON</a>
@@ -172,6 +176,15 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- How to play tease -->
+  <section id="how-to-play" class="how-tease">
+    <div class="how-tease-inner">
+      <div class="section-eyebrow" style="justify-content:center; margin-bottom:20px;">DISPELLED</div>
+      <div class="how-tease-title">HOW TO PLAY</div>
+      <p class="how-tease-body">Rules incoming. The wizards are still writing them.</p>
     </div>
   </section>
 
