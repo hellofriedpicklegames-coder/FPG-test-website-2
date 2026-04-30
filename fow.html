@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0d0c07; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    body { background: #0c0e0a; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
@@ -19,7 +19,7 @@
     /* ── Header ── */
     #site-header {
       position: sticky; top: 0; z-index: 200;
-      background: rgba(13,12,7,0.92); backdrop-filter: blur(16px);
+      background: rgba(12,14,10,0.92); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(153,153,101,0.15);
       transition: box-shadow 0.3s ease;
     }
@@ -36,7 +36,7 @@
     nav a:hover { color: #e7e8e6; }
     .btn-header {
       font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em;
-      background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px;
+      background: #2beb9a; color: #0c0e0a; padding: 0 22px; height: 40px;
       display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0;
       transition: background 0.2s ease, transform 0.15s ease;
     }
@@ -53,11 +53,11 @@
     }
     .game-hero-grad-lr {
       position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to right, rgba(13,12,7,0.97) 0%, rgba(13,12,7,0.82) 38%, rgba(13,12,7,0.35) 65%, transparent 100%);
+      background: linear-gradient(to right, rgba(12,14,10,0.97) 0%, rgba(12,14,10,0.82) 38%, rgba(12,14,10,0.35) 65%, transparent 100%);
     }
     .game-hero-grad-bt {
       position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to top, rgba(13,12,7,1) 0%, rgba(13,12,7,0.65) 18%, transparent 45%);
+      background: linear-gradient(to top, rgba(12,14,10,1) 0%, rgba(12,14,10,0.65) 18%, transparent 45%);
     }
     .game-hero-content {
       position: relative; z-index: 2;
@@ -79,7 +79,7 @@
     .game-hero-btns { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .btn-primary {
       font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.09em;
-      background: #ede090; color: #0d0c07; padding: 0 36px; height: 54px;
+      background: #ede090; color: #0c0e0a; padding: 0 36px; height: 54px;
       display: inline-flex; align-items: center; text-decoration: none;
       transition: background 0.2s ease, transform 0.18s ease;
     }
@@ -94,7 +94,7 @@
 
     /* ── Stats bar ── */
     .stats-bar {
-      background: #141209; border-top: 2px solid rgba(153,153,101,0.28);
+      background: #171c12; border-top: 2px solid rgba(153,153,101,0.28);
       display: grid; grid-template-columns: repeat(4, 1fr);
     }
     .stat-item { padding: 28px 24px; border-right: 1px solid rgba(153,153,101,0.1); text-align: center; }
@@ -113,7 +113,7 @@
     .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.02em; color: #e7e8e6; margin-bottom: 40px; }
 
     /* ── Card gallery ── */
-    .card-gallery { background: #0d0c07; }
+    .card-gallery { background: #0c0e0a; }
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -129,7 +129,7 @@
     .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .gallery-card-info {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(13,12,7,0.92) 0%, transparent 55%);
+      background: linear-gradient(to top, rgba(12,14,10,0.92) 0%, transparent 55%);
       opacity: 0; transition: opacity 0.24s ease;
       display: flex; flex-direction: column; justify-content: flex-end; padding: 12px;
     }
@@ -138,7 +138,7 @@
     .gallery-card-sub { font-size: 11px; color: rgba(231,232,230,0.55); margin-top: 2px; }
 
     /* ── How to play ── */
-    .how-section { background: #141209; border-top: 1px solid rgba(153,153,101,0.1); border-bottom: 1px solid rgba(153,153,101,0.1); }
+    .how-section { background: #171c12; border-top: 1px solid rgba(153,153,101,0.1); border-bottom: 1px solid rgba(153,153,101,0.1); }
     .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .how-visual { position: relative; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 12px 48px rgba(0,0,0,0.55); }
     .how-visual iframe { width: 100%; height: 100%; display: block; border: none; }
@@ -149,7 +149,7 @@
     .step-body p { font-size: 14px; font-weight: 300; color: rgba(231,232,230,0.55); line-height: 1.75; }
 
     /* ── Footer ── */
-    footer { background: #080706; border-top: 1px solid rgba(153,153,101,0.1); }
+    footer { background: #090b07; border-top: 1px solid rgba(153,153,101,0.1); }
     .footer-inner { max-width: 1440px; margin: 0 auto; padding: 52px 48px 32px; }
     .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0; gap: 48px; }
     .footer-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 14px; }
@@ -190,8 +190,8 @@
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .stat-item:nth-child(2) { border-right: none; }
       .game-hero-bg { object-position: 30% 15%; }
-      .game-hero-grad-lr { background: linear-gradient(to right, rgba(13,12,7,0.82) 0%, rgba(13,12,7,0.48) 28%, rgba(13,12,7,0.12) 58%, transparent 100%); }
-      .game-hero-grad-bt { background: linear-gradient(to top, rgba(13,12,7,1) 0%, rgba(13,12,7,0.88) 22%, rgba(13,12,7,0.45) 48%, transparent 68%); }
+      .game-hero-grad-lr { background: linear-gradient(to right, rgba(12,14,10,0.82) 0%, rgba(12,14,10,0.48) 28%, rgba(12,14,10,0.12) 58%, transparent 100%); }
+      .game-hero-grad-bt { background: linear-gradient(to top, rgba(12,14,10,1) 0%, rgba(12,14,10,0.88) 22%, rgba(12,14,10,0.45) 48%, transparent 68%); }
     }
     @media (max-width: 600px) {
       .logo-group span { font-size: 17px; }
