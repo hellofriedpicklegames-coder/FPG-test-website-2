@@ -176,27 +176,6 @@
     .footer-copy { font-size: 12px; color: rgba(231,232,230,0.25); }
     .footer-sig { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.18em; color: rgba(153,153,101,0.28); }
 
-    /* ── Buy section ── */
-    .buy-section { background: #0c0e0a; border-top: 2px solid rgba(153,153,101,0.2); }
-    .buy-split { display: flex; min-height: 420px; max-width: 1440px; margin: 0 auto; }
-    .buy-img { flex: 0 0 48%; position: relative; overflow: hidden; background: #171c12; }
-    .buy-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .buy-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 55%, rgba(12,14,10,0.65) 100%); pointer-events: none; }
-    .buy-info { flex: 1; padding: 64px 72px; display: flex; flex-direction: column; justify-content: center; }
-    .buy-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.22em; color: rgba(153,153,101,0.55); margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
-    .buy-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.12); }
-    .buy-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5vw, 72px); letter-spacing: -0.02em; line-height: 0.9; color: #e7e8e6; margin-bottom: 6px; }
-    .buy-title span { color: #ede090; }
-    .buy-price { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #2beb9a; letter-spacing: -0.01em; line-height: 1; margin: 22px 0 6px; }
-    .buy-price-note { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.18em; color: rgba(153,153,101,0.45); margin-bottom: 24px; }
-    .buy-includes { list-style: none; margin-bottom: 36px; }
-    .buy-includes li { font-size: 14px; font-weight: 300; color: rgba(231,232,230,0.6); padding: 6px 0 6px 18px; position: relative; border-bottom: 1px solid rgba(153,153,101,0.07); }
-    .buy-includes li:last-child { border-bottom: none; }
-    .buy-includes li::before { content: '—'; position: absolute; left: 0; color: rgba(153,153,101,0.4); }
-    .buy-btn { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em; background: #ede090; color: #0c0e0a; padding: 0 44px; height: 56px; display: inline-flex; align-items: center; text-decoration: none; align-self: flex-start; transition: background 0.2s ease, transform 0.15s ease; will-change: transform; }
-    .buy-btn:hover { background: #f5eba8; transform: translateY(-2px); }
-    .buy-btn:active { transform: translateY(0); }
-
     /* ── Responsive ── */
     @media (max-width: 900px) {
       .header-inner { height: 64px; padding: 0 20px; }
@@ -205,10 +184,6 @@
       .game-hero-content { padding: 0 20px 72px; }
       .section-inner { padding: 52px 20px; }
       .how-grid { grid-template-columns: 1fr; gap: 36px; }
-      .buy-split { flex-direction: column; }
-      .buy-img { flex: none; height: 280px; }
-      .buy-img::after { background: linear-gradient(to bottom, transparent 40%, rgba(12,14,10,0.75) 100%); }
-      .buy-info { padding: 48px 20px; }
       .footer-inner { padding: 40px 20px 24px; }
       .footer-top { flex-direction: column; gap: 24px; }
       .footer-nav { gap: 36px; }
@@ -265,7 +240,7 @@
       <p class="game-hero-tagline">Can you smell the victory?</p>
       <p class="game-hero-desc">Deploy hilarious farts! Battle your friends with incense, beans, and protein!</p>
       <div class="game-hero-btns">
-        <a href="#buy" class="btn-primary">BUY NOW — $25</a>
+        <a href="contact.html" class="btn-primary">BUY NOW</a>
         <a href="#how-to-play" class="btn-ghost">▶ &nbsp;HOW TO PLAY</a>
       </div>
     </div>
@@ -364,29 +339,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Buy section -->
-  <section id="buy" class="buy-section">
-    <div class="buy-split">
-      <div class="buy-img">
-        <img src="brand_assets/posters_banners/fart_of_war/cards.png" alt="Fart of War cards"/>
-      </div>
-      <div class="buy-info">
-        <div class="buy-eyebrow">AVAILABLE NOW</div>
-        <div class="buy-title">FART<br/><span>OF WAR</span></div>
-        <div class="buy-price">$25</div>
-        <div class="buy-price-note">FREE SHIPPING ON ORDERS OVER $40</div>
-        <ul class="buy-includes">
-          <li>110 battle cards</li>
-          <li>Quick-start rules included</li>
-          <li>2–4 players · Ages 8+</li>
-          <li>20-minute play time</li>
-        </ul>
-        <!-- TODO: replace href with Shopify buy button embed -->
-        <a href="#" class="buy-btn">COUNT ME IN</a>
       </div>
     </div>
   </section>
