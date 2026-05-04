@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
   <style>
+    html { scroll-padding-top: 80px; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #080c11; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
     body::before {
@@ -60,8 +61,19 @@
     .wizard-card-body { padding: 16px 18px 20px; }
     .wizard-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 4px; }
     .wizard-card-quote { font-size: 13px; font-weight: 300; font-style: italic; color: rgba(149,202,224,0.55); line-height: 1.55; }
+    .hero-scroll-cue {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 3; display: flex; flex-direction: column; align-items: center;
+      opacity: 0.4; color: #e7e8e6; animation: scrollBounce 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-scroll-cue svg { width: 26px; height: 26px; }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50% { transform: translateX(-50%) translateY(7px); opacity: 0.65; }
+    }
     /* How to play tease */
-    .how-tease { background: #080c11; border-top: 1px solid rgba(149,202,224,0.1); border-bottom: 1px solid rgba(149,202,224,0.1); }
+    .how-tease { background: #080c11; border-top: 1px solid rgba(149,202,224,0.1); border-bottom: 1px solid rgba(149,202,224,0.1); scroll-margin-top: 80px; }
     .how-tease-inner { max-width: 640px; margin: 0 auto; padding: 88px 48px; text-align: center; }
     .how-tease-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 88px); letter-spacing: -0.02em; line-height: 1; color: #e7e8e6; margin-bottom: 20px; }
     .how-tease-body { font-size: 16px; font-weight: 300; color: rgba(149,202,224,0.6); line-height: 1.8; font-style: italic; }
@@ -114,7 +126,7 @@
   <header id="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo-group">
-        <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt=""/>
+        <img src="brand_assets/FPGLOGO.png" alt=""/>
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav>
@@ -133,6 +145,9 @@
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
     <div class="game-hero-content">
       <div class="game-hero-badge">✦ &nbsp;COMING SOON</div>
       <div class="game-hero-title">DIS<span style="color:#95cae0;">PELLED</span></div>
@@ -186,7 +201,7 @@
     <div class="how-tease-inner">
       <div class="section-eyebrow" style="justify-content:center; margin-bottom:20px;">DISPELLED</div>
       <div class="how-tease-title">HOW TO PLAY</div>
-      <p class="how-tease-body">Rules incoming. The wizards are still writing them.</p>
+      <p class="how-tease-body">The rule book is still being enchanted. Full rules drop with the game.</p>
     </div>
   </section>
 
@@ -204,7 +219,7 @@
       <div class="footer-top">
         <div>
           <div class="footer-brand">
-            <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt="Fried Pickle Games"/>
+            <img src="brand_assets/FPGLOGO.png" alt="Fried Pickle Games"/>
             <div><span class="footer-brand-name">FRIED PICKLE GAMES</span><span class="footer-brand-sub">Seriously fun card games</span></div>
           </div>
           <p class="footer-tagline">Games you and your pals can play anywhere.</p>

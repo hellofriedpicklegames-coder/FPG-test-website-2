@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
   <style>
+    html { scroll-padding-top: 80px; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #120d08; color: #e7e8e6; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
     body::before {
@@ -54,7 +55,19 @@
     .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.12); }
     .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.02em; color: #e7e8e6; margin-bottom: 40px; }
     /* Card gallery */
-    .card-gallery { background: #120d08; }
+    .card-gallery { background: #120d08; scroll-margin-top: 80px; }
+    .how-section { scroll-margin-top: 80px; }
+    .hero-scroll-cue {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 3; display: flex; flex-direction: column; align-items: center;
+      opacity: 0.4; color: #e7e8e6; animation: scrollBounce 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-scroll-cue svg { width: 26px; height: 26px; }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50% { transform: translateX(-50%) translateY(7px); opacity: 0.65; }
+    }
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
     .gallery-card { aspect-ratio: 5/7; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; background: linear-gradient(135deg, #201409 0%, #1c1208 100%); border: 1px solid rgba(153,153,101,0.18); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; transition: transform 0.28s ease, border-color 0.28s ease; will-change: transform; }
     .gallery-card:hover { transform: translateY(-4px); border-color: rgba(153,153,101,0.35); }
@@ -129,7 +142,7 @@
   <header id="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo-group">
-        <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt=""/>
+        <img src="brand_assets/FPGLOGO.png" alt=""/>
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav>
@@ -148,6 +161,9 @@
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
     <div class="game-hero-content">
       <div class="game-hero-badge">💥 &nbsp;EXPANSION PACK</div>
       <div class="game-hero-title">FART OF WAR<br/><span style="color:#d0eb80;">EXPANSION PACK</span></div>
@@ -167,7 +183,7 @@
     <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">New Cards</div></div>
   </div>
 
-  <section class="card-gallery">
+  <section id="cards" class="card-gallery">
     <div class="section-inner">
       <div class="section-eyebrow">EXPANSION PACK</div>
       <div class="section-title">NEW CARDS</div>
@@ -249,7 +265,7 @@
       <div class="footer-top">
         <div>
           <div class="footer-brand">
-            <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt="Fried Pickle Games"/>
+            <img src="brand_assets/FPGLOGO.png" alt="Fried Pickle Games"/>
             <div><span class="footer-brand-name">FRIED PICKLE GAMES</span><span class="footer-brand-sub">Seriously fun card games</span></div>
           </div>
           <p class="footer-tagline">Games you and your pals can play anywhere.</p>

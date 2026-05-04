@@ -356,6 +356,19 @@
     .btn-hero-ghost:active { transform: translateY(0); }
     .btn-hero-ghost:focus-visible { outline: 2px solid #e7e8e6; outline-offset: 3px; }
 
+    /* Scroll cue */
+    .hero-scroll-cue {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; flex-direction: column; align-items: center;
+      opacity: 0.4; color: #e7e8e6; animation: scrollBounce 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-scroll-cue svg { width: 26px; height: 26px; }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50% { transform: translateX(-50%) translateY(7px); opacity: 0.65; }
+    }
+
     /* Carousel dots */
     .hero-dots {
       position: absolute;
@@ -970,6 +983,8 @@
     @media (max-width: 600px) {
       #announce-bar { font-size: 11px; letter-spacing: 0.08em; padding: 9px 44px 9px 14px; }
       #announce-bar a { display: none; }
+      .announce-full { display: none; }
+      .announce-short { display: inline; }
 
       .header-inner { height: 60px; }
       .btn-header { font-size: 13px; padding: 0 14px; height: 34px; }
@@ -1168,7 +1183,7 @@
 
   <!-- ▓▓▓ ANNOUNCEMENT BAR ▓▓▓ -->
   <div id="announce-bar">
-    💨 FART OF WAR — ONLINE SALES OPENING SOON
+    💨 <span class="announce-full">FART OF WAR — ONLINE SALES OPENING SOON</span><span class="announce-short" style="display:none;">FOW — SALES OPENING SOON</span>
     <a href="contact.html">→ GET NOTIFIED</a>
     <button id="close-announce" aria-label="Dismiss announcement">×</button>
   </div>
@@ -1177,7 +1192,7 @@
   <header id="site-header">
     <div class="header-inner">
       <a href="#" class="logo-group" aria-label="Fried Pickle Games home">
-        <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt=""/>
+        <img src="brand_assets/FPGLOGO.png" alt=""/>
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav aria-label="Primary">
@@ -1268,6 +1283,11 @@
           <a href="#" class="btn-hero-ghost">⏳ &nbsp;COMING SOON</a>
         </div>
       </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
 
     <!-- Dot indicators -->
@@ -1475,7 +1495,7 @@
       <div class="footer-top">
         <div>
           <div class="footer-brand">
-            <img src="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png" alt="Fried Pickle Games"/>
+            <img src="brand_assets/FPGLOGO.png" alt="Fried Pickle Games"/>
             <div>
               <span class="footer-brand-name">FRIED PICKLE GAMES</span>
               <span class="footer-brand-sub">Seriously fun card games</span>
