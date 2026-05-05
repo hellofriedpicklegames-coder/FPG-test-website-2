@@ -30,10 +30,10 @@
     .btn-header:hover { background: #1bc07c; transform: translateY(-1px); }
     /* Hero */
     .game-hero { position: relative; width: 100%; height: 90vh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end; }
-    .game-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+    .game-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; will-change: transform; }
     .game-hero-grad-lr { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(15,11,7,0.97) 0%, rgba(15,11,7,0.82) 38%, rgba(15,11,7,0.35) 65%, transparent 100%); }
     .game-hero-grad-bt { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(15,11,7,1) 0%, rgba(15,11,7,0.65) 18%, transparent 45%); }
-    .game-hero-content { position: relative; z-index: 2; max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 48px 88px; }
+    .game-hero-content { position: relative; z-index: 2; max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 48px 88px; will-change: transform; }
     .game-hero-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(208,235,128,0.1); border: 1px solid rgba(208,235,128,0.3); color: #d0eb80; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.2em; padding: 5px 14px; margin-bottom: 22px; }
     .game-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.8vw, 82px); letter-spacing: -0.025em; line-height: 0.9; color: #e7e8e6; margin-bottom: 22px; filter: drop-shadow(0 6px 28px rgba(0,0,0,0.75)); max-width: 560px; }
     .game-hero-tagline { font-size: clamp(16px, 1.8vw, 20px); font-weight: 500; color: rgba(231,232,230,0.88); margin-bottom: 10px; max-width: 480px; }
@@ -301,6 +301,65 @@
   <script>
     const header = document.getElementById('site-header');
     window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 12); }, { passive: true });
+
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const bgEl = document.querySelector('.game-hero-bg');
+      const contentEl = document.querySelector('.game-hero-content');
+      if (!bgEl || !contentEl) return;
+
+      const BG_RANGE = 10, FG_RANGE = 4, LERP_FACTOR = 0.08;
+      const REVEAL_MS = 1400, START_SCALE = 1.12, END_SCALE = 1.06;
+      const isTouchOnly = window.matchMedia('(hover: none)').matches;
+      let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
+      let fgTX = 0, fgTY = 0, fgCX = 0, fgCY = 0;
+      let t0 = null;
+
+      bgEl.style.transform = 'translate(0px,0px) scale(1.12)';
+
+      contentEl.style.opacity = '0';
+      contentEl.style.transform = 'translateY(12px)';
+      contentEl.style.transition = 'opacity 0.9s ease 0.15s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        contentEl.style.opacity = '1';
+        contentEl.style.transform = 'translateY(0px)';
+      }));
+      setTimeout(() => { contentEl.style.transition = ''; }, REVEAL_MS);
+
+      if (!isTouchOnly) {
+        document.addEventListener('mousemove', function(e) {
+          const nx = e.clientX / window.innerWidth - 0.5;
+          const ny = e.clientY / window.innerHeight - 0.5;
+          bgTX = nx * -BG_RANGE; bgTY = ny * -BG_RANGE;
+          fgTX = nx * FG_RANGE;  fgTY = ny * FG_RANGE;
+        }, { passive: true });
+      }
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function tick(ts) {
+        if (!t0) t0 = ts;
+        const elapsed = ts - t0;
+        const progress = Math.min(elapsed / REVEAL_MS, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const scale = START_SCALE - (START_SCALE - END_SCALE) * ease;
+
+        if (!isTouchOnly) {
+          bgCX = lerp(bgCX, bgTX, LERP_FACTOR); bgCY = lerp(bgCY, bgTY, LERP_FACTOR);
+          fgCX = lerp(fgCX, fgTX, LERP_FACTOR); fgCY = lerp(fgCY, fgTY, LERP_FACTOR);
+        }
+
+        bgEl.style.transform = `translate(${bgCX.toFixed(2)}px,${bgCY.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+
+        if (!isTouchOnly && elapsed > REVEAL_MS) {
+          contentEl.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
   </script>
 </body>
 </html>
