@@ -228,6 +228,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center 15%;
+      will-change: transform;
     }
     .hero-grad-lr {
       position: absolute;
@@ -259,6 +260,7 @@
       width: 100%;
       margin: 0 auto;
       padding: 0 48px 88px;
+      will-change: transform;
     }
     .hero-badge {
       display: inline-flex;
@@ -1535,6 +1537,8 @@
   </footer>
 
   <script>
+    var fpgOnSlideChange;
+
     // Close announcement bar
     document.getElementById('close-announce').addEventListener('click', function() {
       const bar = document.getElementById('announce-bar');
@@ -1627,6 +1631,7 @@
         dots[current].setAttribute('aria-selected', 'true');
         applyTheme(current);
         updateStats(current);
+        if (typeof fpgOnSlideChange === 'function') fpgOnSlideChange(current);
       }
 
       function startTimer() {
@@ -1716,6 +1721,95 @@
         this.submit();
         setTimeout(closePopup, 3000);
       });
+    })();
+
+    // ── Hero parallax + reveal ─────────────────────────────
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const slideEls   = document.querySelectorAll('.hero-slide');
+      const bgEls      = Array.from(slideEls).map(s => s.querySelector('.hero-bg'));
+      const contentEls = Array.from(slideEls).map(s => s.querySelector('.hero-content'));
+      if (!bgEls.length || !bgEls[0]) return;
+
+      const BG_RANGE = 10, FG_RANGE = 4, LERP_FACTOR = 0.08;
+      const REVEAL_MS = 1400, SLIDE_REVEAL_MS = 800;
+      const START_SCALE = 1.12, END_SCALE = 1.06;
+      const isTouchOnly = window.matchMedia('(hover: none)').matches;
+      let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
+      let fgTX = 0, fgTY = 0, fgCX = 0, fgCY = 0;
+      let pageT0 = null, slideT0 = null, activeIdx = 0;
+
+      bgEls.forEach(bg => { if (bg) bg.style.transform = 'translate(0px,0px) scale(1.12)'; });
+
+      function revealContent(el) {
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(12px)';
+        el.style.transition = 'opacity 0.9s ease 0.15s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0px)';
+        }));
+        setTimeout(() => { el.style.transition = ''; }, REVEAL_MS);
+      }
+      revealContent(contentEls[0]);
+
+      fpgOnSlideChange = function(n) {
+        activeIdx = n;
+        slideT0 = null;
+        bgTX = 0; bgTY = 0; fgTX = 0; fgTY = 0;
+        if (bgEls[n]) bgEls[n].style.transform = 'translate(0px,0px) scale(1.12)';
+        revealContent(contentEls[n]);
+      };
+
+      if (!isTouchOnly) {
+        document.addEventListener('mousemove', function(e) {
+          const nx = e.clientX / window.innerWidth - 0.5;
+          const ny = e.clientY / window.innerHeight - 0.5;
+          bgTX = nx * -BG_RANGE; bgTY = ny * -BG_RANGE;
+          fgTX = nx * FG_RANGE;  fgTY = ny * FG_RANGE;
+        }, { passive: true });
+      }
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function tick(ts) {
+        if (!pageT0) pageT0 = ts;
+        if (!slideT0) slideT0 = ts;
+
+        const pageElapsed  = ts - pageT0;
+        const slideElapsed = ts - slideT0;
+        const isFirstLoad  = activeIdx === 0 && pageElapsed < REVEAL_MS;
+        const elapsed  = isFirstLoad ? pageElapsed  : slideElapsed;
+        const duration = isFirstLoad ? REVEAL_MS    : SLIDE_REVEAL_MS;
+
+        const progress = Math.min(elapsed / duration, 1);
+        const ease  = 1 - Math.pow(1 - progress, 3);
+        const scale = START_SCALE - (START_SCALE - END_SCALE) * ease;
+
+        if (!isTouchOnly) {
+          bgCX = lerp(bgCX, bgTX, LERP_FACTOR); bgCY = lerp(bgCY, bgTY, LERP_FACTOR);
+          fgCX = lerp(fgCX, fgTX, LERP_FACTOR); fgCY = lerp(fgCY, fgTY, LERP_FACTOR);
+        }
+
+        const activeBg = bgEls[activeIdx];
+        if (activeBg) {
+          activeBg.style.transform = `translate(${bgCX.toFixed(2)}px,${bgCY.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+        }
+
+        if (!isTouchOnly && elapsed > duration) {
+          const activeContent = contentEls[activeIdx];
+          if (activeContent) {
+            activeContent.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
+          }
+        }
+
+        if (isTouchOnly && elapsed >= duration) return;
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
     })();
   </script>
 
