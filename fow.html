@@ -462,6 +462,7 @@
           contentEl.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
         }
 
+        if (isTouchOnly && elapsed >= REVEAL_MS) return;
         requestAnimationFrame(tick);
       }
 
