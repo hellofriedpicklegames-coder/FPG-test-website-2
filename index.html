@@ -1738,7 +1738,7 @@
       const isTouchOnly = window.matchMedia('(hover: none)').matches;
       let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
       let fgTX = 0, fgTY = 0, fgCX = 0, fgCY = 0;
-      let pageT0 = null, slideT0 = null, activeIdx = 0;
+      let pageT0 = null, slideT0 = null, activeIdx = 0, loopActive = false;
 
       bgEls.forEach(bg => { if (bg) bg.style.transform = 'translate(0px,0px) scale(1.12)'; });
 
@@ -1761,6 +1761,7 @@
         bgTX = 0; bgTY = 0; fgTX = 0; fgTY = 0;
         if (bgEls[n]) bgEls[n].style.transform = 'translate(0px,0px) scale(1.12)';
         revealContent(contentEls[n]);
+        if (isTouchOnly && !loopActive) { loopActive = true; requestAnimationFrame(tick); }
       };
 
       if (!isTouchOnly) {
@@ -1805,11 +1806,11 @@
           }
         }
 
-        if (isTouchOnly && elapsed >= duration) return;
+        if (isTouchOnly && elapsed >= duration) { loopActive = false; return; }
         requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      loopActive = true; requestAnimationFrame(tick);
     })();
   </script>
 
