@@ -415,7 +415,7 @@
       const contentEl = document.querySelector('.game-hero-content');
       if (!bgEl || !contentEl) return;
 
-      const BG_RANGE = 12, FG_RANGE = 5, LERP_FACTOR = 0.08;
+      const BG_RANGE = 10, FG_RANGE = 4, LERP_FACTOR = 0.08;
       const REVEAL_MS = 1400, START_SCALE = 1.12, END_SCALE = 1.06;
       const isTouchOnly = window.matchMedia('(hover: none)').matches;
       let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
@@ -431,7 +431,7 @@
         contentEl.style.opacity = '1';
         contentEl.style.transform = 'translateY(0px)';
       }));
-      setTimeout(() => { contentEl.style.transition = ''; }, 1400);
+      setTimeout(() => { contentEl.style.transition = ''; }, REVEAL_MS);
 
       if (!isTouchOnly) {
         document.addEventListener('mousemove', function(e) {
