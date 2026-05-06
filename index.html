@@ -1732,15 +1732,15 @@
       const contentEls = Array.from(slideEls).map(s => s.querySelector('.hero-content'));
       if (!bgEls.length || !bgEls[0]) return;
 
-      const BG_RANGE = 10, FG_RANGE = 4, LERP_FACTOR = 0.08;
+      const BG_RANGE = 10, FG_RANGE = 4, LERP_FACTOR = 0.08, SCROLL_FACTOR = 0.15;
       const REVEAL_MS = 1400, SLIDE_REVEAL_MS = 800;
-      const START_SCALE = 1.12, END_SCALE = 1.06;
+      const START_SCALE = 1.20, END_SCALE = 1.14;
       const isTouchOnly = window.matchMedia('(hover: none)').matches;
       let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
       let fgTX = 0, fgTY = 0, fgCX = 0, fgCY = 0;
-      let pageT0 = null, slideT0 = null, activeIdx = 0, loopActive = false;
+      let pageT0 = null, slideT0 = null, activeIdx = 0;
 
-      bgEls.forEach(bg => { if (bg) bg.style.transform = 'translate(0px,0px) scale(1.12)'; });
+      bgEls.forEach(bg => { if (bg) bg.style.transform = 'translate(0px,0px) scale(1.20)'; });
 
       function revealContent(el) {
         if (!el) return;
@@ -1759,9 +1759,8 @@
         activeIdx = n;
         slideT0 = null;
         bgTX = 0; bgTY = 0; fgTX = 0; fgTY = 0;
-        if (bgEls[n]) bgEls[n].style.transform = 'translate(0px,0px) scale(1.12)';
+        if (bgEls[n]) bgEls[n].style.transform = 'translate(0px,0px) scale(1.20)';
         revealContent(contentEls[n]);
-        if (isTouchOnly && !loopActive) { loopActive = true; requestAnimationFrame(tick); }
       };
 
       if (!isTouchOnly) {
@@ -1794,9 +1793,10 @@
           fgCX = lerp(fgCX, fgTX, LERP_FACTOR); fgCY = lerp(fgCY, fgTY, LERP_FACTOR);
         }
 
+        const scrollOffset = window.scrollY * SCROLL_FACTOR;
         const activeBg = bgEls[activeIdx];
         if (activeBg) {
-          activeBg.style.transform = `translate(${bgCX.toFixed(2)}px,${bgCY.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+          activeBg.style.transform = `translate(${bgCX.toFixed(2)}px,${(bgCY + scrollOffset).toFixed(2)}px) scale(${scale.toFixed(4)})`;
         }
 
         if (!isTouchOnly && elapsed > duration) {
@@ -1806,11 +1806,10 @@
           }
         }
 
-        if (isTouchOnly && elapsed >= duration) { loopActive = false; return; }
         requestAnimationFrame(tick);
       }
 
-      loopActive = true; requestAnimationFrame(tick);
+      requestAnimationFrame(tick);
     })();
   </script>
 
