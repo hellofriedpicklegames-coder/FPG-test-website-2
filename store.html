@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store — Fried Pickle Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0e0a;
+      --text: #e7e8e6;
+      --text-dim: rgba(231,232,230,0.80);
+      --text-faint: rgba(231,232,230,0.60);
+      /* Page-level brand accent — matches index.html */
+      --brand: #ede090;
+      --brand-rgb: 237,224,144;
+      --brand-light: #f5eba8;
+      --olive: #999965;
+      --olive-dim: rgba(153,153,101,0.38);
+
+      /* Game-specific palettes */
+      --fow-bg:    #192418;   /* dark forest green — noticeably different from page bg */
+      --fow-acc:   #8bc98b;   /* FOW sage green */
+      --fow-btn:   #7CC47C;   /* slightly brighter for CTA */
+
+      --dis-bg:    #131e2c;   /* dark midnight blue */
+      --dis-acc:   #95cae0;   /* Dispelled sky blue */
+      --dis-btn:   #7BBAD4;
+
+      --exp-bg:    #1c1c09;   /* dark olive/chartreuse */
+      --exp-acc:   #c8dc60;   /* nuclear chartreuse */
+      --exp-btn:   #BBCE50;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(12,14,10,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(153,153,101,0.08);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 0.08em; color: var(--brand); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+      letter-spacing: 0.14em; color: rgba(231,232,230,0.72);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cart {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+      letter-spacing: 0.14em; color: var(--brand); cursor: pointer;
+      background: none; border: 1px solid rgba(var(--brand-rgb),0.35);
+      padding: 6px 18px; transition: all 0.2s;
+    }
+    .nav-cart:hover {
+      background: rgba(var(--brand-rgb),0.07);
+      border-color: rgba(var(--brand-rgb),0.65);
+    }
+    #cart-count {
+      background: var(--brand); color: #0c0e0a;
+      padding: 1px 7px; font-size: 11px; font-family: 'Bebas Neue', sans-serif;
+    }
+
+    /* ── HERO ── */
+    .store-hero {
+      position: relative; overflow: visible;
+      min-height: 420px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px 48px 72px;
+      background:
+        radial-gradient(ellipse 70% 90% at 50% 0%, rgba(153,153,101,0.09) 0%, transparent 65%),
+        #0d100c;
+      border-bottom: 1px solid rgba(153,153,101,0.07);
+    }
+    .hero-content {
+      text-align: center;
+    }
+    .hero-drag-callout {
+      position: absolute;
+      right: 8%;
+      bottom: -130px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .store-eyebrow {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.38em; color: var(--olive); margin-bottom: 16px;
+    }
+    .store-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 12vw, 160px);
+      letter-spacing: -0.02em; line-height: 0.88; color: var(--text);
+    }
+    .store-title span { color: var(--brand); }
+    .store-sub {
+      margin-top: 22px;
+      font-size: 15px; color: var(--text-dim);
+      letter-spacing: 0.04em; font-weight: 300; font-style: italic;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 3px; max-width: 1440px; margin: 24px auto 0;
+    }
+
+    /* Base card — each game overrides bg and accent via data attrs */
+    .product-card {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 52px 44px 44px;
+      position: relative; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none; color: inherit;
+      transition: filter 0.3s, border-color 0.3s;
+    }
+    .product-card:hover { filter: brightness(1.06); border-color: rgba(255,255,255,0.11); }
+
+    /* Game-specific backgrounds */
+    .card-fow      { background: var(--fow-bg); }
+    .card-dispelled { background: var(--dis-bg); }
+    .card-exp      { background: var(--exp-bg); }
+
+    /* Top accent line — game colour */
+    .product-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .card-fow::before       { background: linear-gradient(90deg, transparent, rgba(139,201,139,0.55), transparent); }
+    .card-dispelled::before { background: linear-gradient(90deg, transparent, rgba(149,202,224,0.55), transparent); }
+    .card-exp::before       { background: linear-gradient(90deg, transparent, rgba(200,220,96,0.55), transparent); }
+
+    .product-tag {
+      position: absolute; top: 24px; right: 24px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+      letter-spacing: 0.28em; color: #0c0e0a; padding: 4px 12px;
+    }
+    .card-fow .product-tag       { background: var(--fow-acc); }
+    .card-dispelled .product-tag { background: var(--dis-acc); }
+    .card-exp .product-tag       { background: var(--exp-acc); }
+
+
+    /* ── 3D BOX ── */
+    .box-scene {
+      perspective: 640px; perspective-origin: 50% 38%;
+      width: 100%; height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 32px; flex-shrink: 0; position: relative;
+      user-select: none;
+    }
+    .box-3d {
+      --w: 270px; --h: 230px; --d: 70px;
+      width: var(--w); height: var(--h);
+      position: relative; transform-style: preserve-3d;
+      cursor: grab;
+      transform: rotateX(10deg) rotateY(-32deg);
+      transition: transform 0.55s cubic-bezier(0.34, 1.46, 0.64, 1);
+    }
+    .box-3d.dragging { transition: none; cursor: grabbing; }
+    .product-card:hover .box-3d:not(.dragging) {
+      transform: rotateX(6deg) rotateY(-22deg) translateY(-14px);
+    }
+    .box-face { position: absolute; backface-visibility: hidden; }
+    .box-front {
+      width: var(--w); height: var(--h);
+      transform: translateZ(calc(var(--d) / 2));
+      overflow: hidden; border-radius: 2px 0 0 2px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 10px;
+    }
+    .box-icon { font-size: 58px; line-height: 1; }
+    .box-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      letter-spacing: 0.04em; color: var(--text);
+      text-align: center; padding: 0 14px; line-height: 1.1;
+    }
+    .box-back {
+      width: var(--w); height: var(--h);
+      transform: rotateY(180deg) translateZ(calc(var(--d) / 2));
+      overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 10px; padding: 22px;
+    }
+    .box-back-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+      letter-spacing: 0.22em; color: var(--olive); text-align: center;
+    }
+    .box-back-desc {
+      font-size: 11px; color: var(--text-dim); text-align: center;
+      line-height: 1.7; font-weight: 300;
+    }
+    .box-right {
+      width: var(--d); height: var(--h);
+      left: calc(var(--w) - var(--d) / 2); top: 0;
+      transform: rotateY(90deg) translateZ(calc(var(--w) / 2));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .box-right span {
+      font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+      letter-spacing: 0.22em; color: rgba(231,232,230,0.38);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+    }
+    .box-left {
+      width: var(--d); height: var(--h);
+      left: calc(-1 * var(--d) / 2); top: 0;
+      transform: rotateY(-90deg) translateZ(calc(var(--w) / 2));
+    }
+    .box-top {
+      width: var(--w); height: var(--d); left: 0;
+      top: calc(-1 * var(--d) / 2);
+      transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+    }
+    .box-bottom {
+      width: var(--w); height: var(--d); left: 0;
+      top: calc(var(--h) - var(--d) / 2);
+      transform: rotateX(-90deg) translateZ(calc(var(--h) / 2));
+    }
+
+    /* ── CARD FAN ── */
+    .card-fan {
+      position: absolute; bottom: -24px; left: 50%; width: 200px; height: 130px;
+      opacity: 0; pointer-events: none;
+      transform: translateX(-50%) translateY(8px);
+      transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+    }
+    .product-card:hover .card-fan { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .fan-card {
+      position: absolute; bottom: 0; left: 50%;
+      width: 76px; height: 108px; border-radius: 5px; overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.72), 0 2px 6px rgba(0,0,0,0.4);
+      transform-origin: 50% 115%;
+    }
+    .fan-card img { width: 100%; height: 100%; object-fit: cover; }
+    .fan-card-label {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.1em; text-align: center; padding: 8px; line-height: 1.3;
+    }
+    .fan-card:nth-child(1) { transform: translateX(-50%) rotate(-20deg); }
+    .fan-card:nth-child(2) { transform: translateX(-50%) rotate(-10deg); }
+    .fan-card:nth-child(3) { transform: translateX(-50%) rotate(0deg); }
+    .fan-card:nth-child(4) { transform: translateX(-50%) rotate(10deg); }
+    .fan-card:nth-child(5) { transform: translateX(-50%) rotate(20deg); }
+
+    /* ── PRODUCT INFO ── */
+    .product-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 36px;
+      letter-spacing: 0.02em; text-align: center; line-height: 1; margin-bottom: 8px;
+      white-space: nowrap;
+    }
+    .card-fow       .product-name { color: var(--fow-acc); }
+    .card-dispelled .product-name { color: var(--dis-acc); }
+    .card-exp       .product-name { color: var(--exp-acc); }
+
+    .product-tagline {
+      font-size: 13px; color: var(--text-dim); text-align: center;
+      font-weight: 300; line-height: 1.65; letter-spacing: 0.01em; margin-bottom: 28px;
+      max-width: 280px;
+    }
+    .product-stats { display: flex; gap: 28px; margin-bottom: 28px; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; }
+    .card-fow       .stat-val { color: var(--fow-acc); }
+    .card-dispelled .stat-val { color: var(--dis-acc); }
+    .card-exp       .stat-val { color: var(--exp-acc); }
+    .stat-lbl { font-size: 9px; letter-spacing: 0.22em; color: var(--olive); text-transform: uppercase; }
+
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif; font-size: 56px;
+      letter-spacing: -0.02em; color: var(--text); line-height: 1; margin-bottom: 28px;
+      margin-top: auto;
+    }
+    .product-price sup { font-size: 22px; vertical-align: super; color: var(--text-dim); }
+    .price-cents { font-size: 22px; vertical-align: super; color: var(--text-dim); }
+
+    /* ── BUY BUTTON — game colour, dark text ── */
+    .btn-buy {
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+      letter-spacing: 0.12em; color: #0c0e0a;
+      border: none; padding: 0 40px; height: 54px; cursor: pointer; width: 100%;
+      transition: filter 0.2s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .card-fow       .btn-buy { background: var(--fow-btn); }
+    .card-dispelled .btn-buy { background: var(--dis-btn); }
+    .card-exp       .btn-buy { background: var(--exp-btn); }
+    .btn-buy:hover { filter: brightness(1.12); transform: translateY(-2px); }
+    .btn-buy:active { transform: translateY(0); }
+    .btn-arrow { transition: transform 0.2s; }
+    .btn-buy:hover .btn-arrow { transform: translateX(5px); }
+
+    /* ── BUNDLE TEASER ── */
+    .bundle-teaser {
+      max-width: 1440px; margin: 0 auto; padding: 80px 48px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      border-top: 1px solid rgba(153,153,101,0.07);
+    }
+    .bundle-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 5vw, 72px); letter-spacing: -0.01em;
+      line-height: 0.95; margin-bottom: 14px; color: var(--text);
+    }
+    .bundle-text h2 span { color: var(--brand); }
+    .bundle-text p { font-size: 15px; color: var(--text-dim); font-weight: 300; max-width: 400px; line-height: 1.75; }
+    .bundle-price-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+    .bundle-was { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: rgba(231,232,230,0.28); text-decoration: line-through; letter-spacing: 0.04em; }
+    .bundle-now { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -0.03em; line-height: 1; color: var(--brand); }
+    .btn-bundle {
+      font-family: 'Bebas Neue', sans-serif; font-size: 17px;
+      letter-spacing: 0.12em; background: transparent; color: var(--brand);
+      border: 1px solid rgba(var(--brand-rgb),0.42); padding: 0 40px; height: 52px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-bundle:hover { background: rgba(var(--brand-rgb),0.08); border-color: rgba(var(--brand-rgb),0.7); }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      border-top: 1px solid rgba(153,153,101,0.06); padding: 52px 48px;
+      display: flex; align-items: center; justify-content: center; gap: 64px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 12px; }
+    .trust-icon { font-size: 18px; opacity: 0.55; }
+    .trust-text { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.22em; color: var(--olive); }
+
+    /* ── CART DRAWER ── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.62);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-drawer {
+      position: fixed; top: 0; right: 0;
+      width: 420px; height: 100vh;
+      background: #1a1e16; z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      display: flex; flex-direction: column;
+      border-left: 1px solid rgba(153,153,101,0.1);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 32px; border-bottom: 1px solid rgba(153,153,101,0.1); flex-shrink: 0;
+    }
+    .cart-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.12em; }
+    .cart-close { background: none; border: none; color: var(--text-dim); font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
+    .cart-close:hover { color: var(--text); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 16px 32px; }
+    .cart-empty { color: var(--text-dim); font-size: 13px; text-align: center; padding: 52px 0; }
+    .cart-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(153,153,101,0.07); }
+    .cart-item-thumb { width: 64px; height: 64px; background: #111309; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; border-radius: 2px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .cart-item-price { font-size: 13px; color: var(--brand); margin-bottom: 10px; }
+    .cart-qty { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { background: none; border: 1px solid rgba(153,153,101,0.18); color: var(--text); width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: border-color 0.2s; }
+    .qty-btn:hover { border-color: rgba(237,224,144,0.5); }
+    .qty-num { font-family: 'Bebas Neue', sans-serif; font-size: 18px; min-width: 22px; text-align: center; }
+    .cart-footer { padding: 24px 32px 36px; border-top: 1px solid rgba(153,153,101,0.1); flex-shrink: 0; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+    .cart-total-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: var(--olive); }
+    .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: -0.01em; }
+    .btn-checkout { width: 100%; background: var(--brand); color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; transition: filter 0.2s; margin-bottom: 12px; }
+    .btn-checkout:hover { filter: brightness(1.1); }
+    .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">FRIED PICKLE GAMES</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="fow.html">GAMES</a></li>
+    <li><a href="store.html" class="active">STORE</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <button class="nav-cart" onclick="openCart()">
+    CART &nbsp;<span id="cart-count">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="store-hero">
+  <div class="hero-content">
+    <p class="store-eyebrow">FRIED PICKLE GAMES — OFFICIAL STORE</p>
+    <h1 class="store-title">THE<br><span>ARSENAL</span></h1>
+    <p class="store-sub">Games built to ruin game night. In the best way.</p>
+  </div>
+
+  <!-- Sketchy callout arrow bridging hero into rightmost card -->
+  <div class="hero-drag-callout" aria-hidden="true">
+    <svg viewBox="0 0 220 270" width="220" height="270" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="sketchy-f" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="9" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <g filter="url(#sketchy-f)">
+        <text
+          x="6" y="32"
+          font-family="Caveat, cursive" font-size="20" font-weight="600"
+          fill="#e7e8e6" letter-spacing="0.5"
+          transform="rotate(-7, 6, 32)">DRAG TO INSPECT</text>
+        <path d="M 105 50 C 128 88 122 148 106 228"
+              stroke="#e7e8e6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M 91 213 L 106 232 L 120 214"
+              stroke="#e7e8e6" stroke-width="2.4" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- PRODUCT GRID -->
+<div class="product-grid">
+
+  <!-- FART OF WAR -->
+  <a class="product-card card-fow" href="fow.html">
+    <span class="product-tag">BESTSELLER</span>
+    <div class="box-scene" id="scene-fow">
+      <div class="box-3d" id="box-fow" data-rot-y="-32" data-rot-x="10">
+        <div class="box-face box-front" style="background: linear-gradient(145deg, #3a5a2e 0%, #243e18 100%); border: 1px solid rgba(139,201,139,0.18);">
+          <div class="box-icon">💨</div>
+          <div class="box-label" style="color: var(--fow-acc);">FART<br>OF WAR</div>
+        </div>
+        <div class="box-face box-back" style="background: linear-gradient(145deg, #2e4a22 0%, #1a2e10 100%);">
+          <div class="box-back-title">WHAT'S IN THE BOX</div>
+          <div class="box-back-desc">110+ Cards · 2–6 Players · 30–60 Min<br><br>Deploy hilarious farts! Battle your friends with incense, beans, and protein! When the third "Fart of War" card is drawn, have the strongest fart army.</div>
+        </div>
+        <div class="box-face box-right" style="background: linear-gradient(180deg, #2c4820 0%, #1a2e10 100%);"><span>FART OF WAR</span></div>
+        <div class="box-face box-left" style="background: #141e0e;"></div>
+        <div class="box-face box-top" style="background: linear-gradient(90deg, #3a5a2e 0%, #2c4820 100%);"></div>
+        <div class="box-face box-bottom" style="background: #0e1808;"></div>
+      </div>
+      <div class="card-fan">
+        <div class="fan-card" style="background:#1e3018;"><div class="fan-card-label" style="color:var(--fow-acc);">AIRPLANE<br>FART</div></div>
+        <div class="fan-card" style="background:#182a12;"><div class="fan-card-label" style="color:var(--fow-acc);">DUTCH<br>OVEN</div></div>
+        <div class="fan-card" style="background:#1c2e16;"><div class="fan-card-label" style="color:var(--fow-acc);">GAS<br>MASK</div></div>
+        <div class="fan-card" style="background:#182a12;"><div class="fan-card-label" style="color:var(--fow-acc);">BUTT<br>BURNER</div></div>
+        <div class="fan-card" style="background:#1e3018;"><div class="fan-card-label" style="color:var(--fow-acc);">BEANS<br>+2</div></div>
+      </div>
+    </div>
+    <h2 class="product-name">FART OF WAR</h2>
+    <p class="product-tagline">Deploy hilarious farts! Battle your friends with incense, beans, and protein! When the third "Fart of War" card is drawn, have the strongest fart army.</p>
+    <div class="product-stats">
+      <div class="stat"><span class="stat-val">2–6</span><span class="stat-lbl">Players</span></div>
+      <div class="stat"><span class="stat-val">30m</span><span class="stat-lbl">Play Time</span></div>
+      <div class="stat"><span class="stat-val">110+</span><span class="stat-lbl">Cards</span></div>
+    </div>
+    <div class="product-price"><sup>$</sup>24<span class="price-cents">.99</span></div>
+    <button class="btn-buy" onclick="event.preventDefault();event.stopPropagation();addToCart('fow')">
+      ADD TO CART <span class="btn-arrow">→</span>
+    </button>
+  </a>
+
+  <!-- DISPELLED -->
+  <a class="product-card card-dispelled" href="dispelled.html">
+    <div class="box-scene" id="scene-dispelled">
+      <div class="box-3d" id="box-dispelled" data-rot-y="-32" data-rot-x="10" style="--w:250px;--h:220px;--d:65px;">
+        <div class="box-face box-front" style="background: linear-gradient(145deg, #253a52 0%, #162438 100%); border: 1px solid rgba(149,202,224,0.18);">
+          <div class="box-icon">🧙</div>
+          <div class="box-label" style="color: var(--dis-acc);">DISPELLED</div>
+        </div>
+        <div class="box-face box-back" style="background: linear-gradient(145deg, #1e3048 0%, #101c30 100%);">
+          <div class="box-back-title">WHAT'S IN THE BOX</div>
+          <div class="box-back-desc">80+ Cards · 2–5 Players · 20–45 Min<br><br>Use wizards to outwit your friends in this mystic word battle.</div>
+        </div>
+        <div class="box-face box-right" style="background: linear-gradient(180deg, #1e3048 0%, #101c30 100%);"><span>DISPELLED</span></div>
+        <div class="box-face box-left" style="background: #0c1828;"></div>
+        <div class="box-face box-top" style="background: linear-gradient(90deg, #253a52 0%, #1e3048 100%);"></div>
+        <div class="box-face box-bottom" style="background: #080e18;"></div>
+      </div>
+      <div class="card-fan">
+        <div class="fan-card" style="background:#162232;"><div class="fan-card-label" style="color:var(--dis-acc);">FROG<br>WIZARD</div></div>
+        <div class="fan-card" style="background:#101c2c;"><div class="fan-card-label" style="color:var(--dis-acc);">GAS<br>QUATCH</div></div>
+        <div class="fan-card" style="background:#141e30;"><div class="fan-card-label" style="color:var(--dis-acc);">OLD<br>EGG</div></div>
+        <div class="fan-card" style="background:#101c2c;"><div class="fan-card-label" style="color:var(--dis-acc);">REAR<br>ADMIRAL</div></div>
+        <div class="fan-card" style="background:#162232;"><div class="fan-card-label" style="color:var(--dis-acc);">ROSE<br>GUN</div></div>
+      </div>
+    </div>
+    <h2 class="product-name">DISPELLED</h2>
+    <p class="product-tagline">Use wizards to outwit your friends in this mystic word battle.</p>
+    <div class="product-stats">
+      <div class="stat"><span class="stat-val">2–5</span><span class="stat-lbl">Players</span></div>
+      <div class="stat"><span class="stat-val">20m</span><span class="stat-lbl">Play Time</span></div>
+      <div class="stat"><span class="stat-val">80+</span><span class="stat-lbl">Cards</span></div>
+    </div>
+    <div class="product-price"><sup>$</sup>22<span class="price-cents">.99</span></div>
+    <button class="btn-buy" onclick="event.preventDefault();event.stopPropagation();addToCart('dispelled')">
+      ADD TO CART <span class="btn-arrow">→</span>
+    </button>
+  </a>
+
+  <!-- NUCLEAR EXPANSION -->
+  <a class="product-card card-exp" href="expansion.html">
+    <div class="box-scene" id="scene-exp">
+      <div class="box-3d" id="box-exp" data-rot-y="-32" data-rot-x="10" style="--w:250px;--h:200px;--d:58px;">
+        <div class="box-face box-front" style="background: linear-gradient(145deg, #38380e 0%, #222206 100%); border: 1px solid rgba(200,220,96,0.18);">
+          <div class="box-icon">☢️</div>
+          <div class="box-label" style="color: var(--exp-acc);">NUCLEAR<br>EXPANSION</div>
+        </div>
+        <div class="box-face box-back" style="background: linear-gradient(145deg, #2c2c0a 0%, #1a1a04 100%);">
+          <div class="box-back-title">WHAT'S IN THE BOX</div>
+          <div class="box-back-desc">40+ New Cards · All Players · Ages 18+<br><br>Deploy the elusive Gasquatch! Battle your friends with tactical rose guns!</div>
+        </div>
+        <div class="box-face box-right" style="background: linear-gradient(180deg, #2c2c0a 0%, #1c1c06 100%);"><span>EXPANSION</span></div>
+        <div class="box-face box-left" style="background: #161604;"></div>
+        <div class="box-face box-top" style="background: linear-gradient(90deg, #38380e 0%, #2c2c0a 100%);"></div>
+        <div class="box-face box-bottom" style="background: #0e0e04;"></div>
+      </div>
+      <div class="card-fan">
+        <div class="fan-card" style="background:#222210;"><div class="fan-card-label" style="color:var(--exp-acc);">NUCLEAR<br>FART</div></div>
+        <div class="fan-card" style="background:#1a1a08;"><div class="fan-card-label" style="color:var(--exp-acc);">FART<br>CANNON</div></div>
+        <div class="fan-card" style="background:#1e1c0c;"><div class="fan-card-label" style="color:var(--exp-acc);">FRESH<br>AIR</div></div>
+        <div class="fan-card" style="background:#1a1a08;"><div class="fan-card-label" style="color:var(--exp-acc);">GAS<br>QUATCH</div></div>
+        <div class="fan-card" style="background:#222210;"><div class="fan-card-label" style="color:var(--exp-acc);">ROSE<br>GUN</div></div>
+      </div>
+    </div>
+    <h2 class="product-name">FRESH AIR EXPANSION</h2>
+    <p class="product-tagline">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns!</p>
+    <div class="product-stats">
+      <div class="stat"><span class="stat-val">+40</span><span class="stat-lbl">New Cards</span></div>
+      <div class="stat"><span class="stat-val">ALL</span><span class="stat-lbl">Players</span></div>
+      <div class="stat"><span class="stat-val">18+</span><span class="stat-lbl">Age</span></div>
+    </div>
+    <div class="product-price"><sup>$</sup>14<span class="price-cents">.99</span></div>
+    <button class="btn-buy" onclick="event.preventDefault();event.stopPropagation();addToCart('exp')">
+      ADD TO CART <span class="btn-arrow">→</span>
+    </button>
+  </a>
+
+</div>
+
+<!-- BUNDLE TEASER -->
+<div class="bundle-teaser">
+  <div class="bundle-text">
+    <h2>THE FULL<br><span>ARSENAL BUNDLE</span></h2>
+    <p>Grab all three games and save. Everything you need to destroy friendships, alienate relatives, and have a genuinely good time.</p>
+  </div>
+  <div class="bundle-price-wrap">
+    <span class="bundle-was">$62.97 separately</span>
+    <span class="bundle-now">$49<sup style="font-size:28px;vertical-align:super;">.99</sup></span>
+    <button class="btn-bundle" onclick="addBundle()">ADD BUNDLE TO CART →</button>
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-icon">📦</span><span class="trust-text">FREE SHIPPING OVER $40</span></div>
+  <div class="trust-item"><span class="trust-icon">↩</span><span class="trust-text">30-DAY RETURNS</span></div>
+  <div class="trust-item"><span class="trust-icon">🔒</span><span class="trust-text">SECURE CHECKOUT VIA SHOPIFY</span></div>
+  <div class="trust-item"><span class="trust-icon">🌎</span><span class="trust-text">SHIPS WORLDWIDE</span></div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <span class="cart-title">YOUR CART</span>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <p class="cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">TOTAL</span>
+      <span class="cart-total-amount" id="cart-total">$0.00</span>
+    </div>
+    <button class="btn-checkout">PROCEED TO CHECKOUT</button>
+    <p class="cart-note">Taxes and shipping calculated at checkout</p>
+  </div>
+</div>
+
+<script>
+  /* ── DRAG-TO-ROTATE ── */
+  document.querySelectorAll('.box-3d').forEach(box => {
+    const scene = box.closest('.box-scene');
+    const card  = box.closest('.product-card');
+    let dragging = false, lastX = 0, lastY = 0, totalDrag = 0;
+    let rotY = parseFloat(box.dataset.rotY);
+    let rotX = parseFloat(box.dataset.rotX);
+
+    const apply = () => { box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
+
+    const start = e => {
+      dragging = true; totalDrag = 0;
+      box.classList.add('dragging');
+      scene.classList.add('has-dragged');
+      const p = e.touches ? e.touches[0] : e;
+      lastX = p.clientX; lastY = p.clientY;
+      e.preventDefault(); e.stopPropagation();
+    };
+    const move = e => {
+      if (!dragging) return;
+      const p = e.touches ? e.touches[0] : e;
+      const dx = p.clientX - lastX, dy = p.clientY - lastY;
+      totalDrag += Math.abs(dx) + Math.abs(dy);
+      rotY += dx * 0.65;
+      rotX -= dy * 0.4;
+      rotX = Math.max(-35, Math.min(35, rotX));
+      apply();
+      lastX = p.clientX; lastY = p.clientY;
+    };
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      box.classList.remove('dragging');
+      /* If user dragged meaningfully, block the next click so the card
+         link does not fire when they lift their finger/mouse. */
+      if (totalDrag > 8 && card) {
+        card._blockClick = true;
+        setTimeout(() => { card._blockClick = false; }, 400);
+      }
+      clearTimeout(box._snap);
+      box._snap = setTimeout(() => {
+        box.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
+        rotY = parseFloat(box.dataset.rotY);
+        rotX = parseFloat(box.dataset.rotX);
+        apply();
+        setTimeout(() => { box.style.transition = ''; }, 850);
+      }, 1800);
+    };
+
+    box.addEventListener('mousedown', start);
+    box.addEventListener('touchstart', start, { passive: false });
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move, { passive: false });
+    document.addEventListener('mouseup', end);
+    document.addEventListener('touchend', end);
+  });
+
+  /* Intercept clicks on cards — suppress navigation if a drag just finished */
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (card._blockClick) { e.preventDefault(); card._blockClick = false; }
+    }, true); /* capture phase — fires before the <a> navigation */
+  });
+
+  /* ── CART ── */
+  const PRODUCTS = {
+    fow:       { name: 'Fart of War',          price: 24.99, icon: '💨' },
+    dispelled: { name: 'Dispelled',            price: 22.99, icon: '🧙' },
+    exp:       { name: 'Fresh Air Expansion',  price: 14.99, icon: '☢️' },
+  };
+  let cart = {};
+
+  function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
+  function addBundle()   { ['fow','dispelled','exp'].forEach(id => cart[id]=(cart[id]||0)+1); renderCart(); openCart(); }
+  function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
+
+  function renderCart() {
+    const count = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = count;
+    document.getElementById('cart-total').textContent = '$' +
+      Object.entries(cart).reduce((s,[id,q])=>s+PRODUCTS[id].price*q,0).toFixed(2);
+    const el = document.getElementById('cart-items');
+    if (!count) { el.innerHTML='<p class="cart-empty">Your cart is empty.</p>'; return; }
+    el.innerHTML = Object.entries(cart).map(([id,qty]) => {
+      const p = PRODUCTS[id];
+      return `<div class="cart-item">
+        <div class="cart-item-thumb">${p.icon}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-price">$${p.price.toFixed(2)} each</div>
+          <div class="cart-qty">
+            <button class="qty-btn" onclick="changeQty('${id}',-1)">−</button>
+            <span class="qty-num">${qty}</span>
+            <button class="qty-btn" onclick="changeQty('${id}',1)">+</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  function openCart()  { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
+  function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
+</script>
+</body>
+</html>
