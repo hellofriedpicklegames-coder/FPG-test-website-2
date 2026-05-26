@@ -238,25 +238,44 @@
       transform: translateX(-50%) translateY(8px);
       transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
     }
-    .product-card:hover .card-fan { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .product-card:hover .card-fan { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
     .fan-card {
       position: absolute; bottom: 0; left: 50%;
       width: 76px; height: 108px; border-radius: 5px; overflow: hidden;
       box-shadow: 0 10px 28px rgba(0,0,0,0.72), 0 2px 6px rgba(0,0,0,0.4);
       transform-origin: 50% 115%;
+      filter: brightness(0.38);
+      transition: filter 0.18s ease, transform 0.18s ease;
     }
     .fan-card img { width: 100%; height: 100%; object-fit: cover; }
-    .fan-card-label {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
-      letter-spacing: 0.1em; text-align: center; padding: 8px; line-height: 1.3;
-    }
+
+    /* base rotations */
     .fan-card:nth-child(1) { transform: translateX(-50%) rotate(-20deg); }
     .fan-card:nth-child(2) { transform: translateX(-50%) rotate(-10deg); }
     .fan-card:nth-child(3) { transform: translateX(-50%) rotate(0deg); }
     .fan-card:nth-child(4) { transform: translateX(-50%) rotate(10deg); }
     .fan-card:nth-child(5) { transform: translateX(-50%) rotate(20deg); }
+
+    /* default: middle card lit up */
+    .fan-card:nth-child(3) {
+      filter: brightness(1);
+      transform: translateX(-50%) rotate(0deg) translateY(-9px) scale(1.06);
+    }
+
+    /* on fan hover: dim all back to base rotation */
+    .card-fan:hover .fan-card:nth-child(1) { filter: brightness(0.38); transform: translateX(-50%) rotate(-20deg); }
+    .card-fan:hover .fan-card:nth-child(2) { filter: brightness(0.38); transform: translateX(-50%) rotate(-10deg); }
+    .card-fan:hover .fan-card:nth-child(3) { filter: brightness(0.38); transform: translateX(-50%) rotate(0deg); }
+    .card-fan:hover .fan-card:hover        { filter: brightness(0.38); }
+    .card-fan:hover .fan-card:nth-child(4) { filter: brightness(0.38); transform: translateX(-50%) rotate(10deg); }
+    .card-fan:hover .fan-card:nth-child(5) { filter: brightness(0.38); transform: translateX(-50%) rotate(20deg); }
+
+    /* highlight whichever card is hovered */
+    .card-fan:hover .fan-card:nth-child(1):hover { filter: brightness(1); transform: translateX(-50%) rotate(-20deg) translateY(-9px) scale(1.06); }
+    .card-fan:hover .fan-card:nth-child(2):hover { filter: brightness(1); transform: translateX(-50%) rotate(-10deg) translateY(-9px) scale(1.06); }
+    .card-fan:hover .fan-card:nth-child(3):hover { filter: brightness(1); transform: translateX(-50%) rotate(0deg)   translateY(-9px) scale(1.06); }
+    .card-fan:hover .fan-card:nth-child(4):hover { filter: brightness(1); transform: translateX(-50%) rotate(10deg)  translateY(-9px) scale(1.06); }
+    .card-fan:hover .fan-card:nth-child(5):hover { filter: brightness(1); transform: translateX(-50%) rotate(20deg)  translateY(-9px) scale(1.06); }
 
     /* ── PRODUCT INFO ── */
     .product-name {
@@ -438,12 +457,12 @@
     <span class="product-tag">BESTSELLER</span>
     <div class="box-scene" id="scene-fow">
       <div class="box-3d" id="box-fow" data-rot-y="-32" data-rot-x="10">
-        <div class="box-face box-front" style="background-image:url('brand_assets/front%20face.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-back"  style="background-image:url('brand_assets/back%20face.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-right" style="background-image:url('brand_assets/right%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-left"  style="background-image:url('brand_assets/left%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-top"   style="background-image:url('brand_assets/top%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-bottom" style="background-image:url('brand_assets/bottom%20side.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-front" style="background-image:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.18)),url('brand_assets/front%20face.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-back"  style="background-image:linear-gradient(rgba(0,0,0,0.28),rgba(0,0,0,0.28)),url('brand_assets/back%20face.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-right" style="background-image:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.38)),url('brand_assets/right%20side.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-left"  style="background-image:linear-gradient(rgba(0,0,0,0.48),rgba(0,0,0,0.48)),url('brand_assets/left%20side.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-top"   style="background-image:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),url('brand_assets/top%20side.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-bottom" style="background-image:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),url('brand_assets/bottom%20side.png');background-size:cover;background-position:center;"></div>
       </div>
       <div class="card-fan">
         <div class="fan-card"><img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart"/></div>
