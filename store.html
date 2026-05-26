@@ -207,7 +207,7 @@
     .box-right {
       width: var(--d); height: var(--h);
       left: calc(var(--w) - var(--d) / 2); top: 0;
-      transform: rotateY(90deg) translateZ(calc(var(--w) / 2));
+      transform: rotateY(90deg);
       display: flex; align-items: center; justify-content: center;
     }
     .box-right span {
@@ -218,17 +218,17 @@
     .box-left {
       width: var(--d); height: var(--h);
       left: calc(-1 * var(--d) / 2); top: 0;
-      transform: rotateY(-90deg) translateZ(calc(var(--w) / 2));
+      transform: rotateY(-90deg);
     }
     .box-top {
       width: var(--w); height: var(--d); left: 0;
       top: calc(-1 * var(--d) / 2);
-      transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+      transform: rotateX(90deg);
     }
     .box-bottom {
       width: var(--w); height: var(--d); left: 0;
       top: calc(var(--h) - var(--d) / 2);
-      transform: rotateX(-90deg) translateZ(calc(var(--h) / 2));
+      transform: rotateX(-90deg);
     }
 
     /* ── CARD FAN ── */
