@@ -239,6 +239,7 @@
       transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
     }
     .product-card:hover .card-fan { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
+    .box-3d.dragging ~ .card-fan  { opacity: 0 !important; pointer-events: none !important; transition: none !important; }
     .fan-card {
       position: absolute; bottom: 0; left: 50%;
       width: 76px; height: 108px; border-radius: 5px; overflow: hidden;
@@ -489,9 +490,9 @@
   <a class="product-card card-dispelled" href="dispelled.html">
     <div class="box-scene" id="scene-dispelled">
       <div class="box-3d" id="box-dispelled" data-rot-y="-32" data-rot-x="10" style="--w:250px;--h:220px;--d:65px;">
-        <div class="box-face box-front" style="background:linear-gradient(145deg,#253a52 0%,#162438 100%);border:1px solid rgba(149,202,224,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.32em;color:var(--dis-acc);opacity:0.7;">DISPELLED</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:0.04em;color:var(--text);line-height:1;text-align:center;">COMING<br>SOON</div>
+        <div class="box-face box-front" style="background:linear-gradient(145deg,#253a52 0%,#162438 100%);border:1px solid rgba(149,202,224,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:18px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:0.28em;color:var(--dis-acc);opacity:0.65;">DISPELLED</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.06em;color:var(--text);line-height:1.05;text-align:center;">COMING<br>SOON</div>
         </div>
         <div class="box-face box-back"  style="background:linear-gradient(145deg,#1e3048 0%,#101c30 100%);"></div>
         <div class="box-face box-right" style="background:linear-gradient(180deg,#1e3048 0%,#101c30 100%);"></div>
@@ -524,9 +525,9 @@
   <a class="product-card card-exp" href="expansion.html">
     <div class="box-scene" id="scene-exp">
       <div class="box-3d" id="box-exp" data-rot-y="-32" data-rot-x="10" style="--w:250px;--h:200px;--d:58px;">
-        <div class="box-face box-front" style="background:linear-gradient(145deg,#38380e 0%,#222206 100%);border:1px solid rgba(200,220,96,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.32em;color:var(--exp-acc);opacity:0.7;">FRESH AIR EXPANSION</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:0.04em;color:var(--text);line-height:1;text-align:center;">COMING<br>SOON</div>
+        <div class="box-face box-front" style="background:linear-gradient(145deg,#38380e 0%,#222206 100%);border:1px solid rgba(200,220,96,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:18px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:0.22em;color:var(--exp-acc);opacity:0.65;">FRESH AIR EXPANSION</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.06em;color:var(--text);line-height:1.05;text-align:center;">COMING<br>SOON</div>
         </div>
         <div class="box-face box-back"  style="background:linear-gradient(145deg,#2c2c0a 0%,#1a1a04 100%);"></div>
         <div class="box-face box-right" style="background:linear-gradient(180deg,#2c2c0a 0%,#1c1c06 100%);"></div>
