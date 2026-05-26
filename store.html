@@ -68,11 +68,14 @@
       font-family: 'Bebas Neue', sans-serif; font-size: 14px;
       letter-spacing: 0.14em; color: var(--brand); cursor: pointer;
       background: none; border: 1px solid rgba(var(--brand-rgb),0.35);
-      padding: 6px 18px; transition: all 0.2s;
+      padding: 6px 18px;
+      box-shadow: 0 2px 12px rgba(var(--brand-rgb),0.15);
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .nav-cart:hover {
       background: rgba(var(--brand-rgb),0.07);
       border-color: rgba(var(--brand-rgb),0.65);
+      box-shadow: 0 4px 20px rgba(var(--brand-rgb),0.38);
     }
     #cart-count {
       background: var(--brand); color: #0c0e0a;
@@ -315,13 +318,15 @@
       font-family: 'Bebas Neue', sans-serif; font-size: 18px;
       letter-spacing: 0.12em; color: #0c0e0a;
       border: none; padding: 0 40px; height: 54px; cursor: pointer; width: 100%;
-      transition: filter 0.2s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: filter 0.2s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .card-fow       .btn-buy { background: var(--fow-btn); }
-    .card-dispelled .btn-buy { background: var(--dis-btn); }
-    .card-exp       .btn-buy { background: var(--exp-btn); }
-    .btn-buy:hover { filter: brightness(1.12); transform: translateY(-2px); }
+    .card-fow       .btn-buy { background: var(--fow-btn); box-shadow: 0 2px 16px rgba(139,201,139,0.30); }
+    .card-dispelled .btn-buy { background: var(--dis-btn); box-shadow: 0 2px 16px rgba(149,202,224,0.30); }
+    .card-exp       .btn-buy { background: var(--exp-btn); box-shadow: 0 2px 16px rgba(208,235,128,0.30); }
+    .card-fow       .btn-buy:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(139,201,139,0.58); }
+    .card-dispelled .btn-buy:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(149,202,224,0.58); }
+    .card-exp       .btn-buy:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(208,235,128,0.58); }
     .btn-buy:active { transform: translateY(0); }
     .btn-arrow { transition: transform 0.2s; }
     .btn-buy:hover .btn-arrow { transform: translateX(5px); }
@@ -346,9 +351,11 @@
       font-family: 'Bebas Neue', sans-serif; font-size: 17px;
       letter-spacing: 0.12em; background: transparent; color: var(--brand);
       border: 1px solid rgba(var(--brand-rgb),0.42); padding: 0 40px; height: 52px;
-      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 2px 12px rgba(var(--brand-rgb),0.12);
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn-bundle:hover { background: rgba(var(--brand-rgb),0.08); border-color: rgba(var(--brand-rgb),0.7); }
+    .btn-bundle:hover { background: rgba(var(--brand-rgb),0.08); border-color: rgba(var(--brand-rgb),0.7); box-shadow: 0 4px 20px rgba(var(--brand-rgb),0.32); }
 
     /* ── TRUST STRIP ── */
     .trust-strip {
@@ -397,8 +404,8 @@
     .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
     .cart-total-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: var(--olive); }
     .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: -0.01em; }
-    .btn-checkout { width: 100%; background: var(--brand); color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; transition: filter 0.2s; margin-bottom: 12px; }
-    .btn-checkout:hover { filter: brightness(1.1); }
+    .btn-checkout { width: 100%; background: var(--brand); color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; box-shadow: 0 2px 16px rgba(237,224,144,0.30); transition: filter 0.2s, box-shadow 0.2s ease; margin-bottom: 12px; }
+    .btn-checkout:hover { filter: brightness(1.1); box-shadow: 0 6px 28px rgba(237,224,144,0.55); }
     .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
   </style>
 </head>
@@ -502,11 +509,11 @@
         <div class="box-face box-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#080e18;"></div>
       </div>
       <div class="card-fan">
-        <div class="fan-card" style="background:#162232;"></div>
-        <div class="fan-card" style="background:#101c2c;"></div>
-        <div class="fan-card" style="background:#141e30;"></div>
-        <div class="fan-card" style="background:#101c2c;"></div>
-        <div class="fan-card" style="background:#162232;"></div>
+        <div class="fan-card" style="background:#162232;"><div class="fan-card-label" style="color:var(--dis-acc);">FROG<br>WIZARD</div></div>
+        <div class="fan-card" style="background:#101c2c;"><div class="fan-card-label" style="color:var(--dis-acc);">GAS<br>QUATCH</div></div>
+        <div class="fan-card" style="background:#141e30;"><div class="fan-card-label" style="color:var(--dis-acc);">OLD<br>EGG</div></div>
+        <div class="fan-card" style="background:#101c2c;"><div class="fan-card-label" style="color:var(--dis-acc);">REAR<br>ADMIRAL</div></div>
+        <div class="fan-card" style="background:#162232;"><div class="fan-card-label" style="color:var(--dis-acc);">ROSE<br>GUN</div></div>
       </div>
     </div>
     <h2 class="product-name">DISPELLED</h2>
@@ -537,11 +544,11 @@
         <div class="box-face box-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#0e0e04;"></div>
       </div>
       <div class="card-fan">
-        <div class="fan-card" style="background:#222210;"></div>
-        <div class="fan-card" style="background:#1a1a08;"></div>
-        <div class="fan-card" style="background:#1e1c0c;"></div>
-        <div class="fan-card" style="background:#1a1a08;"></div>
-        <div class="fan-card" style="background:#222210;"></div>
+        <div class="fan-card" style="background:#222210;"><div class="fan-card-label" style="color:var(--exp-acc);">NUCLEAR<br>FART</div></div>
+        <div class="fan-card" style="background:#1a1a08;"><div class="fan-card-label" style="color:var(--exp-acc);">FART<br>CANNON</div></div>
+        <div class="fan-card" style="background:#1e1c0c;"><div class="fan-card-label" style="color:var(--exp-acc);">FRESH<br>AIR</div></div>
+        <div class="fan-card" style="background:#1a1a08;"><div class="fan-card-label" style="color:var(--exp-acc);">GAS<br>QUATCH</div></div>
+        <div class="fan-card" style="background:#222210;"><div class="fan-card-label" style="color:var(--exp-acc);">ROSE<br>GUN</div></div>
       </div>
     </div>
     <h2 class="product-name">FRESH AIR EXPANSION</h2>

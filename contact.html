@@ -25,8 +25,8 @@
     nav { display: flex; align-items: center; gap: 36px; }
     nav a { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.13em; color: rgba(231,232,230,0.82); text-decoration: none; transition: color 0.2s ease; }
     nav a:hover { color: #e7e8e6; }
-    .btn-header { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px; display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; transition: background 0.2s ease, transform 0.15s ease; }
-    .btn-header:hover { background: #1bc07c; transform: translateY(-1px); }
+    .btn-header { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px; display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; box-shadow: 0 2px 14px rgba(43,235,154,0.28); transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; }
+    .btn-header:hover { background: #1bc07c; transform: translateY(-1px); box-shadow: 0 4px 24px rgba(43,235,154,0.55); }
     /* Main — split layout */
     .contact-main { min-height: calc(100vh - 80px); display: flex; }
     .contact-split { display: flex; width: 100%; min-height: calc(100vh - 80px); }
@@ -45,8 +45,8 @@
     .signup-input { background: rgba(255,255,255,0.04); border: 1px solid rgba(153,153,101,0.2); color: #e7e8e6; font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 0 18px; height: 52px; outline: none; transition: border-color 0.2s ease; width: 100%; }
     .signup-input:focus { border-color: #999965; }
     .signup-input::placeholder { color: rgba(231,232,230,0.3); }
-    .signup-submit { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.1em; background: #ede090; color: #0d0c07; height: 52px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; will-change: transform; }
-    .signup-submit:hover { background: #f5eba8; transform: translateY(-1px); }
+    .signup-submit { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.1em; background: #ede090; color: #0d0c07; height: 52px; border: none; cursor: pointer; box-shadow: 0 2px 16px rgba(237,224,144,0.30); transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; will-change: transform; }
+    .signup-submit:hover { background: #f5eba8; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(237,224,144,0.55); }
     .signup-submit:active { transform: translateY(0); }
     .signup-success { display: none; padding: 20px; background: rgba(153,153,101,0.07); border: 1px solid rgba(153,153,101,0.2); text-align: center; }
     .signup-success-headline { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.05em; color: #ede090; margin-bottom: 6px; }
