@@ -157,6 +157,7 @@
     .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .how-visual { position: relative; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 12px 48px rgba(0,0,0,0.55); }
     .how-visual iframe { width: 100%; height: 100%; display: block; border: none; }
+    .yt-facade { position: relative; width: 100%; height: 100%; cursor: pointer; background: #000; }
     .how-steps { display: flex; flex-direction: column; gap: 30px; }
     .how-step { display: flex; gap: 22px; align-items: flex-start; }
     .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: rgba(153,153,101,0.18); line-height: 1; flex-shrink: 0; width: 44px; text-align: right; }
@@ -246,8 +247,8 @@
   <!-- Hero -->
   <section class="game-hero">
     <picture>
-      <source media="(max-width: 900px)" srcset="brand_assets/2.png"/>
-      <img src="brand_assets/base1.png" alt="" class="game-hero-bg"/>
+      <source media="(max-width: 900px)" srcset="brand_assets/2.jpg" type="image/jpeg"/>
+      <img src="brand_assets/base1.jpg" alt="" class="game-hero-bg" fetchpriority="high"/>
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
@@ -281,39 +282,39 @@
       <div class="section-title">THE CARDS</div>
       <div class="card-grid">
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Butt%20Burner.jpg" alt="Butt Burner"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Butt%20Burner.jpg" alt="Butt Burner" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">BUTT BURNER</div><div class="gallery-card-sub">You know exactly what this does.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Dutch%20Oven.jpg" alt="Dutch Oven"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Dutch%20Oven.jpg" alt="Dutch Oven" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">DUTCH OVEN</div><div class="gallery-card-sub">Close quarters. No escape.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">AIRPLANE FART</div><div class="gallery-card-sub">High altitude. Maximum dread.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/GasMaskCard.jpg" alt="Gas Mask"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/GasMaskCard.jpg" alt="Gas Mask" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">GAS MASK</div><div class="gallery-card-sub">Defense when the air turns ugly.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/BEANSMODIFIER.jpg" alt="Beans"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/BEANSMODIFIER.jpg" alt="Beans" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">BEANS</div><div class="gallery-card-sub">+2 power. You know exactly why.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/CheekLiftAction.jpg" alt="Cheek Lift"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/CheekLiftAction.jpg" alt="Cheek Lift" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">CHEEK LIFT</div><div class="gallery-card-sub">A precision tactical maneuver.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Dried-Fruit1-_MODIFIER-CARD_.jpg" alt="Dried Fruit"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Dried-Fruit1-_MODIFIER-CARD_.jpg" alt="Dried Fruit" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">DRIED FRUIT</div><div class="gallery-card-sub">Takes a turn. Worth it.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Car-Fart1-_FC_.jpg" alt="Car Fart"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Copy-of-Car-Fart1-_FC_.jpg" alt="Car Fart" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">CAR FART</div><div class="gallery-card-sub">No escape once the windows go up.</div></div>
         </div>
         <div class="gallery-card">
-          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Fart%20of%20War_Sample_Cards_EN_V2-0511%20(1).jpg" alt="Sample Cards"/>
+          <img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Fart%20of%20War_Sample_Cards_EN_V2-0511%20(1).jpg" alt="Sample Cards" loading="lazy"/>
           <div class="gallery-card-info"><div class="gallery-card-title">THE FULL ARSENAL</div><div class="gallery-card-sub">The whole deck, all at once.</div></div>
         </div>
       </div>
@@ -327,7 +328,10 @@
       <div class="section-title" style="font-size: clamp(48px, 7vw, 88px); margin-bottom: 48px;">HOW TO PLAY</div>
       <div class="how-grid">
         <div class="how-visual">
-          <iframe src="https://www.youtube.com/embed/4olooi1JqsI" title="Fart of War — How to Play" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="yt-facade" id="yt-fow" onclick="document.getElementById('yt-fow').outerHTML='<iframe src=\'https://www.youtube.com/embed/4olooi1JqsI?autoplay=1\' title=\'Fart of War — How to Play\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen style=\'width:100%;height:100%;display:block;border:none;\'></iframe>'">
+            <img src="https://i.ytimg.com/vi/4olooi1JqsI/maxresdefault.jpg" alt="Play: Fart of War — How to Play" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+            <button aria-label="Play video" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(0,0,0,0.75);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg viewBox='0 0 24 24' width='28' height='28' fill='white'><polygon points='5,3 19,12 5,21'/></svg></button>
+          </div>
         </div>
         <div class="how-steps">
           <div class="how-step">
@@ -444,6 +448,8 @@
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
+      let rafId = null;
+
       function tick(ts) {
         if (!t0) t0 = ts;
         const elapsed = ts - t0;
@@ -463,10 +469,18 @@
           contentEl.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
         }
 
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
+
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(rafId); rafId = null;
+        }
+      }, { threshold: 0 }).observe(document.querySelector('.game-hero'));
     })();
   </script>
 </body>

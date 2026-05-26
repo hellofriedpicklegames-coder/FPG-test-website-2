@@ -157,7 +157,7 @@
   <section class="game-hero">
     <picture>
       <source media="(max-width: 900px)" srcset="brand_assets/EXPmobile.png"/>
-      <img src="brand_assets/expnew.png" alt="" class="game-hero-bg"/>
+      <img src="brand_assets/expnew.jpg" alt="" class="game-hero-bg" fetchpriority="high"/>
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
@@ -337,6 +337,8 @@
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
+      let rafId = null;
+
       function tick(ts) {
         if (!t0) t0 = ts;
         const elapsed = ts - t0;
@@ -356,10 +358,18 @@
           contentEl.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
         }
 
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
+
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(rafId); rafId = null;
+        }
+      }, { threshold: 0 }).observe(document.querySelector('.game-hero'));
     })();
   </script>
 </body>

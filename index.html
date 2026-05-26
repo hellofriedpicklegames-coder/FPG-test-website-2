@@ -596,6 +596,7 @@
       box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 2px 10px rgba(153,153,101,0.08);
       aspect-ratio: 16/9;
     }
+    .yt-facade { position: relative; width: 100%; height: 100%; cursor: pointer; background: #000; }
     .how-visual iframe {
       width: 100%;
       height: 100%;
@@ -1214,8 +1215,8 @@
     <!-- Slide 0: Brand intro -->
     <div class="hero-slide active" id="hero-slide-0">
       <picture>
-        <source media="(max-width: 900px)" srcset="brand_assets/FPGBRAND3.png"/>
-        <img src="brand_assets/FPGBRAND2.png" alt="" class="hero-bg" aria-hidden="true"/>
+        <source media="(max-width: 900px)" srcset="brand_assets/FPGBRAND3.jpg" type="image/jpeg"/>
+        <img src="brand_assets/FPGBRAND2.jpg" alt="" class="hero-bg" aria-hidden="true" fetchpriority="high"/>
       </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
@@ -1233,8 +1234,8 @@
     <!-- Slide 1: Fart of War -->
     <div class="hero-slide" id="hero-slide-1">
       <picture>
-        <source media="(max-width: 900px)" srcset="brand_assets/2.png"/>
-        <img src="brand_assets/base1.png" alt="" class="hero-bg" aria-hidden="true"/>
+        <source media="(max-width: 900px)" srcset="brand_assets/2.jpg" type="image/jpeg"/>
+        <img src="brand_assets/base1.jpg" alt="" class="hero-bg" aria-hidden="true"/>
       </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
@@ -1254,7 +1255,7 @@
     <div class="hero-slide" id="hero-slide-2">
       <picture>
         <source media="(max-width: 900px)" srcset="dispelledmobile.png"/>
-        <img src="brand_assets/PRODUCTION%20(1).png" alt="" class="hero-bg" aria-hidden="true" style="object-position: center top;"/>
+        <img src="brand_assets/PRODUCTION%20(1).jpg" alt="" class="hero-bg" aria-hidden="true" style="object-position: center top;"/>
       </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
@@ -1273,7 +1274,7 @@
     <div class="hero-slide" id="hero-slide-3">
       <picture>
         <source media="(max-width: 900px)" srcset="brand_assets/EXPmobile.png"/>
-        <img src="brand_assets/expnew.png" alt="" class="hero-bg" aria-hidden="true"/>
+        <img src="brand_assets/expnew.jpg" alt="" class="hero-bg" aria-hidden="true"/>
       </picture>
       <div class="hero-grad-lr" aria-hidden="true"></div>
       <div class="hero-grad-bt" aria-hidden="true"></div>
@@ -1333,7 +1334,7 @@
       <!-- Fart of War -->
       <a href="fow.html" class="game-card" style="background:#0c0e0a;">
         <div class="game-card-img-wrap">
-          <img src="brand_assets/base1.png" alt="Fart of War" class="game-card-img"/>
+          <img src="brand_assets/base1.jpg" alt="Fart of War" class="game-card-img" loading="lazy"/>
           <div class="game-card-overlay"></div>
         </div>
         <div class="game-card-body">
@@ -1349,7 +1350,7 @@
       <!-- Expansion Pack -->
       <a href="expansion.html" class="game-card" style="background:#120d08;">
         <div class="game-card-img-wrap">
-          <img src="brand_assets/expnew.png" alt="Fart of War: Expansion Pack" class="game-card-img"/>
+          <img src="brand_assets/expnew.jpg" alt="Fart of War: Expansion Pack" class="game-card-img" loading="lazy"/>
           <div class="game-card-overlay"></div>
         </div>
         <div class="game-card-body">
@@ -1365,7 +1366,7 @@
       <!-- Dispelled -->
       <a href="dispelled.html" class="game-card" style="background:#080c11;">
         <div class="game-card-img-wrap">
-          <img src="brand_assets/PRODUCTION (1).png" alt="Dispelled" class="game-card-img"/>
+          <img src="brand_assets/PRODUCTION (1).jpg" alt="Dispelled" class="game-card-img" loading="lazy"/>
           <div class="game-card-overlay"></div>
         </div>
         <div class="game-card-body">
@@ -1389,12 +1390,10 @@
       <div class="how-title">HOW TO PLAY</div>
       <div class="how-grid">
         <div class="how-visual">
-          <iframe
-            src="https://www.youtube.com/embed/4olooi1JqsI"
-            title="Fart of War — How to Play"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+          <div class="yt-facade" id="yt-index" onclick="document.getElementById('yt-index').outerHTML='<iframe src=\'https://www.youtube.com/embed/4olooi1JqsI?autoplay=1\' title=\'Fart of War — How to Play\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen style=\'width:100%;height:100%;display:block;border:none;\'></iframe>'">
+            <img src="https://i.ytimg.com/vi/4olooi1JqsI/maxresdefault.jpg" alt="Play: Fart of War — How to Play" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+            <button aria-label="Play video" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(0,0,0,0.75);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg viewBox='0 0 24 24' width='28' height='28' fill='white'><polygon points='5,3 19,12 5,21'/></svg></button>
+          </div>
         </div>
         <div class="how-steps">
           <div class="how-step">
@@ -1437,6 +1436,7 @@
       alt=""
       class="dispelled-bg"
       aria-hidden="true"
+      loading="lazy"
     />
     <div class="dispelled-grad-lr" aria-hidden="true"></div>
     <div class="dispelled-grad-bt" aria-hidden="true"></div>
@@ -1457,7 +1457,7 @@
 
         <div class="maker-card" tabindex="0">
           <div class="maker-img">
-            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2817%29.png" alt="Terran Greenfield, co-founder"/>
+            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2817%29.png" alt="Terran Greenfield, co-founder" loading="lazy"/>
           </div>
           <div class="maker-body">
             <div class="maker-name">TERRAN GREENFIELD</div>
@@ -1468,7 +1468,7 @@
 
         <div class="maker-card" tabindex="0">
           <div class="maker-img">
-            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2816%29.png" alt="River Greenfield, co-founder"/>
+            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2816%29.png" alt="River Greenfield, co-founder" loading="lazy"/>
           </div>
           <div class="maker-body">
             <div class="maker-name">RIVER GREENFIELD</div>
@@ -1479,7 +1479,7 @@
 
         <div class="maker-card" tabindex="0">
           <div class="maker-img wide">
-            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2838%29.png" alt="The Fried Pickle Games team"/>
+            <img src="brand_assets/posters_banners/headshots/Untitled%20design%20%2838%29.png" alt="The Fried Pickle Games team" loading="lazy"/>
           </div>
           <div class="maker-body">
             <div class="maker-name">FRIED PICKLE GAMES</div>
@@ -1775,6 +1775,8 @@
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
+      let rafId = null;
+
       function tick(ts) {
         if (!pageT0) pageT0 = ts;
         if (!slideT0) slideT0 = ts;
@@ -1807,10 +1809,18 @@
           }
         }
 
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
+
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(rafId); rafId = null;
+        }
+      }, { threshold: 0 }).observe(document.querySelector('.hero-section'));
     })();
   </script>
 

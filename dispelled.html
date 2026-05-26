@@ -141,7 +141,7 @@
   <section class="game-hero">
     <picture>
       <source media="(max-width: 900px)" srcset="dispelledmobile.png"/>
-      <img src="brand_assets/PRODUCTION%20(1).png" alt="" class="game-hero-bg"/>
+      <img src="brand_assets/PRODUCTION%20(1).jpg" alt="" class="game-hero-bg" fetchpriority="high"/>
     </picture>
     <div class="game-hero-grad-lr"></div>
     <div class="game-hero-grad-bt"></div>
@@ -172,21 +172,21 @@
       <div class="section-title">THE WIZARDS</div>
       <div class="wizards-grid">
         <div class="wizard-card">
-          <img src="brand_assets/posters_banners/dispelled/back%20of%20card.jpg" alt="Dispelled card back"/>
+          <img src="brand_assets/posters_banners/dispelled/back%20of%20card.jpg" alt="Dispelled card back" loading="lazy"/>
           <div class="wizard-card-body">
             <div class="wizard-card-name">DISPELLED</div>
             <div class="wizard-card-quote">For those who have a way with words (or not)</div>
           </div>
         </div>
         <div class="wizard-card">
-          <img src="brand_assets/posters_banners/dispelled/frogwizard.jpg" alt="The Toad Sage"/>
+          <img src="brand_assets/posters_banners/dispelled/frogwizard.jpg" alt="The Toad Sage" loading="lazy"/>
           <div class="wizard-card-body">
             <div class="wizard-card-name">THE TOAD SAGE</div>
             <div class="wizard-card-quote">ribbit, ribbit, ribbit</div>
           </div>
         </div>
         <div class="wizard-card">
-          <img src="brand_assets/posters_banners/dispelled/3fe7d1ae-18ce-42aa-8d86-8593693922b3.png" alt="Wordlebee the Wise"/>
+          <img src="brand_assets/posters_banners/dispelled/3fe7d1ae-18ce-42aa-8d86-8593693922b3.png" alt="Wordlebee the Wise" loading="lazy"/>
           <div class="wizard-card-body">
             <div class="wizard-card-name">WORDLEBEE THE WISE</div>
             <div class="wizard-card-quote">the most wisest</div>
@@ -291,6 +291,8 @@
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
+      let rafId = null;
+
       function tick(ts) {
         if (!t0) t0 = ts;
         const elapsed = ts - t0;
@@ -310,10 +312,18 @@
           contentEl.style.transform = `translate(${fgCX.toFixed(2)}px,${fgCY.toFixed(2)}px)`;
         }
 
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
+
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(rafId); rafId = null;
+        }
+      }, { threshold: 0 }).observe(document.querySelector('.game-hero'));
     })();
   </script>
 </body>
