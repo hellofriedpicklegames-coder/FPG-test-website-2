@@ -717,6 +717,42 @@
       color: rgba(231,232,230,0.58); max-width: 620px;
       margin: 0 auto 72px; text-align: center;
     }
+    /* Isolation photo */
+    .mission-isolation-wrap {
+      position: relative; overflow: hidden;
+      height: 56vh; min-height: 340px; max-height: 540px;
+    }
+    .mission-isolation-img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 25%;
+      filter: sepia(0.3) brightness(0.55) contrast(1.1) saturate(0.8);
+    }
+    .mission-isolation-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, #0e0c08 0%, rgba(14,12,8,0.08) 22%, rgba(14,12,8,0.08) 74%, #0e0c08 100%),
+        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 25%, rgba(14,12,8,0.55) 100%);
+    }
+    .mission-isolation-text {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 48px 32px; text-align: center;
+    }
+    .mission-isolation-text p {
+      font-size: clamp(17px, 2vw, 24px);
+      font-weight: 300; font-style: italic;
+      color: rgba(240,238,234,0.88);
+      max-width: 660px; line-height: 1.7;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.98), 0 0 80px rgba(0,0,0,0.8);
+    }
+    /* Scroll reveal */
+    .mission-reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .mission-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
     /* Why card games */
     .mission-pivot { text-align: center; margin-bottom: 52px; position: relative; z-index: 1; }
     .mission-pivot-eyebrow {
@@ -748,7 +784,7 @@
     .mission-reason:hover { background: #121008; }
     .reason-num {
       font-family: 'Bebas Neue', sans-serif; font-size: 80px;
-      color: rgba(153,153,101,0.07); line-height: 1; flex-shrink: 0;
+      color: rgba(153,153,101,0.28); line-height: 1; flex-shrink: 0;
     }
     .reason-body h3 {
       font-family: 'Bebas Neue', sans-serif; font-size: 22px;
@@ -1117,6 +1153,9 @@
       .mission-reasons { grid-template-columns: 1fr; }
       .mission-verse-wrap { padding: 72px 20px 52px; }
       .mission-body { padding: 0 20px 64px; }
+      .mission-isolation-wrap { height: 44vh; min-height: 280px; }
+      .mission-isolation-text { padding: 32px 20px; }
+      .mission-isolation-text p { font-size: clamp(15px, 4vw, 19px); }
 
       .makers-grid { grid-template-columns: 1fr 1fr; }
       .makers-section { padding: 60px 0 72px; }
@@ -1181,6 +1220,8 @@
       .mission-reason { padding: 36px 24px; }
       .mission-verse-wrap { padding: 56px 16px 40px; }
       .mission-body { padding: 0 16px 52px; }
+      .mission-isolation-wrap { height: 38vh; min-height: 240px; }
+      .mission-isolation-text p { font-size: 15px; }
     }
   /* ── Email Popup ──────────────────────────────── */
   #popup-overlay {
@@ -1584,6 +1625,7 @@
       <div class="mission-verse-rule"></div>
     </div>
 
+    <!-- Above the fold: opener + stats -->
     <div class="mission-body">
 
       <!-- Opener -->
@@ -1592,29 +1634,40 @@
       <!-- Stats -->
       <div class="mission-stats">
         <div class="mission-stat">
-          <div class="mission-stat-value">58<span>%</span></div>
+          <div class="mission-stat-value" data-target="58">58<span>%</span></div>
           <div class="mission-stat-label">of Americans feel lonely on a regular basis</div>
           <div class="mission-stat-source">Cigna U.S. Loneliness Index</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value">7<span>+ hrs</span></div>
+          <div class="mission-stat-value" data-target="7">7<span>+ hrs</span></div>
           <div class="mission-stat-label">average daily screen time for American adults</div>
           <div class="mission-stat-source">DataReportal, 2024</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value">26<span>%</span></div>
+          <div class="mission-stat-value" data-target="26">26<span>%</span></div>
           <div class="mission-stat-label">higher risk of early death from social isolation</div>
           <div class="mission-stat-source">Brigham Young University</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value">8.5<span> hrs</span></div>
+          <div class="mission-stat-value" data-target="8.5">8.5<span> hrs</span></div>
           <div class="mission-stat-label">daily screen entertainment for teenagers</div>
           <div class="mission-stat-source">Common Sense Media, 2023</div>
         </div>
       </div>
 
-      <!-- Pivot -->
-      <p class="mission-bridge">You know what this feels like. A whole weekend on the phone, and Sunday night you put it down and can't name a single real conversation from the past 48 hours.</p>
+    </div>
+
+    <!-- Full-bleed isolation photo — bridge text overlaid -->
+    <div class="mission-isolation-wrap">
+      <img src="brand_assets/ISOLATION.png" class="mission-isolation-img" alt="" loading="lazy"/>
+      <div class="mission-isolation-overlay"></div>
+      <div class="mission-isolation-text">
+        <p>You know what this feels like. A whole weekend on the phone, and Sunday night you put it down and can't name a single real conversation from the past 48 hours.</p>
+      </div>
+    </div>
+
+    <!-- Below the image: pivot + reasons + CTA -->
+    <div class="mission-body">
 
       <div class="mission-pivot">
         <div class="mission-pivot-eyebrow">WHY WE MAKE CARD GAMES</div>
@@ -2081,6 +2134,71 @@
           cancelAnimationFrame(rafId); rafId = null;
         }
       }, { threshold: 0 }).observe(document.querySelector('.hero-section'));
+    })();
+
+    // ── Mission: stat count-up ────────────────────────────────────
+    (function() {
+      const statEls = document.querySelectorAll('.mission-stat-value[data-target]');
+      if (!statEls.length) return;
+
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function animateStat(el) {
+        const targetStr = el.dataset.target;
+        const target    = parseFloat(targetStr);
+        const decimals  = targetStr.includes('.') ? 1 : 0;
+        const span      = el.querySelector('span');
+        const suffix    = span ? span.outerHTML : '';
+        const duration  = 1200;
+        const startTime = performance.now();
+        function tick(now) {
+          const t   = Math.min((now - startTime) / duration, 1);
+          const val = easeOutCubic(t) * target;
+          el.innerHTML = val.toFixed(decimals) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      const countObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateStat(entry.target);
+            countObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      statEls.forEach(el => {
+        const span     = el.querySelector('span');
+        const suffix   = span ? span.outerHTML : '';
+        const decimals = (el.dataset.target || '').includes('.') ? 1 : 0;
+        el.innerHTML = (0).toFixed(decimals) + suffix;
+        countObs.observe(el);
+      });
+    })();
+
+    // ── Mission: scroll reveal ────────────────────────────────────
+    (function() {
+      const targets = document.querySelectorAll('.mission-reason, .mission-pivot, .mission-isolation-wrap, .mission-cta-row');
+      if (!targets.length) return;
+      let reasonIdx = 0;
+      targets.forEach(el => {
+        el.classList.add('mission-reveal');
+        if (el.classList.contains('mission-reason')) {
+          el.style.transitionDelay = (reasonIdx * 0.09) + 's';
+          reasonIdx++;
+        }
+      });
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      targets.forEach(el => revealObs.observe(el));
     })();
 
     // Hamburger menu
