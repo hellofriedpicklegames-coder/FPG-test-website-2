@@ -359,16 +359,29 @@
     }
     .btn-hero-ghost:active { transform: translateY(0); }
     .btn-hero-ghost:focus-visible { outline: 2px solid #e7e8e6; outline-offset: 3px; }
-    /* Dispelled slide — blue glow variant */
-    #hero-slide-2 .btn-hero-ghost {
-      box-shadow: 0 2px 14px rgba(149,202,224,0.22);
+    /* Expansion Pack hero button — matches btn-notify on expansion.html */
+    .btn-hero-expansion {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 19px;
+      letter-spacing: 0.09em;
+      background: #d0eb80;
+      color: #120d08;
+      padding: 0 36px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      box-shadow: 0 2px 16px rgba(208,235,128,0.28);
+      transition: background 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
     }
-    #hero-slide-2 .btn-hero-ghost:hover {
-      background: rgba(149,202,224,0.12);
-      border-color: rgba(149,202,224,0.65);
-      box-shadow: 0 6px 28px rgba(149,202,224,0.50);
+    .btn-hero-expansion:hover {
+      background: #e4f5a0;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(208,235,128,0.55);
     }
-    #hero-slide-2 .btn-hero-ghost:focus-visible { outline-color: #95cae0; }
+    .btn-hero-expansion:active { transform: translateY(0); }
+    .btn-hero-expansion:focus-visible { outline: 2px solid #d0eb80; outline-offset: 3px; }
 
     /* Scroll cue */
     .hero-scroll-cue {
@@ -1280,7 +1293,7 @@
         <p class="hero-tagline" style="color:rgba(231,232,230,0.88);">For people who have a way with words (or not!)</p>
         <p class="hero-desc">Use wizards to outwit your friends in this mystic word battle.</p>
         <div class="hero-btns">
-          <a href="dispelled.html" class="btn-hero-ghost" style="border-color:rgba(149,202,224,0.5); color:#95cae0;">✦ &nbsp;COMING SOON</a>
+          <a href="dispelled.html" class="btn-dispelled">✦ &nbsp;COMING SOON</a>
         </div>
       </div>
     </div>
@@ -1299,7 +1312,7 @@
         <p class="hero-tagline">A breath of fresh air.</p>
         <p class="hero-desc">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns!</p>
         <div class="hero-btns">
-          <a href="expansion.html" class="btn-hero-ghost">⏳ &nbsp;COMING SOON</a>
+          <a href="expansion.html" class="btn-hero-expansion">⏳ &nbsp;COMING SOON</a>
         </div>
       </div>
     </div>
