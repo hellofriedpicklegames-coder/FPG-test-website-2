@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fried Pickle Games — Seriously Fun Card Games</title>
+  <link rel="icon" type="image/png" href="brand_assets/posters_banners/fart_of_war/BLAME%20IT%20ON%20(2).png"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -713,11 +714,11 @@
       font-size: 10px; color: rgba(153,153,101,0.28);
       margin-top: 10px; font-style: italic; letter-spacing: 0.03em;
     }
-    /* Bridge text between stats and reasons */
+    /* Bridge text — tight below stats, immediately before photo */
     .mission-bridge {
       font-size: clamp(16px, 1.8vw, 20px); font-weight: 300; line-height: 1.75;
       color: rgba(231,232,230,0.58); max-width: 620px;
-      margin: 0 auto 72px; text-align: center;
+      margin: 28px auto 0; text-align: center;
     }
     /* Isolation photo */
     .mission-isolation-wrap {
@@ -1657,15 +1658,15 @@
         </div>
       </div>
 
+      <!-- Bridge — sits tight below the stats -->
+      <p class="mission-bridge">You know what this feels like. A whole weekend on the phone, and Sunday night you put it down and can't name a single real conversation from the past 48 hours.</p>
+
     </div>
 
-    <!-- Full-bleed isolation photo — bridge text overlaid -->
+    <!-- Full-bleed isolation photo -->
     <div class="mission-isolation-wrap">
       <img src="brand_assets/ISOLATION.png" class="mission-isolation-img" alt="" loading="lazy"/>
       <div class="mission-isolation-overlay"></div>
-      <div class="mission-isolation-text">
-        <p>You know what this feels like. A whole weekend on the phone, and Sunday night you put it down and can't name a single real conversation from the past 48 hours.</p>
-      </div>
     </div>
 
     <!-- Below the image: pivot + reasons + CTA -->
@@ -2143,47 +2144,59 @@
       const statEls = document.querySelectorAll('.mission-stat-value[data-target]');
       if (!statEls.length) return;
 
-      // easeOutExpo: slams fast then decelerates sharply — punchy, satisfying
-      function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+      // easeInOutExpo: starts slow, accelerates through the middle,
+      // settles gracefully at the end — satisfying and not rushed
+      function easeInOutExpo(t) {
+        if (t === 0) return 0;
+        if (t === 1) return 1;
+        return t < 0.5
+          ? Math.pow(2, 20 * t - 10) / 2
+          : (2 - Math.pow(2, -20 * t + 10)) / 2;
+      }
+
+      const rafMap = new Map(); // track active animation per element
+
+      function resetStat(el) {
+        if (rafMap.has(el)) { cancelAnimationFrame(rafMap.get(el)); rafMap.delete(el); }
+        const span     = el.querySelector('span');
+        const suffix   = span ? span.outerHTML : '';
+        const decimals = (el.dataset.target || '').includes('.') ? 1 : 0;
+        el.innerHTML = (0).toFixed(decimals) + suffix;
+      }
 
       function animateStat(el) {
+        if (rafMap.has(el)) { cancelAnimationFrame(rafMap.get(el)); rafMap.delete(el); }
         const targetStr = el.dataset.target;
         const target    = parseFloat(targetStr);
         const decimals  = targetStr.includes('.') ? 1 : 0;
         const span      = el.querySelector('span');
         const suffix    = span ? span.outerHTML : '';
-        const duration  = 1500;
+        const duration  = 2200;
         const startTime = performance.now();
         function tick(now) {
           const t   = Math.min((now - startTime) / duration, 1);
-          const val = easeOutExpo(t) * target;
+          const val = easeInOutExpo(t) * target;
           el.innerHTML = val.toFixed(decimals) + suffix;
-          if (t < 1) requestAnimationFrame(tick);
+          if (t < 1) { rafMap.set(el, requestAnimationFrame(tick)); }
+          else        { rafMap.delete(el); }
         }
-        requestAnimationFrame(tick);
+        rafMap.set(el, requestAnimationFrame(tick));
       }
 
+      // No unobserve — resets when leaving, replays when re-entering
       const countObs = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            animateStat(entry.target);
-            countObs.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) animateStat(entry.target);
+          else                      resetStat(entry.target);
         });
       }, { threshold: 0.5 });
 
-      statEls.forEach(el => {
-        const span     = el.querySelector('span');
-        const suffix   = span ? span.outerHTML : '';
-        const decimals = (el.dataset.target || '').includes('.') ? 1 : 0;
-        el.innerHTML = (0).toFixed(decimals) + suffix;
-        countObs.observe(el);
-      });
+      statEls.forEach(el => { resetStat(el); countObs.observe(el); });
     })();
 
     // ── Mission: scroll reveal ────────────────────────────────────
     (function() {
-      const targets = document.querySelectorAll('.mission-reason, .mission-pivot, .mission-isolation-wrap, .mission-cta-row');
+      const targets = document.querySelectorAll('.mission-reason, .mission-pivot, .mission-cta-row');
       if (!targets.length) return;
       let reasonIdx = 0;
       targets.forEach(el => {
