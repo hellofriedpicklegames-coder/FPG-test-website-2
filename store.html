@@ -408,6 +408,32 @@
     .btn-checkout { width: 100%; background: var(--brand); color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; box-shadow: 0 2px 16px rgba(237,224,144,0.30); transition: filter 0.2s, box-shadow 0.2s ease; margin-bottom: 12px; }
     .btn-checkout:hover { filter: brightness(1.1); box-shadow: 0 6px 28px rgba(237,224,144,0.55); }
     .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
+
+    /* ── Hamburger + Mobile Nav ── */
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #e7e8e6; border-radius: 1px; transition: transform 0.22s ease, opacity 0.22s ease; pointer-events: none; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(12,14,10,0.97); backdrop-filter: blur(16px); padding: 12px 28px 28px; flex-direction: column; z-index: 199; border-bottom: 1px solid rgba(153,153,101,0.15); }
+    .mobile-nav.open { display: flex; animation: mobileNavIn 0.2s ease forwards; }
+    @keyframes mobileNavIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .mobile-nav a { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.1em; color: rgba(231,232,230,0.82); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.15s ease; }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:active { color: #e7e8e6; }
+
+    /* ── Mobile ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-drag-callout { display: none; }
+      .store-hero { padding: 72px 20px 52px; }
+      .store-title { white-space: normal; }
+    }
+    @media (max-width: 600px) {
+      .nav-logo { font-size: 17px; }
+    }
   </style>
 </head>
 <body>
@@ -421,10 +447,21 @@
     <li><a href="store.html" class="active">STORE</a></li>
     <li><a href="contact.html">CONTACT</a></li>
   </ul>
+  <button class="hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <button class="nav-cart" onclick="openCart()">
     CART &nbsp;<span id="cart-count">0</span>
   </button>
 </nav>
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <a href="index.html">HOME</a>
+  <a href="index.html#games">ALL GAMES</a>
+  <a href="fow.html">FART OF WAR</a>
+  <a href="dispelled.html">DISPELLED</a>
+  <a href="expansion.html">EXPANSION PACK</a>
+  <a href="contact.html">CONTACT</a>
+</div>
 
 <!-- HERO -->
 <section class="store-hero">
@@ -710,6 +747,27 @@
   }
   function openCart()  { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
   function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
+
+  // Hamburger menu
+  (function() {
+    const btn = document.getElementById('nav-hamburger');
+    const nav = document.getElementById('mobile-nav');
+    if (!btn || !nav) return;
+    btn.addEventListener('click', function() {
+      const open = btn.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      nav.classList.toggle('open', open);
+      nav.setAttribute('aria-hidden', !open);
+    });
+    nav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', false);
+        nav.classList.remove('open');
+        nav.setAttribute('aria-hidden', true);
+      });
+    });
+  })();
 </script>
 </body>
 </html>

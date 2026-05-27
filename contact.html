@@ -27,6 +27,18 @@
     nav a:hover { color: #e7e8e6; }
     .btn-header { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; background: #2beb9a; color: #0d0c07; padding: 0 22px; height: 40px; display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; box-shadow: 0 2px 14px rgba(43,235,154,0.28); transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; }
     .btn-header:hover { background: #1bc07c; transform: translateY(-1px); box-shadow: 0 4px 24px rgba(43,235,154,0.55); }
+    /* ── Hamburger + Mobile Nav ── */
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #e7e8e6; border-radius: 1px; transition: transform 0.22s ease, opacity 0.22s ease; pointer-events: none; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,12,7,0.97); backdrop-filter: blur(16px); padding: 12px 28px 28px; flex-direction: column; z-index: 199; border-bottom: 1px solid rgba(153,153,101,0.15); }
+    .mobile-nav.open { display: flex; animation: mobileNavIn 0.2s ease forwards; }
+    @keyframes mobileNavIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .mobile-nav a { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.1em; color: rgba(231,232,230,0.82); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.15s ease; }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:active { color: #e7e8e6; }
     /* Main — split layout */
     .contact-main { min-height: calc(100vh - 80px); display: flex; }
     .contact-split { display: flex; width: 100%; min-height: calc(100vh - 80px); }
@@ -82,7 +94,7 @@
     .footer-sig { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.18em; color: rgba(153,153,101,0.28); }
     /* Responsive */
     @media (max-width: 900px) {
-      .header-inner { height: 64px; padding: 0 20px; } nav { display: none; }
+      .header-inner { height: 64px; padding: 0 20px; } nav { display: none; } .hamburger { display: flex; }
       .logo-group span { font-size: 20px; }
       .contact-split { flex-direction: column; }
       .contact-left { flex: none; padding: 56px 20px; }
@@ -106,9 +118,19 @@
         <a href="index.html#makers">ABOUT</a>
         <a href="contact.html">CONTACT</a>
       </nav>
+      <button class="hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
       <a href="store.html" class="btn-header">STORE</a>
     </div>
   </header>
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="index.html">HOME</a>
+    <a href="index.html#games">ALL GAMES</a>
+    <a href="index.html#makers">ABOUT</a>
+    <a href="store.html">STORE</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
 
   <main class="contact-main">
   <div class="contact-split">
@@ -194,6 +216,27 @@
         document.getElementById('signup-success').style.display = 'block';
       }, 800);
     });
+
+    // Hamburger menu
+    (function() {
+      const btn = document.getElementById('nav-hamburger');
+      const nav = document.getElementById('mobile-nav');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', function() {
+        const open = btn.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+        nav.classList.toggle('open', open);
+        nav.setAttribute('aria-hidden', !open);
+      });
+      nav.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          btn.classList.remove('open');
+          btn.setAttribute('aria-expanded', false);
+          nav.classList.remove('open');
+          nav.setAttribute('aria-hidden', true);
+        });
+      });
+    })();
   </script>
 </body>
 </html>
