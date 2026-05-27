@@ -147,6 +147,96 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
     }
     @media (max-width: 430px) { .logo-group span { display: none; } .section-inner { padding: 40px 16px; } .notify-inner { padding: 52px 16px; } }
+
+    /* ── BUY MODULE ── */
+    .buy-section { position: relative; overflow: hidden; }
+    .buy-card {
+      display: grid; grid-template-columns: 55fr 45fr;
+      position: relative; overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      min-height: 540px;
+      background:
+        radial-gradient(ellipse 85% 140% at 28% 55%, rgba(208,235,128,0.16) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 75% at 78% 50%, rgba(208,235,128,0.06) 0%, transparent 60%),
+        #111009;
+    }
+    .buy-card::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='nb'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23nb)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+    .buy-box-col { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 52px 20px 52px 48px; min-height: 540px; }
+    .buy-info-col { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 52px 48px 52px 40px; }
+    .buy-scene { perspective: 820px; perspective-origin: 50% 42%; width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; position: relative; user-select: none; }
+    .buy-box { --w: 400px; --h: 340px; --d: 95px; width: var(--w); height: var(--h); position: relative; transform-style: preserve-3d; cursor: grab; transform: rotateX(10deg) rotateY(-32deg); transition: transform 0.55s cubic-bezier(0.34, 1.46, 0.64, 1); }
+    .buy-box.dragging { transition: none; cursor: grabbing; }
+    .buy-face { position: absolute; backface-visibility: hidden; }
+    .buy-front { width: var(--w); height: var(--h); transform: translateZ(calc(var(--d)/2)); overflow: hidden; border-radius: 2px 0 0 2px; }
+    .buy-back  { width: var(--w); height: var(--h); transform: rotateY(180deg) translateZ(calc(var(--d)/2)); overflow: hidden; }
+    .buy-right { width: var(--d); height: var(--h); left: calc(var(--w) - var(--d)/2); top: 0; transform: rotateY(90deg); }
+    .buy-left  { width: var(--d); height: var(--h); left: calc(-1*var(--d)/2); top: 0; transform: rotateY(-90deg); }
+    .buy-top   { width: var(--w); height: var(--d); left: 0; top: calc(-1*var(--d)/2); transform: rotateX(90deg); }
+    .buy-bottom{ width: var(--w); height: var(--d); left: 0; top: calc(var(--h) - var(--d)/2); transform: rotateX(-90deg); }
+    .buy-fan { position: absolute; bottom: -18px; left: 50%; width: 280px; height: 180px; transform: translateX(-50%); pointer-events: none; z-index: 2; }
+    .buy-fan-card { position: absolute; bottom: 0; left: 50%; width: 100px; height: 142px; border-radius: 6px; overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.75), 0 2px 8px rgba(0,0,0,0.45); transform-origin: 50% 115%; }
+    .buy-fan-card:nth-child(1) { transform: translateX(-50%) rotate(-22deg); filter: brightness(0.35); }
+    .buy-fan-card:nth-child(2) { transform: translateX(-50%) rotate(-11deg); filter: brightness(0.52); }
+    .buy-fan-card:nth-child(3) { transform: translateX(-50%) rotate(0deg) translateY(-10px) scale(1.07); filter: brightness(1); }
+    .buy-fan-card:nth-child(4) { transform: translateX(-50%) rotate(11deg); filter: brightness(0.52); }
+    .buy-fan-card:nth-child(5) { transform: translateX(-50%) rotate(22deg); filter: brightness(0.35); }
+    .buy-fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .buy-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.32em; color: rgba(208,235,128,0.55); margin-bottom: 10px; }
+    .buy-game-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 3.8vw, 62px); letter-spacing: -0.02em; line-height: 0.92; color: #d0eb80; margin-bottom: 16px; }
+    .buy-tagline { font-size: 15px; font-weight: 400; color: rgba(231,232,230,0.62); line-height: 1.72; margin-bottom: 28px; max-width: 360px; }
+    .buy-price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 20px; }
+    .buy-price-dollar { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: rgba(231,232,230,0.5); line-height: 1; }
+    .buy-price-main { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -0.03em; line-height: 1; color: #e7e8e6; }
+    .buy-price-cents { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: rgba(231,232,230,0.5); line-height: 1; }
+    .ks-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(5,206,120,0.08); border: 1px solid rgba(5,206,120,0.25); padding: 9px 16px; margin-bottom: 24px; align-self: flex-start; }
+    .ks-dot { width: 22px; height: 22px; background: #05ce78; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #120d08; flex-shrink: 0; }
+    .ks-text { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.18em; color: rgba(5,206,120,0.85); }
+    .buy-cta { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.1em; color: #120d08; background: #d0eb80; border: none; padding: 0; height: 58px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 2px 20px rgba(208,235,128,0.28); transition: filter 0.2s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease; }
+    .buy-cta:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 32px rgba(208,235,128,0.52); }
+    .buy-cta:active { transform: translateY(0); }
+    .buy-cta-arrow { transition: transform 0.2s ease; }
+    .buy-cta:hover .buy-cta-arrow { transform: translateX(5px); }
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.62); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-drawer { position: fixed; top: 0; right: 0; width: 420px; height: 100vh; background: #1a160a; z-index: 301; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; border-left: 1px solid rgba(153,153,101,0.12); }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header { display: flex; align-items: center; justify-content: space-between; padding: 28px 32px; border-bottom: 1px solid rgba(153,153,101,0.1); flex-shrink: 0; }
+    .cart-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.12em; color: #e7e8e6; }
+    .cart-close { background: none; border: none; color: rgba(231,232,230,0.6); font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
+    .cart-close:hover { color: #e7e8e6; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 16px 32px; }
+    .cart-empty { color: rgba(231,232,230,0.55); font-size: 13px; text-align: center; padding: 52px 0; }
+    .cart-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(153,153,101,0.07); }
+    .cart-item-thumb { width: 64px; height: 64px; background: #181408; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; border-radius: 2px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; color: #e7e8e6; margin-bottom: 4px; }
+    .cart-item-price { font-size: 13px; color: #d0eb80; margin-bottom: 10px; }
+    .cart-qty { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { background: none; border: 1px solid rgba(153,153,101,0.18); color: #e7e8e6; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: border-color 0.2s; }
+    .qty-btn:hover { border-color: rgba(208,235,128,0.5); }
+    .qty-num { font-family: 'Bebas Neue', sans-serif; font-size: 18px; min-width: 22px; text-align: center; color: #e7e8e6; }
+    .cart-footer { padding: 24px 32px 36px; border-top: 1px solid rgba(153,153,101,0.1); flex-shrink: 0; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+    .cart-total-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: rgba(153,153,101,0.6); }
+    .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: -0.01em; color: #e7e8e6; }
+    .btn-checkout { width: 100%; background: #d0eb80; color: #120d08; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; box-shadow: 0 2px 16px rgba(208,235,128,0.25); transition: filter 0.2s, box-shadow 0.2s ease; margin-bottom: 12px; }
+    .btn-checkout:hover { filter: brightness(1.08); box-shadow: 0 6px 28px rgba(208,235,128,0.50); }
+    .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
+    @media (max-width: 900px) {
+      .buy-card { grid-template-columns: 1fr; }
+      .buy-box { --w: 280px; --h: 238px; --d: 68px; }
+      .buy-scene { height: 320px; }
+      .buy-box-col { padding: 44px 20px 20px; min-height: auto; }
+      .buy-info-col { padding: 24px 20px 48px; }
+      .buy-game-title { font-size: 44px; }
+      .cart-drawer { width: 100vw; }
+    }
+    @media (max-width: 600px) { .buy-price-main { font-size: 56px; } }
   </style>
 </head>
 <body>
@@ -194,6 +284,49 @@
       <div class="game-hero-btns">
         <a href="contact.html" class="btn-notify">NOTIFY ME</a>
         <a href="fow.html" class="btn-ghost">← &nbsp;BASE GAME</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buy Module -->
+  <section class="buy-section" id="buy">
+    <div class="buy-card">
+      <div class="buy-box-col">
+        <div class="buy-scene">
+          <div class="buy-box" id="buy-box" data-rot-y="-32" data-rot-x="10">
+            <div class="buy-face buy-front" style="background:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.18)),linear-gradient(145deg,#38380e 0%,#222206 100%);border:1px solid rgba(208,235,128,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:0.22em;color:#d0eb80;opacity:0.7;">FRESH AIR EXPANSION</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:#e7e8e6;line-height:1.1;text-align:center;">COMING<br>SOON</div>
+            </div>
+            <div class="buy-face buy-back"  style="background:linear-gradient(rgba(0,0,0,0.28),rgba(0,0,0,0.28)),linear-gradient(145deg,#2c2c0a 0%,#1a1a04 100%);"></div>
+            <div class="buy-face buy-right" style="background:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.38)),linear-gradient(180deg,#2c2c0a 0%,#1c1c06 100%);"></div>
+            <div class="buy-face buy-left"  style="background:linear-gradient(rgba(0,0,0,0.48),rgba(0,0,0,0.48)),#161604;"></div>
+            <div class="buy-face buy-top"   style="background:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),linear-gradient(90deg,#38380e 0%,#2c2c0a 100%);"></div>
+            <div class="buy-face buy-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#0e0e04;"></div>
+          </div>
+          <div class="buy-fan">
+            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/rosegun.png" alt="" loading="lazy"/></div>
+            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/oldegg.png" alt="" loading="lazy"/></div>
+            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/gasquatch.png" alt="" loading="lazy"/></div>
+            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/fartcannon.png" alt="" loading="lazy"/></div>
+            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/rearadmiral.png" alt="" loading="lazy"/></div>
+          </div>
+        </div>
+      </div>
+      <div class="buy-info-col">
+        <div class="buy-eyebrow">FART OF WAR · EXPANSION PACK</div>
+        <div class="buy-game-title">FRESH AIR<br>EXPANSION PACK</div>
+        <p class="buy-tagline">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns! Shuffle into the base game and watch things escalate.</p>
+        <div class="buy-price-row">
+          <span class="buy-price-dollar">$</span>
+          <span class="buy-price-main">14</span>
+          <span class="buy-price-cents">.99</span>
+        </div>
+        <div class="ks-badge">
+          <div class="ks-dot">K</div>
+          <span class="ks-text">BACKED IN 19 HOURS ON KICKSTARTER</span>
+        </div>
+        <button class="buy-cta" onclick="addToCart('exp')">NOTIFY ME WHEN IT DROPS &nbsp;<span class="buy-cta-arrow">→</span></button>
       </div>
     </div>
   </section>
@@ -320,6 +453,26 @@
     </div>
   </footer>
 
+  <!-- Cart -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <span class="cart-title">YOUR CART</span>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">TOTAL</span>
+        <span class="cart-total-amount" id="cart-total">$0.00</span>
+      </div>
+      <button class="btn-checkout">PROCEED TO CHECKOUT</button>
+      <p class="cart-note">Taxes and shipping calculated at checkout</p>
+    </div>
+  </div>
+
   <script>
     const header = document.getElementById('site-header');
     window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 12); }, { passive: true });
@@ -414,6 +567,64 @@
         });
       });
     })();
+
+    /* ── BUY BOX DRAG-TO-ROTATE ── */
+    (function() {
+      const box = document.getElementById('buy-box');
+      if (!box) return;
+      let dragging = false, lastX = 0, lastY = 0;
+      let rotY = parseFloat(box.dataset.rotY);
+      let rotX = parseFloat(box.dataset.rotX);
+      const apply = () => { box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
+      const start = e => {
+        dragging = true; box.classList.add('dragging');
+        const p = e.touches ? e.touches[0] : e;
+        lastX = p.clientX; lastY = p.clientY; e.preventDefault();
+      };
+      const move = e => {
+        if (!dragging) return;
+        const p = e.touches ? e.touches[0] : e;
+        const dx = p.clientX - lastX, dy = p.clientY - lastY;
+        rotY += dx * 0.65; rotX -= dy * 0.4;
+        rotX = Math.max(-35, Math.min(35, rotX));
+        apply(); lastX = p.clientX; lastY = p.clientY;
+      };
+      const end = () => {
+        if (!dragging) return;
+        dragging = false; box.classList.remove('dragging');
+        clearTimeout(box._snap);
+        box._snap = setTimeout(() => {
+          box.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
+          rotY = parseFloat(box.dataset.rotY); rotX = parseFloat(box.dataset.rotX);
+          apply();
+          setTimeout(() => { box.style.transition = ''; }, 850);
+        }, 1800);
+      };
+      box.addEventListener('mousedown', start);
+      box.addEventListener('touchstart', start, { passive: false });
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, { passive: false });
+      document.addEventListener('mouseup', end);
+      document.addEventListener('touchend', end);
+    })();
+
+    /* ── CART ── */
+    const PRODUCTS = { exp: { name: 'Fresh Air Expansion', price: 14.99, icon: '☢️' } };
+    let cart = {};
+    function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
+    function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
+    function renderCart() {
+      document.getElementById('cart-total').textContent = '$' + Object.entries(cart).reduce((s,[id,q])=>s+PRODUCTS[id].price*q,0).toFixed(2);
+      const el = document.getElementById('cart-items');
+      const count = Object.values(cart).reduce((a,b)=>a+b,0);
+      if (!count) { el.innerHTML='<p class="cart-empty">Your cart is empty.</p>'; return; }
+      el.innerHTML = Object.entries(cart).map(([id,qty]) => {
+        const p = PRODUCTS[id];
+        return `<div class="cart-item"><div class="cart-item-thumb">${p.icon}</div><div class="cart-item-info"><div class="cart-item-name">${p.name}</div><div class="cart-item-price">$${p.price.toFixed(2)} each</div><div class="cart-qty"><button class="qty-btn" onclick="changeQty('${id}',-1)">−</button><span class="qty-num">${qty}</span><button class="qty-btn" onclick="changeQty('${id}',1)">+</button></div></div></div>`;
+      }).join('');
+    }
+    function openCart()  { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
+    function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
   </script>
 </body>
 </html>
