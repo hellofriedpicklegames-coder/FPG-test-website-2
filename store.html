@@ -430,9 +430,28 @@
       .hero-drag-callout { display: none; }
       .store-hero { padding: 72px 20px 52px; }
       .store-title { white-space: normal; }
+
+      /* Product grid: one card per row */
+      .product-grid { grid-template-columns: 1fr; gap: 0; }
+      .product-card { padding: 52px 24px 44px; }
+      .product-name { white-space: normal; }
+      .box-3d { --w: 240px; --h: 205px; --d: 62px; }
+
+      /* Bundle: stack vertically */
+      .bundle-teaser { flex-direction: column; align-items: flex-start; padding: 52px 24px; gap: 28px; }
+      .bundle-price-wrap { align-items: flex-start; flex-direction: row; align-items: center; gap: 24px; }
+      .bundle-now { font-size: 56px; }
+      .btn-bundle { white-space: nowrap; }
+
+      /* Trust strip */
+      .trust-strip { padding: 40px 24px; gap: 28px; justify-content: flex-start; }
+
+      /* Cart drawer: full width on mobile */
+      .cart-drawer { width: 100vw; }
     }
     @media (max-width: 600px) {
       .nav-logo { font-size: 17px; }
+      .product-card { padding: 44px 20px 40px; }
     }
   </style>
 </head>
