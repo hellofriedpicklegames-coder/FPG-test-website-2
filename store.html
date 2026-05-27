@@ -156,6 +156,20 @@
       margin-bottom: 32px; flex-shrink: 0; position: relative;
       user-select: none;
     }
+    /* Per-game glow halo behind box */
+    .box-scene::before {
+      content: ''; position: absolute;
+      width: 220px; height: 220px; border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      filter: blur(52px);
+      opacity: 0.32;
+      transition: opacity 0.4s ease;
+      z-index: 0; pointer-events: none;
+    }
+    .card-fow      .box-scene::before { background: radial-gradient(ellipse at center, rgba(139,201,139,1) 0%, transparent 70%); }
+    .card-dispelled .box-scene::before { background: radial-gradient(ellipse at center, rgba(149,202,224,1) 0%, transparent 70%); }
+    .card-exp      .box-scene::before { background: radial-gradient(ellipse at center, rgba(200,220,96,1) 0%, transparent 70%); }
+    .product-card:hover .box-scene::before { opacity: 0.55; }
     .box-3d {
       --w: 270px; --h: 230px; --d: 70px;
       width: var(--w); height: var(--h);

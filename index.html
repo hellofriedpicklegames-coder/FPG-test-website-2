@@ -210,7 +210,7 @@
     .nav-dropdown-menu a:hover { color: #e7e8e6; background: rgba(153,153,101,0.08); }
     .nav-dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px; }
     /* Cart + STORE grouped */
-    .header-cta { display: flex; align-items: center; flex-shrink: 0; }
+    .header-cta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
     .btn-header {
       font-family: 'Bebas Neue', sans-serif;
@@ -1426,9 +1426,9 @@
         <span></span><span></span><span></span>
       </button>
       <div class="header-cta">
-        <a href="store.html" class="btn-nav-cart" aria-label="Go to store">
+        <button class="btn-nav-cart" onclick="openCart()" aria-label="Open cart">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        </a>
+        </button>
         <a href="store.html" class="btn-header">STORE</a>
       </div>
     </div>
@@ -1747,19 +1747,19 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:72px;padding-bottom:64px;border-bottom:1px solid rgba(153,153,101,0.1);">
         <div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:-0.02em;line-height:1;color:#e7e8e6;margin-bottom:28px;">FRIED PICKLE<br/>GAMES</div>
-          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers. We've played a card game at dinner almost every night of our lives, started it ourselves and never stopped. Somewhere in all those hands dealt and arguments over the rules, making one of our own seemed inevitable.</p>
-          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started in 2023, at a Mexican restaurant, after a family trip to Costa Rica collapsed at the airport. We were talking about Sun Tzu. Someone said "Fart of War." It was a bad joke. It stuck for two years.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers. We've played a card game at dinner almost every night of our lives — we started doing it ourselves and never stopped. After enough hands dealt and enough arguments over the rules, we just had to make our own.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started in 2023, at a Mexican restaurant. A family trip had just fallen through, and we ended up at a table talking about Sun Tzu. Someone said "Fart of War." It was a bad joke. It stuck for two years.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">What followed was messier than we expected: index cards on every surface, 52 hand-drawn card characters, two consulting agencies, a Christmas campaign that got called off, and a three-month road trip working out of libraries and roadside cafes. The box took until August 2024 to finally get right. A few months later, we held a prototype.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;">Every card we design starts with one question: <em style="color:rgba(231,232,230,0.82);">will this make people want to gather?</em> If yes, it ships.</p>
         </div>
         <div style="display:flex;flex-direction:column;gap:20px;">
           <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #ede090;">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#ede090;margin-bottom:10px;">THE ORIGIN</div>
-            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">A failed trip to Costa Rica, a Mexican restaurant, and a Sun Tzu conversation. Someone said "Fart of War" as a joke. Two years later it was a real game with real cards.</p>
+            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">A family trip fell through. We ended up at a Mexican restaurant, talking about Sun Tzu. Someone said "Fart of War" as a joke. Two years later it was a real game with real cards.</p>
           </div>
           <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #2beb9a;">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#2beb9a;margin-bottom:10px;">THE MISSION</div>
-            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">We are defiantly, unapologetically pro-table. We believe the world has enough screens, and not enough card games. We intend to fix that.</p>
+            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">We are defiantly, unapologetically pro-table. We believe the world has enough screens, and not enough card games. We're fixing that.</p>
           </div>
           <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #95cae0;">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#95cae0;margin-bottom:10px;">EST. 2024</div>
