@@ -1363,6 +1363,37 @@
       transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .btn-nav-cart:hover { background: rgba(43,235,154,0.14); border-color: rgba(43,235,154,0.5); box-shadow: 0 2px 14px rgba(43,235,154,0.28); }
+    #cart-count { position: absolute; top: 3px; right: 1px; background: #ede090; color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 10px; padding: 0 4px; min-width: 14px; text-align: center; pointer-events: none; display: none; }
+    #cart-count.has-items { display: block; }
+
+    /* ── Cart Drawer ── */
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.62); z-index: 400; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-drawer { position: fixed; top: 0; right: 0; width: 420px; height: 100vh; background: #1a1e16; z-index: 401; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; border-left: 1px solid rgba(153,153,101,0.1); }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header { display: flex; align-items: center; justify-content: space-between; padding: 28px 32px; border-bottom: 1px solid rgba(153,153,101,0.1); flex-shrink: 0; }
+    .cart-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.12em; color: #e7e8e6; }
+    .cart-close { background: none; border: none; color: rgba(231,232,230,0.45); font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
+    .cart-close:hover { color: #e7e8e6; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 16px 32px; }
+    .cart-empty { color: rgba(153,153,101,0.55); font-size: 13px; text-align: center; padding: 52px 0; }
+    .cart-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(153,153,101,0.07); }
+    .cart-item-thumb { width: 64px; height: 64px; background: #111309; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; border-radius: 2px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; color: #e7e8e6; margin-bottom: 4px; }
+    .cart-item-price { font-size: 13px; color: #2beb9a; margin-bottom: 10px; }
+    .cart-qty { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { background: none; border: 1px solid rgba(153,153,101,0.18); color: #e7e8e6; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: border-color 0.2s; }
+    .qty-btn:hover { border-color: rgba(237,224,144,0.5); }
+    .qty-num { font-family: 'Bebas Neue', sans-serif; font-size: 18px; min-width: 22px; text-align: center; color: #e7e8e6; }
+    .cart-footer { padding: 24px 32px 36px; border-top: 1px solid rgba(153,153,101,0.1); flex-shrink: 0; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+    .cart-total-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: #999965; }
+    .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: -0.01em; color: #e7e8e6; }
+    .btn-checkout { width: 100%; background: #ede090; color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; border: none; height: 56px; cursor: pointer; box-shadow: 0 2px 16px rgba(237,224,144,0.30); transition: filter 0.2s, box-shadow 0.2s ease; margin-bottom: 12px; }
+    .btn-checkout:hover { filter: brightness(1.1); box-shadow: 0 6px 28px rgba(237,224,144,0.55); }
+    .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
+    @media (max-width: 600px) { .cart-drawer { width: 100vw; } }
   </style>
 </head>
 
@@ -1428,6 +1459,7 @@
       <div class="header-cta">
         <button class="btn-nav-cart" onclick="openCart()" aria-label="Open cart">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span id="cart-count">0</span>
         </button>
         <a href="store.html" class="btn-header">STORE</a>
       </div>
@@ -1747,7 +1779,7 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:72px;padding-bottom:64px;border-bottom:1px solid rgba(153,153,101,0.1);">
         <div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:-0.02em;line-height:1;color:#e7e8e6;margin-bottom:28px;">FRIED PICKLE<br/>GAMES</div>
-          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers. We've played a card game at dinner almost every night of our lives — we started doing it ourselves and never stopped. After enough hands dealt and enough arguments over the rules, we just had to make our own.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers. We've played a card game at dinner almost every night of our lives. We started doing it ourselves and never stopped. After enough hands dealt and enough arguments over the rules, we just had to make our own.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started in 2023, at a Mexican restaurant. A family trip had just fallen through, and we ended up at a table talking about Sun Tzu. Someone said "Fart of War." It was a bad joke. It stuck for two years.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">What followed was messier than we expected: index cards on every surface, 52 hand-drawn card characters, two consulting agencies, a Christmas campaign that got called off, and a three-month road trip working out of libraries and roadside cafes. The box took until August 2024 to finally get right. A few months later, we held a prototype.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;">Every card we design starts with one question: <em style="color:rgba(231,232,230,0.82);">will this make people want to gather?</em> If yes, it ships.</p>
@@ -2237,6 +2269,67 @@
         });
       });
     })();
+  </script>
+
+  <!-- ▓▓▓ CART DRAWER ▓▓▓ -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <span class="cart-title">YOUR CART</span>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">TOTAL</span>
+        <span class="cart-total-amount" id="cart-total">$0.00</span>
+      </div>
+      <button class="btn-checkout" onclick="window.location.href='store.html'">PROCEED TO CHECKOUT</button>
+      <p class="cart-note">Taxes and shipping calculated at checkout</p>
+    </div>
+  </div>
+
+  <script>
+    /* ── CART ── */
+    const PRODUCTS = {
+      fow:       { name: 'Fart of War',         price: 19.99, icon: '💨' },
+      dispelled: { name: 'Dispelled',           price: 19.99, icon: '🧙' },
+      exp:       { name: 'Fresh Air Expansion', price: 9.99,  icon: '☢️' },
+    };
+    let cart = {};
+
+    function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
+
+    function renderCart() {
+      const count = Object.values(cart).reduce((a,b)=>a+b,0);
+      const countEl = document.getElementById('cart-count');
+      if (countEl) { countEl.textContent = count; countEl.classList.toggle('has-items', count > 0); }
+      const totalEl = document.getElementById('cart-total');
+      if (totalEl) totalEl.textContent = '$' + Object.entries(cart).reduce((s,[id,q])=>s+PRODUCTS[id].price*q,0).toFixed(2);
+      const el = document.getElementById('cart-items');
+      if (!el) return;
+      if (!count) { el.innerHTML='<p class="cart-empty">Your cart is empty.</p>'; return; }
+      el.innerHTML = Object.entries(cart).map(([id,qty]) => {
+        const p = PRODUCTS[id];
+        return `<div class="cart-item">
+          <div class="cart-item-thumb">${p.icon}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${p.name}</div>
+            <div class="cart-item-price">$${p.price.toFixed(2)} each</div>
+            <div class="cart-qty">
+              <button class="qty-btn" onclick="changeQty('${id}',-1)">−</button>
+              <span class="qty-num">${qty}</span>
+              <button class="qty-btn" onclick="changeQty('${id}',1)">+</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openCart()  { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
+    function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
   </script>
 
 </body>
