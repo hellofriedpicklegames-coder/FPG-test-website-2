@@ -756,11 +756,12 @@
     dispelled: { name: 'Dispelled',            price: 19.99, icon: '🧙' },
     exp:       { name: 'Fresh Air Expansion',  price: 9.99,  icon: '☢️' },
   };
-  let cart = {};
+  let cart = JSON.parse(localStorage.getItem('fpg_cart') || '{}');
+  function saveCart() { localStorage.setItem('fpg_cart', JSON.stringify(cart)); }
 
-  function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
-  function addBundle()   { ['fow','dispelled','exp'].forEach(id => cart[id]=(cart[id]||0)+1); renderCart(); openCart(); }
-  function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
+  function addToCart(id) { cart[id] = (cart[id]||0) + 1; saveCart(); renderCart(); openCart(); }
+  function addBundle()   { ['fow','dispelled','exp'].forEach(id => cart[id]=(cart[id]||0)+1); saveCart(); renderCart(); openCart(); }
+  function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; saveCart(); renderCart(); }
 
   function renderCart() {
     const count = Object.values(cart).reduce((a,b)=>a+b,0);

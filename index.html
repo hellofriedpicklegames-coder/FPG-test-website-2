@@ -2298,9 +2298,10 @@
       dispelled: { name: 'Dispelled',           price: 19.99, icon: '🧙' },
       exp:       { name: 'Fresh Air Expansion', price: 9.99,  icon: '☢️' },
     };
-    let cart = {};
+    let cart = JSON.parse(localStorage.getItem('fpg_cart') || '{}');
+    function saveCart() { localStorage.setItem('fpg_cart', JSON.stringify(cart)); }
 
-    function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
+    function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; saveCart(); renderCart(); }
 
     function renderCart() {
       const count = Object.values(cart).reduce((a,b)=>a+b,0);
@@ -2330,6 +2331,9 @@
 
     function openCart()  { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
     function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
+
+    // Sync badge + drawer contents on page load
+    renderCart();
   </script>
 
 </body>
