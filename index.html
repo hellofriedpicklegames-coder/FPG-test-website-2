@@ -207,6 +207,7 @@
     }
     .nav-dropdown-menu a::after { display: none !important; }
     .nav-dropdown-menu a:hover { color: #e7e8e6; background: rgba(153,153,101,0.08); }
+    .nav-dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px; }
     /* Cart + STORE grouped */
     .header-cta { display: flex; align-items: center; flex-shrink: 0; }
 
@@ -627,112 +628,143 @@
     /* ===================== MISSION ===================== */
     .mission-section {
       position: relative; overflow: hidden;
-      background: #0d0c07;
-      border-top: 1px solid rgba(153,153,101,0.1);
-      border-bottom: 1px solid rgba(153,153,101,0.1);
+      background: #0e0c08;
+      border-top: 1px solid rgba(153,153,101,0.12);
+      border-bottom: 1px solid rgba(153,153,101,0.12);
     }
+    /* Persistent atmospheric layer */
     .mission-section::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse 60% 50% at 50% -5%, rgba(153,153,101,0.07) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 55% at 8% 90%, rgba(237,224,144,0.04) 0%, transparent 50%),
-        radial-gradient(ellipse 30% 40% at 92% 60%, rgba(43,235,154,0.03) 0%, transparent 45%);
+        radial-gradient(ellipse 55% 35% at 50% 0%, rgba(237,224,144,0.055) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 55% at 8% 88%, rgba(237,224,144,0.03) 0%, transparent 48%),
+        radial-gradient(ellipse 35% 40% at 94% 55%, rgba(43,235,154,0.02) 0%, transparent 42%);
     }
     /* Verse */
     .mission-verse-wrap {
-      padding: 100px 48px 72px; text-align: center; position: relative; z-index: 1;
+      padding: 128px 48px 88px; text-align: center;
+      position: relative; z-index: 1;
+      min-height: 52vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+    }
+    /* Halo behind the verse */
+    .mission-verse-wrap::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 72% 65% at 50% 48%, rgba(237,224,144,0.06) 0%, rgba(237,224,144,0.02) 38%, transparent 65%);
     }
     .mission-verse {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(26px, 3.8vw, 50px);
+      font-size: clamp(28px, 4.2vw, 56px);
       font-style: italic; font-weight: 300;
-      color: #e7e8e6; line-height: 1.25;
-      letter-spacing: -0.02em; margin-bottom: 18px;
-      max-width: 800px; margin-left: auto; margin-right: auto;
+      color: #f0eeea; line-height: 1.22;
+      letter-spacing: -0.025em; margin-bottom: 20px;
+      max-width: 860px; position: relative;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.8);
     }
     .mission-verse-ref {
       font-family: 'Bebas Neue', sans-serif; font-size: 12px;
-      letter-spacing: 0.24em; color: rgba(153,153,101,0.45);
+      letter-spacing: 0.26em; color: rgba(153,153,101,0.4);
+      position: relative;
+    }
+    /* thin rule below verse */
+    .mission-verse-rule {
+      width: 48px; height: 1px; background: rgba(153,153,101,0.2);
+      margin: 32px auto 0; position: relative;
     }
     /* Body content */
     .mission-body {
-      max-width: 1440px; margin: 0 auto; padding: 0 48px 88px;
+      max-width: 1440px; margin: 0 auto; padding: 0 48px 96px;
       position: relative; z-index: 1;
     }
     .mission-opener {
-      font-size: clamp(17px, 2vw, 22px); font-weight: 300; line-height: 1.7;
-      color: rgba(231,232,230,0.68); max-width: 680px;
-      margin: 0 auto 80px; text-align: center;
+      font-size: clamp(16px, 1.8vw, 21px); font-weight: 300; line-height: 1.75;
+      color: rgba(231,232,230,0.62); max-width: 640px;
+      margin: 0 auto 88px; text-align: center;
     }
     /* Stats grid */
     .mission-stats {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 2px; margin-bottom: 100px;
-      background: rgba(153,153,101,0.1);
-      border: 1px solid rgba(153,153,101,0.1);
+      gap: 1px; margin-bottom: 96px;
+      background: rgba(153,153,101,0.12);
+      border: 1px solid rgba(153,153,101,0.12);
     }
     .mission-stat {
-      background: #0d0c07; padding: 44px 28px; text-align: center;
+      background: #0e0c08; padding: 48px 28px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .mission-stat::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: rgba(237,224,144,0.14);
     }
     .mission-stat-value {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(44px, 5vw, 76px);
-      line-height: 1; color: #e7e8e6; margin-bottom: 14px;
+      font-size: clamp(48px, 5.5vw, 84px);
+      line-height: 1; color: #ede090; margin-bottom: 14px;
+      filter: drop-shadow(0 0 24px rgba(237,224,144,0.18));
     }
-    .mission-stat-value em { color: #ede090; font-style: normal; }
+    .mission-stat-value span { font-size: 0.55em; color: rgba(237,224,144,0.7); }
     .mission-stat-label {
       font-size: 13px; font-weight: 300;
-      color: rgba(231,232,230,0.5); line-height: 1.55;
+      color: rgba(231,232,230,0.48); line-height: 1.6;
     }
     .mission-stat-source {
-      font-size: 10px; color: rgba(153,153,101,0.32);
+      font-size: 10px; color: rgba(153,153,101,0.28);
       margin-top: 10px; font-style: italic; letter-spacing: 0.03em;
     }
+    /* Bridge text between stats and reasons */
+    .mission-bridge {
+      font-size: clamp(16px, 1.8vw, 20px); font-weight: 300; line-height: 1.75;
+      color: rgba(231,232,230,0.58); max-width: 620px;
+      margin: 0 auto 72px; text-align: center;
+    }
     /* Why card games */
-    .mission-pivot { text-align: center; margin-bottom: 56px; position: relative; z-index: 1; }
+    .mission-pivot { text-align: center; margin-bottom: 52px; position: relative; z-index: 1; }
     .mission-pivot-eyebrow {
       font-family: 'Bebas Neue', sans-serif; font-size: 12px;
-      letter-spacing: 0.22em; color: rgba(153,153,101,0.45); margin-bottom: 14px;
+      letter-spacing: 0.22em; color: rgba(153,153,101,0.42); margin-bottom: 14px;
     }
     .mission-pivot-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(40px, 6vw, 82px);
-      letter-spacing: -0.025em; line-height: 0.95; color: #e7e8e6;
+      font-size: clamp(42px, 6.5vw, 88px);
+      letter-spacing: -0.03em; line-height: 0.92; color: #e7e8e6;
     }
     /* Reasons grid */
     .mission-reasons {
       display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 2px; margin-bottom: 72px;
+      gap: 1px; margin-bottom: 80px;
       background: rgba(153,153,101,0.1);
       border: 1px solid rgba(153,153,101,0.1);
     }
     .mission-reason {
-      background: #0d0c07; padding: 52px 44px;
+      background: #0e0c08; padding: 52px 44px;
       display: flex; gap: 28px; align-items: flex-start;
-      transition: background 0.2s ease;
+      transition: background 0.25s ease;
+      position: relative;
     }
-    .mission-reason:hover { background: #111009; }
+    .mission-reason::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px; background: rgba(153,153,101,0.08);
+    }
+    .mission-reason:hover { background: #121008; }
     .reason-num {
-      font-family: 'Bebas Neue', sans-serif; font-size: 72px;
-      color: rgba(153,153,101,0.09); line-height: 1; flex-shrink: 0;
+      font-family: 'Bebas Neue', sans-serif; font-size: 80px;
+      color: rgba(153,153,101,0.07); line-height: 1; flex-shrink: 0;
     }
     .reason-body h3 {
       font-family: 'Bebas Neue', sans-serif; font-size: 22px;
-      letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 13px;
+      letter-spacing: 0.05em; color: #e0e1de; margin-bottom: 13px;
     }
     .reason-body p {
       font-size: 14px; font-weight: 300;
-      color: rgba(231,232,230,0.5); line-height: 1.8;
+      color: rgba(231,232,230,0.48); line-height: 1.85;
     }
     /* Mission CTA */
-    .mission-cta-row {
-      text-align: center; padding-top: 8px;
-    }
+    .mission-cta-row { text-align: center; padding-top: 8px; }
     .mission-cta-text {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(28px, 3.5vw, 48px);
-      letter-spacing: -0.02em; color: rgba(231,232,230,0.88);
-      margin-bottom: 28px; line-height: 1.1;
+      font-size: clamp(30px, 3.8vw, 52px);
+      letter-spacing: -0.02em; color: rgba(231,232,230,0.85);
+      margin-bottom: 32px; line-height: 1.1;
     }
     .mission-cta-text em { color: #2beb9a; font-style: normal; }
     .btn-mission-cta {
@@ -1549,39 +1581,40 @@
     <div class="mission-verse-wrap">
       <div class="mission-verse">"It is not good for man to be alone."</div>
       <div class="mission-verse-ref">— Genesis 2:18</div>
+      <div class="mission-verse-rule"></div>
     </div>
 
     <div class="mission-body">
 
       <!-- Opener -->
-      <p class="mission-opener">We live in the most connected era in human history. And somehow, the loneliest. The Surgeon General has declared loneliness a public health epidemic. One in three adults says they have no one to talk to. And it's getting worse — not better.</p>
+      <p class="mission-opener">We live in the most connected era in history. And somehow, the loneliest. The Surgeon General has declared loneliness a public health epidemic. One in three adults has no one to talk to. It's getting worse.</p>
 
       <!-- Stats -->
       <div class="mission-stats">
         <div class="mission-stat">
-          <div class="mission-stat-value"><em>58%</em></div>
-          <div class="mission-stat-label">of Americans report feeling lonely on a regular basis</div>
+          <div class="mission-stat-value">58<span>%</span></div>
+          <div class="mission-stat-label">of Americans feel lonely on a regular basis</div>
           <div class="mission-stat-source">Cigna U.S. Loneliness Index</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value"><em>7+</em> hrs</div>
+          <div class="mission-stat-value">7<span>+ hrs</span></div>
           <div class="mission-stat-label">average daily screen time for American adults</div>
           <div class="mission-stat-source">DataReportal, 2024</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value"><em>26%</em></div>
+          <div class="mission-stat-value">26<span>%</span></div>
           <div class="mission-stat-label">higher risk of early death from social isolation</div>
           <div class="mission-stat-source">Brigham Young University</div>
         </div>
         <div class="mission-stat">
-          <div class="mission-stat-value"><em>8.5</em> hrs</div>
+          <div class="mission-stat-value">8.5<span> hrs</span></div>
           <div class="mission-stat-label">daily screen entertainment for teenagers</div>
           <div class="mission-stat-source">Common Sense Media, 2023</div>
         </div>
       </div>
 
       <!-- Pivot -->
-      <p style="font-size:clamp(15px,1.6vw,19px);font-weight:300;color:rgba(231,232,230,0.62);max-width:720px;margin:0 auto 64px;text-align:center;line-height:1.75;">We don't think phones or video games are the enemy. People aren't bad for using them. But there is something deeply wrong when the tools built to connect us end up isolating us instead — when a weekend passes and no one gathered.</p>
+      <p class="mission-bridge">You know what this feels like. A whole weekend on the phone, and Sunday night you put it down and can't name a single real conversation from the past 48 hours.</p>
 
       <div class="mission-pivot">
         <div class="mission-pivot-eyebrow">WHY WE MAKE CARD GAMES</div>
@@ -1601,28 +1634,28 @@
           <div class="reason-num">02</div>
           <div class="reason-body">
             <h3>FULLY OFFLINE</h3>
-            <p>No WiFi required. No algorithm deciding what you see. No notification pulling someone away mid-game. Just the people sitting around the table, right now, with nowhere else to be.</p>
+            <p>Your phone stays in your pocket. There's no algorithm deciding what you see. Nobody gets a notification mid-round. Just whoever is sitting at the table.</p>
           </div>
         </div>
         <div class="mission-reason">
           <div class="reason-num">03</div>
           <div class="reason-body">
             <h3>DEMANDS ANOTHER HUMAN</h3>
-            <p>You literally cannot play alone. Every game is a forced act of fellowship — and there is nothing wrong with a little forcing when the alternative is spending Friday night staring at a screen by yourself.</p>
+            <p>You literally can't play alone. A solo card game is just a pile of cards. So you call someone. They call someone. You end up with four people arguing at your kitchen table at midnight and nobody wanted to leave.</p>
           </div>
         </div>
         <div class="mission-reason">
           <div class="reason-num">04</div>
           <div class="reason-body">
             <h3>FITS YOUR LIFE</h3>
-            <p>You can eat, drink, talk, laugh, and argue over a card ruling — all at the same time. Card games don't hijack your evening. They become the best part of it. The part people actually remember.</p>
+            <p>You can eat, drink, and have a whole separate conversation while you play. The game is the reason to gather, not the whole reason to be there. People remember these nights.</p>
           </div>
         </div>
       </div>
 
       <!-- CTA -->
       <div class="mission-cta-row">
-        <div class="mission-cta-text">This is why we make games.<br/><em>This is why you should play them.</em></div>
+        <div class="mission-cta-text">This is why we make games.<br/><em>Go get one.</em></div>
         <a href="store.html" class="btn-mission-cta">GET A GAME →</a>
       </div>
 
@@ -1658,9 +1691,9 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:72px;padding-bottom:64px;border-bottom:1px solid rgba(153,153,101,0.1);">
         <div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:-0.02em;line-height:1;color:#e7e8e6;margin-bottom:28px;">FRIED PICKLE<br/>GAMES</div>
-          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started the way the best things do — around a table, with people we love, making each other laugh.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started at a table, with people we love, cracking each other up.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers who grew up playing games together. As the world kept retreating behind screens, we kept coming back to the table. We couldn't figure out why more people weren't doing the same thing.</p>
-          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">So in 2024 we decided to do something about it. We started making games — weird ones, funny ones, games built for real people sitting in real rooms together. Not for phones. Not for algorithms. For the table.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">So in 2024 we started making games. Weird ones, funny ones, games built for real people sitting in real rooms together. Games that force you off your phone and into the room with whoever you actually care about.</p>
           <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;">Every card we design starts with one question: <em style="color:rgba(231,232,230,0.82);">will this make people want to gather?</em> If the answer is yes, it ships. If not, it goes back to the drawing board.</p>
         </div>
         <div style="display:flex;flex-direction:column;gap:20px;">
