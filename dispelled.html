@@ -287,13 +287,6 @@
             <div class="buy-face buy-top"   style="background:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),linear-gradient(90deg,#253a52 0%,#1e3048 100%);"></div>
             <div class="buy-face buy-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#080e18;"></div>
           </div>
-          <div class="buy-fan">
-            <div class="buy-fan-card" style="background:#162232;"></div>
-            <div class="buy-fan-card" style="background:#101c2c;"></div>
-            <div class="buy-fan-card" style="background:linear-gradient(145deg,#1e3a52,#0e1e34);border:1px solid rgba(149,202,224,0.15);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Bebas Neue',sans-serif;font-size:11px;color:#95cae0;letter-spacing:0.1em;">SPELL</span></div>
-            <div class="buy-fan-card" style="background:#101c2c;"></div>
-            <div class="buy-fan-card" style="background:#162232;"></div>
-          </div>
         </div>
       </div>
       <div class="buy-info-col">
@@ -302,12 +295,8 @@
         <p class="buy-tagline">Use wizards to outwit your friends in this mystic word battle. Pick a wizard each round — they give you a special power. Spell the best words. Win.</p>
         <div class="buy-price-row">
           <span class="buy-price-dollar">$</span>
-          <span class="buy-price-main">22</span>
+          <span class="buy-price-main">19</span>
           <span class="buy-price-cents">.99</span>
-        </div>
-        <div class="ks-badge">
-          <div class="ks-dot">K</div>
-          <span class="ks-text">BACKED IN 19 HOURS ON KICKSTARTER</span>
         </div>
         <button class="buy-cta" onclick="addToCart('dispelled')">NOTIFY ME WHEN IT DROPS &nbsp;<span class="buy-cta-arrow">→</span></button>
       </div>
@@ -563,7 +552,7 @@
     })();
 
     /* ── CART ── */
-    const PRODUCTS = { dispelled: { name: 'Dispelled', price: 22.99, icon: '🧙' } };
+    const PRODUCTS = { dispelled: { name: 'Dispelled', price: 19.99, icon: '🧙' } };
     let cart = {};
     function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
     function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }

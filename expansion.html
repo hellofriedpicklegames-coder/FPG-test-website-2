@@ -304,13 +304,6 @@
             <div class="buy-face buy-top"   style="background:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),linear-gradient(90deg,#38380e 0%,#2c2c0a 100%);"></div>
             <div class="buy-face buy-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#0e0e04;"></div>
           </div>
-          <div class="buy-fan">
-            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/rosegun.png" alt="" loading="lazy"/></div>
-            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/oldegg.png" alt="" loading="lazy"/></div>
-            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/gasquatch.png" alt="" loading="lazy"/></div>
-            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/fartcannon.png" alt="" loading="lazy"/></div>
-            <div class="buy-fan-card"><img src="brand_assets/posters_banners/expansionpack/rearadmiral.png" alt="" loading="lazy"/></div>
-          </div>
         </div>
       </div>
       <div class="buy-info-col">
@@ -319,7 +312,7 @@
         <p class="buy-tagline">Deploy the elusive Gasquatch! Battle your friends with tactical rose guns! Shuffle into the base game and watch things escalate.</p>
         <div class="buy-price-row">
           <span class="buy-price-dollar">$</span>
-          <span class="buy-price-main">14</span>
+          <span class="buy-price-main">9</span>
           <span class="buy-price-cents">.99</span>
         </div>
         <div class="ks-badge">
@@ -609,7 +602,7 @@
     })();
 
     /* ── CART ── */
-    const PRODUCTS = { exp: { name: 'Fresh Air Expansion', price: 14.99, icon: '☢️' } };
+    const PRODUCTS = { exp: { name: 'Fresh Air Expansion', price: 9.99, icon: '☢️' } };
     let cart = {};
     function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
     function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
