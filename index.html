@@ -173,6 +173,43 @@
     nav a:hover { color: #e7e8e6; }
     nav a:hover::after { width: 100%; }
     nav a:focus-visible { outline: 2px solid #999965; outline-offset: 4px; }
+
+    /* ── Nav Dropdown ── */
+    .nav-item { position: relative; display: inline-flex; align-items: center; }
+    .nav-item > a {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.13em;
+      color: rgba(231,232,230,0.82); text-decoration: none; transition: color 0.2s ease;
+    }
+    .nav-item > a svg { flex-shrink: 0; transition: transform 0.2s ease; }
+    .nav-item > a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: #999965; transition: width 0.22s ease; }
+    .nav-item:hover > a { color: #e7e8e6; }
+    .nav-item:hover > a::after { width: 100%; }
+    .nav-item:hover > a svg { transform: rotate(180deg); }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 20px); left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      min-width: 200px; background: rgba(13,12,7,0.98);
+      backdrop-filter: blur(20px); border: 1px solid rgba(153,153,101,0.18);
+      padding: 6px 0; opacity: 0; pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.65); z-index: 201;
+    }
+    .nav-item:hover .nav-dropdown-menu,
+    .nav-item:focus-within .nav-dropdown-menu {
+      opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu a {
+      display: block; padding: 9px 20px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.1em;
+      color: rgba(231,232,230,0.72); text-decoration: none; white-space: nowrap;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .nav-dropdown-menu a::after { display: none !important; }
+    .nav-dropdown-menu a:hover { color: #e7e8e6; background: rgba(153,153,101,0.08); }
+    /* Cart + STORE grouped */
+    .header-cta { display: flex; align-items: center; flex-shrink: 0; }
+
     .btn-header {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 15px;
@@ -587,84 +624,126 @@
     }
 
 
-    /* ===================== HOW TO PLAY ===================== */
-    .how-section {
-      background: #141209;
+    /* ===================== MISSION ===================== */
+    .mission-section {
+      position: relative; overflow: hidden;
+      background: #0d0c07;
       border-top: 1px solid rgba(153,153,101,0.1);
       border-bottom: 1px solid rgba(153,153,101,0.1);
     }
-    .how-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 72px 48px;
+    .mission-section::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% -5%, rgba(153,153,101,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 55% at 8% 90%, rgba(237,224,144,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 30% 40% at 92% 60%, rgba(43,235,154,0.03) 0%, transparent 45%);
     }
-    .how-eyebrow {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.22em;
-      color: rgba(153,153,101,0.5);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    /* Verse */
+    .mission-verse-wrap {
+      padding: 100px 48px 72px; text-align: center; position: relative; z-index: 1;
     }
-    .how-eyebrow::after {
-      content: '';
-      flex: 1;
-      height: 1px;
+    .mission-verse {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(26px, 3.8vw, 50px);
+      font-style: italic; font-weight: 300;
+      color: #e7e8e6; line-height: 1.25;
+      letter-spacing: -0.02em; margin-bottom: 18px;
+      max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .mission-verse-ref {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.24em; color: rgba(153,153,101,0.45);
+    }
+    /* Body content */
+    .mission-body {
+      max-width: 1440px; margin: 0 auto; padding: 0 48px 88px;
+      position: relative; z-index: 1;
+    }
+    .mission-opener {
+      font-size: clamp(17px, 2vw, 22px); font-weight: 300; line-height: 1.7;
+      color: rgba(231,232,230,0.68); max-width: 680px;
+      margin: 0 auto 80px; text-align: center;
+    }
+    /* Stats grid */
+    .mission-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; margin-bottom: 100px;
       background: rgba(153,153,101,0.1);
+      border: 1px solid rgba(153,153,101,0.1);
     }
-    .how-title {
+    .mission-stat {
+      background: #0d0c07; padding: 44px 28px; text-align: center;
+    }
+    .mission-stat-value {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 7vw, 88px);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      color: #e7e8e6;
-      margin-bottom: 48px;
+      font-size: clamp(44px, 5vw, 76px);
+      line-height: 1; color: #e7e8e6; margin-bottom: 14px;
     }
-    .how-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+    .mission-stat-value em { color: #ede090; font-style: normal; }
+    .mission-stat-label {
+      font-size: 13px; font-weight: 300;
+      color: rgba(231,232,230,0.5); line-height: 1.55;
     }
-    .how-visual {
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 2px 10px rgba(153,153,101,0.08);
-      aspect-ratio: 16/9;
+    .mission-stat-source {
+      font-size: 10px; color: rgba(153,153,101,0.32);
+      margin-top: 10px; font-style: italic; letter-spacing: 0.03em;
     }
-    .yt-facade { position: relative; width: 100%; height: 100%; cursor: pointer; background: #000; }
-    .how-visual iframe {
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: none;
+    /* Why card games */
+    .mission-pivot { text-align: center; margin-bottom: 56px; position: relative; z-index: 1; }
+    .mission-pivot-eyebrow {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.22em; color: rgba(153,153,101,0.45); margin-bottom: 14px;
     }
-    .how-steps { display: flex; flex-direction: column; gap: 30px; }
-    .how-step { display: flex; gap: 22px; align-items: flex-start; }
-    .step-num {
+    .mission-pivot-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      color: rgba(153,153,101,0.18);
-      line-height: 1;
-      flex-shrink: 0;
-      width: 44px;
-      text-align: right;
+      font-size: clamp(40px, 6vw, 82px);
+      letter-spacing: -0.025em; line-height: 0.95; color: #e7e8e6;
     }
-    .step-body h3 {
+    /* Reasons grid */
+    .mission-reasons {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 2px; margin-bottom: 72px;
+      background: rgba(153,153,101,0.1);
+      border: 1px solid rgba(153,153,101,0.1);
+    }
+    .mission-reason {
+      background: #0d0c07; padding: 52px 44px;
+      display: flex; gap: 28px; align-items: flex-start;
+      transition: background 0.2s ease;
+    }
+    .mission-reason:hover { background: #111009; }
+    .reason-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 72px;
+      color: rgba(153,153,101,0.09); line-height: 1; flex-shrink: 0;
+    }
+    .reason-body h3 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 0.05em; color: #e7e8e6; margin-bottom: 13px;
+    }
+    .reason-body p {
+      font-size: 14px; font-weight: 300;
+      color: rgba(231,232,230,0.5); line-height: 1.8;
+    }
+    /* Mission CTA */
+    .mission-cta-row {
+      text-align: center; padding-top: 8px;
+    }
+    .mission-cta-text {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 23px;
-      letter-spacing: 0.05em;
-      color: #e7e8e6;
-      margin-bottom: 7px;
+      font-size: clamp(28px, 3.5vw, 48px);
+      letter-spacing: -0.02em; color: rgba(231,232,230,0.88);
+      margin-bottom: 28px; line-height: 1.1;
     }
-    .step-body p {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(231,232,230,0.55);
-      line-height: 1.75;
+    .mission-cta-text em { color: #2beb9a; font-style: normal; }
+    .btn-mission-cta {
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em;
+      background: #2beb9a; color: #0d0c07; padding: 0 44px; height: 58px;
+      display: inline-flex; align-items: center; text-decoration: none;
+      box-shadow: 0 2px 20px rgba(43,235,154,0.3);
+      transition: background 0.2s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
     }
+    .btn-mission-cta:hover { background: #1bc07c; transform: translateY(-2px); box-shadow: 0 6px 32px rgba(43,235,154,0.52); }
+    .btn-mission-cta:active { transform: translateY(0); }
 
     /* ===================== DISPELLED FEATURE ===================== */
     .dispelled-section {
@@ -963,8 +1042,8 @@
 
     @media (max-width: 1024px) {
       .header-inner, .hero-content, .dispelled-content,
-      .how-inner, .makers-inner, .footer-inner { padding-left: 28px; padding-right: 28px; }
-      .section-eyebrow, .row-header, .makers-eyebrow, .how-eyebrow { padding-left: 28px; padding-right: 28px; }
+      .makers-inner, .footer-inner { padding-left: 28px; padding-right: 28px; }
+      .section-eyebrow, .row-header, .makers-eyebrow { padding-left: 28px; padding-right: 28px; }
       .cards-scroll { padding-left: 28px; padding-right: 28px; }
       .hero-dots { right: 28px; }
     }
@@ -1002,8 +1081,10 @@
       .hero-btns { flex-direction: column; align-items: stretch; }
       .hero-dots { right: 20px; bottom: 24px; }
 
-      .how-grid { grid-template-columns: 1fr; gap: 36px; }
-      .how-inner { padding: 52px 20px; }
+      .mission-stats { grid-template-columns: repeat(2, 1fr); }
+      .mission-reasons { grid-template-columns: 1fr; }
+      .mission-verse-wrap { padding: 72px 20px 52px; }
+      .mission-body { padding: 0 20px 64px; }
 
       .makers-grid { grid-template-columns: 1fr 1fr; }
       .makers-section { padding: 60px 0 72px; }
@@ -1015,7 +1096,7 @@
       .dispelled-bg { width: 100%; opacity: 0.15; }
       .dispelled-content { padding: 72px 20px 80px; }
 
-      .section-eyebrow, .makers-eyebrow, .how-eyebrow { padding: 0 20px; }
+      .section-eyebrow, .makers-eyebrow { padding: 0 20px; }
       .games-grid { grid-template-columns: 1fr; padding: 0 20px; gap: 16px; }
 
       .footer-inner { padding: 40px 20px 24px; }
@@ -1061,9 +1142,13 @@
       .logo-group span { display: none; }
       .cards-scroll { padding: 28px 16px; }
       .hero-content { padding-left: 16px; padding-right: 16px; }
-      .how-inner, .makers-inner, .dispelled-content,
+      .makers-inner, .dispelled-content,
       .footer-inner, .section-eyebrow, .row-header,
-      .makers-eyebrow, .how-eyebrow { padding-left: 16px; padding-right: 16px; }
+      .makers-eyebrow { padding-left: 16px; padding-right: 16px; }
+      .mission-stats { grid-template-columns: 1fr 1fr; }
+      .mission-reason { padding: 36px 24px; }
+      .mission-verse-wrap { padding: 56px 16px 40px; }
+      .mission-body { padding: 0 16px 52px; }
     }
   /* ── Email Popup ──────────────────────────────── */
   #popup-overlay {
@@ -1249,24 +1334,35 @@
         <span>FRIED PICKLE GAMES</span>
       </a>
       <nav aria-label="Primary">
-        <a href="#games">GAMES</a>
-        <a href="#how-to-play">HOW TO PLAY</a>
+        <div class="nav-item">
+          <a href="#games">GAMES <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="fow.html">Fart of War</a>
+            <a href="dispelled.html">Dispelled</a>
+            <a href="expansion.html">Expansion Pack</a>
+          </div>
+        </div>
+        <a href="how-to-play.html">HOW TO PLAY</a>
         <a href="#makers">ABOUT</a>
-        <a href="store.html">STORE</a>
         <a href="contact.html">CONTACT</a>
       </nav>
       <button class="hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
-      <a href="store.html" class="btn-nav-cart" aria-label="Go to store">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      </a>
-      <a href="store.html" class="btn-header">STORE</a>
+      <div class="header-cta">
+        <a href="store.html" class="btn-nav-cart" aria-label="Go to store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </a>
+        <a href="store.html" class="btn-header">STORE</a>
+      </div>
     </div>
   </header>
   <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
     <a href="#games">GAMES</a>
-    <a href="#how-to-play">HOW TO PLAY</a>
+    <a href="fow.html" style="font-size:18px;padding:8px 0 8px 20px;color:rgba(231,232,230,0.5);border-bottom-color:rgba(255,255,255,0.04)">— Fart of War</a>
+    <a href="dispelled.html" style="font-size:18px;padding:8px 0 8px 20px;color:rgba(231,232,230,0.5);border-bottom-color:rgba(255,255,255,0.04)">— Dispelled</a>
+    <a href="expansion.html" style="font-size:18px;padding:8px 0 8px 20px;color:rgba(231,232,230,0.5);border-bottom-color:rgba(255,255,255,0.04)">— Expansion Pack</a>
+    <a href="how-to-play.html">HOW TO PLAY</a>
     <a href="#makers">ABOUT</a>
     <a href="store.html">STORE</a>
     <a href="contact.html">CONTACT</a>
@@ -1446,49 +1542,90 @@
 
   </section>
 
-  <!-- ▓▓▓ HOW TO PLAY ▓▓▓ -->
-  <section id="how-to-play" class="how-section">
-    <div class="how-inner">
-      <div class="how-eyebrow">FART OF WAR</div>
-      <div class="how-title">HOW TO PLAY</div>
-      <div class="how-grid">
-        <div class="how-visual">
-          <div class="yt-facade" id="yt-index" onclick="document.getElementById('yt-index').outerHTML='<iframe src=\'https://www.youtube.com/embed/4olooi1JqsI?autoplay=1\' title=\'Fart of War — How to Play\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen style=\'width:100%;height:100%;display:block;border:none;\'></iframe>'">
-            <img src="https://i.ytimg.com/vi/4olooi1JqsI/maxresdefault.jpg" alt="Play: Fart of War — How to Play" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-            <button aria-label="Play video" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(0,0,0,0.75);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg viewBox='0 0 24 24' width='28' height='28' fill='white'><polygon points='5,3 19,12 5,21'/></svg></button>
+  <!-- ▓▓▓ MISSION ▓▓▓ -->
+  <section id="mission" class="mission-section">
+
+    <!-- Verse -->
+    <div class="mission-verse-wrap">
+      <div class="mission-verse">"It is not good for man to be alone."</div>
+      <div class="mission-verse-ref">— Genesis 2:18</div>
+    </div>
+
+    <div class="mission-body">
+
+      <!-- Opener -->
+      <p class="mission-opener">We live in the most connected era in human history. And somehow, the loneliest. The Surgeon General has declared loneliness a public health epidemic. One in three adults says they have no one to talk to. And it's getting worse — not better.</p>
+
+      <!-- Stats -->
+      <div class="mission-stats">
+        <div class="mission-stat">
+          <div class="mission-stat-value"><em>58%</em></div>
+          <div class="mission-stat-label">of Americans report feeling lonely on a regular basis</div>
+          <div class="mission-stat-source">Cigna U.S. Loneliness Index</div>
+        </div>
+        <div class="mission-stat">
+          <div class="mission-stat-value"><em>7+</em> hrs</div>
+          <div class="mission-stat-label">average daily screen time for American adults</div>
+          <div class="mission-stat-source">DataReportal, 2024</div>
+        </div>
+        <div class="mission-stat">
+          <div class="mission-stat-value"><em>26%</em></div>
+          <div class="mission-stat-label">higher risk of early death from social isolation</div>
+          <div class="mission-stat-source">Brigham Young University</div>
+        </div>
+        <div class="mission-stat">
+          <div class="mission-stat-value"><em>8.5</em> hrs</div>
+          <div class="mission-stat-label">daily screen entertainment for teenagers</div>
+          <div class="mission-stat-source">Common Sense Media, 2023</div>
+        </div>
+      </div>
+
+      <!-- Pivot -->
+      <p style="font-size:clamp(15px,1.6vw,19px);font-weight:300;color:rgba(231,232,230,0.62);max-width:720px;margin:0 auto 64px;text-align:center;line-height:1.75;">We don't think phones or video games are the enemy. People aren't bad for using them. But there is something deeply wrong when the tools built to connect us end up isolating us instead — when a weekend passes and no one gathered.</p>
+
+      <div class="mission-pivot">
+        <div class="mission-pivot-eyebrow">WHY WE MAKE CARD GAMES</div>
+        <div class="mission-pivot-title">CARD GAMES ARE<br/>THE ANTIDOTE.</div>
+      </div>
+
+      <!-- 4 Reasons -->
+      <div class="mission-reasons">
+        <div class="mission-reason">
+          <div class="reason-num">01</div>
+          <div class="reason-body">
+            <h3>PROVEN OVER MILLENNIA</h3>
+            <p>People have gathered around games for thousands of years, across every culture and continent. Card games don't need an update. They don't need better hardware. They just need people. If it ain't broke, don't fix it.</p>
           </div>
         </div>
-        <div class="how-steps">
-          <div class="how-step">
-            <div class="step-num">01</div>
-            <div class="step-body">
-              <h3>BUILD YOUR BARRACKS</h3>
-              <p>Shuffle 25 Fart Character cards and deal 3 face-up to each player — those are your soldiers. Draw your hand from the Gas Station deck: 7 cards for 2 players, down to 5 for 4+.</p>
-            </div>
+        <div class="mission-reason">
+          <div class="reason-num">02</div>
+          <div class="reason-body">
+            <h3>FULLY OFFLINE</h3>
+            <p>No WiFi required. No algorithm deciding what you see. No notification pulling someone away mid-game. Just the people sitting around the table, right now, with nowhere else to be.</p>
           </div>
-          <div class="how-step">
-            <div class="step-num">02</div>
-            <div class="step-body">
-              <h3>DRAW, PLAY, OR BOTH</h3>
-              <p>Each turn, choose: Draw &amp; Play 1 card, Draw Twice, or Play Twice. Deploy Fart Characters, stack Modifiers on your fighters, or drop a Special Action on whoever's getting too comfortable.</p>
-            </div>
+        </div>
+        <div class="mission-reason">
+          <div class="reason-num">03</div>
+          <div class="reason-body">
+            <h3>DEMANDS ANOTHER HUMAN</h3>
+            <p>You literally cannot play alone. Every game is a forced act of fellowship — and there is nothing wrong with a little forcing when the alternative is spending Friday night staring at a screen by yourself.</p>
           </div>
-          <div class="how-step">
-            <div class="step-num">03</div>
-            <div class="step-body">
-              <h3>MODIFIER MADNESS</h3>
-              <p>Each Fart Character holds up to 4 Modifier cards. Cancel out equal-opposite Modifiers to wipe them both out — a +2 Can of Beans erases a -2 Peppermint Oil and frees the slot.</p>
-            </div>
-          </div>
-          <div class="how-step">
-            <div class="step-num">04</div>
-            <div class="step-body">
-              <h3>BEWARE THE FART OF WAR</h3>
-              <p>Drawing a Fart of War card ends your turn. Play a Tighty Whitey to cancel it. When the 3rd Fart of War drops uncancelled, the game ends — highest total points wins, and earns a legendary victory toot.</p>
-            </div>
+        </div>
+        <div class="mission-reason">
+          <div class="reason-num">04</div>
+          <div class="reason-body">
+            <h3>FITS YOUR LIFE</h3>
+            <p>You can eat, drink, talk, laugh, and argue over a card ruling — all at the same time. Card games don't hijack your evening. They become the best part of it. The part people actually remember.</p>
           </div>
         </div>
       </div>
+
+      <!-- CTA -->
+      <div class="mission-cta-row">
+        <div class="mission-cta-text">This is why we make games.<br/><em>This is why you should play them.</em></div>
+        <a href="store.html" class="btn-mission-cta">GET A GAME →</a>
+      </div>
+
     </div>
   </section>
 
@@ -1515,7 +1652,34 @@
   <!-- ▓▓▓ MEET THE MAKERS ▓▓▓ -->
   <section id="makers" class="makers-section">
     <div class="makers-inner">
-      <div class="makers-eyebrow">MEET THE MAKERS</div>
+      <div class="makers-eyebrow">OUR STORY</div>
+
+      <!-- Story block -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:72px;padding-bottom:64px;border-bottom:1px solid rgba(153,153,101,0.1);">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:-0.02em;line-height:1;color:#e7e8e6;margin-bottom:28px;">FRIED PICKLE<br/>GAMES</div>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">Fried Pickle Games started the way the best things do — around a table, with people we love, making each other laugh.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">We're Terran and River Greenfield, twin brothers who grew up playing games together. As the world kept retreating behind screens, we kept coming back to the table. We couldn't figure out why more people weren't doing the same thing.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;margin-bottom:20px;">So in 2024 we decided to do something about it. We started making games — weird ones, funny ones, games built for real people sitting in real rooms together. Not for phones. Not for algorithms. For the table.</p>
+          <p style="font-size:15px;font-weight:300;color:rgba(231,232,230,0.6);line-height:1.85;">Every card we design starts with one question: <em style="color:rgba(231,232,230,0.82);">will this make people want to gather?</em> If the answer is yes, it ships. If not, it goes back to the drawing board.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #ede090;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#ede090;margin-bottom:10px;">THE ORIGIN</div>
+            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">Fart of War was designed as a game our whole family could play — something fast, unpredictable, and loud enough that nobody could look at their phone. It worked. So we made more.</p>
+          </div>
+          <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #2beb9a;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#2beb9a;margin-bottom:10px;">THE MISSION</div>
+            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">We are defiantly, unapologetically pro-table. We believe the world has enough screens, and not enough card games. We intend to fix that.</p>
+          </div>
+          <div style="background:#141209;border:1px solid rgba(153,153,101,0.1);padding:28px 32px;border-left:3px solid #95cae0;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.18em;color:#95cae0;margin-bottom:10px;">EST. 2024</div>
+            <p style="font-size:14px;font-weight:300;color:rgba(231,232,230,0.55);line-height:1.75;">Small company. Big table. More games coming.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="makers-eyebrow" style="margin-bottom:36px;">MEET THE MAKERS</div>
       <div class="makers-grid">
 
         <div class="maker-card" tabindex="0">
