@@ -240,7 +240,7 @@
 
     /* ── CARD FAN ── */
     .card-fan {
-      position: absolute; bottom: -24px; left: 50%; width: 200px; height: 130px;
+      position: absolute; bottom: -24px; left: 50%; width: 280px; height: 130px;
       opacity: 0; pointer-events: none;
       transform: translateX(-50%) translateY(8px);
       transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
@@ -257,33 +257,26 @@
     }
     .fan-card img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* base rotations */
-    .fan-card:nth-child(1) { transform: translateX(-50%) rotate(-20deg); }
-    .fan-card:nth-child(2) { transform: translateX(-50%) rotate(-10deg); }
-    .fan-card:nth-child(3) { transform: translateX(-50%) rotate(0deg); }
-    .fan-card:nth-child(4) { transform: translateX(-50%) rotate(10deg); }
-    .fan-card:nth-child(5) { transform: translateX(-50%) rotate(20deg); }
+    /* Spread cards horizontally so each face is visible; center card on top */
+    .fan-card:nth-child(1) { transform: translateX(calc(-50% - 82px)) rotate(-20deg); z-index: 1; }
+    .fan-card:nth-child(2) { transform: translateX(calc(-50% - 41px)) rotate(-10deg); z-index: 2; }
+    .fan-card:nth-child(3) { transform: translateX(-50%)               rotate(0deg) translateY(-9px) scale(1.06); z-index: 5; filter: brightness(1); }
+    .fan-card:nth-child(4) { transform: translateX(calc(-50% + 41px))  rotate(10deg); z-index: 2; }
+    .fan-card:nth-child(5) { transform: translateX(calc(-50% + 82px))  rotate(20deg); z-index: 1; }
 
-    /* default: middle card lit up */
-    .fan-card:nth-child(3) {
-      filter: brightness(1);
-      transform: translateX(-50%) rotate(0deg) translateY(-9px) scale(1.06);
-    }
-
-    /* on fan hover: dim all back to base rotation */
-    .card-fan:hover .fan-card:nth-child(1) { filter: brightness(0.38); transform: translateX(-50%) rotate(-20deg); }
-    .card-fan:hover .fan-card:nth-child(2) { filter: brightness(0.38); transform: translateX(-50%) rotate(-10deg); }
+    /* on fan hover: dim all, drop center back to rest */
+    .card-fan:hover .fan-card:nth-child(1) { filter: brightness(0.38); transform: translateX(calc(-50% - 82px)) rotate(-20deg); }
+    .card-fan:hover .fan-card:nth-child(2) { filter: brightness(0.38); transform: translateX(calc(-50% - 41px)) rotate(-10deg); }
     .card-fan:hover .fan-card:nth-child(3) { filter: brightness(0.38); transform: translateX(-50%) rotate(0deg); }
-    .card-fan:hover .fan-card:hover        { filter: brightness(0.38); }
-    .card-fan:hover .fan-card:nth-child(4) { filter: brightness(0.38); transform: translateX(-50%) rotate(10deg); }
-    .card-fan:hover .fan-card:nth-child(5) { filter: brightness(0.38); transform: translateX(-50%) rotate(20deg); }
+    .card-fan:hover .fan-card:nth-child(4) { filter: brightness(0.38); transform: translateX(calc(-50% + 41px)) rotate(10deg); }
+    .card-fan:hover .fan-card:nth-child(5) { filter: brightness(0.38); transform: translateX(calc(-50% + 82px)) rotate(20deg); }
 
     /* highlight whichever card is hovered */
-    .card-fan:hover .fan-card:nth-child(1):hover { filter: brightness(1); transform: translateX(-50%) rotate(-20deg) translateY(-9px) scale(1.06); }
-    .card-fan:hover .fan-card:nth-child(2):hover { filter: brightness(1); transform: translateX(-50%) rotate(-10deg) translateY(-9px) scale(1.06); }
-    .card-fan:hover .fan-card:nth-child(3):hover { filter: brightness(1); transform: translateX(-50%) rotate(0deg)   translateY(-9px) scale(1.06); }
-    .card-fan:hover .fan-card:nth-child(4):hover { filter: brightness(1); transform: translateX(-50%) rotate(10deg)  translateY(-9px) scale(1.06); }
-    .card-fan:hover .fan-card:nth-child(5):hover { filter: brightness(1); transform: translateX(-50%) rotate(20deg)  translateY(-9px) scale(1.06); }
+    .card-fan:hover .fan-card:nth-child(1):hover { filter: brightness(1); transform: translateX(calc(-50% - 82px)) rotate(-20deg) translateY(-9px) scale(1.06); z-index: 10; }
+    .card-fan:hover .fan-card:nth-child(2):hover { filter: brightness(1); transform: translateX(calc(-50% - 41px)) rotate(-10deg) translateY(-9px) scale(1.06); z-index: 10; }
+    .card-fan:hover .fan-card:nth-child(3):hover { filter: brightness(1); transform: translateX(-50%)              rotate(0deg)   translateY(-9px) scale(1.06); z-index: 10; }
+    .card-fan:hover .fan-card:nth-child(4):hover { filter: brightness(1); transform: translateX(calc(-50% + 41px)) rotate(10deg)  translateY(-9px) scale(1.06); z-index: 10; }
+    .card-fan:hover .fan-card:nth-child(5):hover { filter: brightness(1); transform: translateX(calc(-50% + 82px)) rotate(20deg)  translateY(-9px) scale(1.06); z-index: 10; }
 
     /* ── PRODUCT INFO ── */
     .product-name {
