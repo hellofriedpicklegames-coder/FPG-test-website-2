@@ -641,6 +641,11 @@
         radial-gradient(ellipse 45% 55% at 8% 88%, rgba(237,224,144,0.03) 0%, transparent 48%),
         radial-gradient(ellipse 35% 40% at 94% 55%, rgba(43,235,154,0.02) 0%, transparent 42%);
     }
+    #mission-particles {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
     /* Verse */
     .mission-verse-wrap {
       padding: 128px 48px 88px; text-align: center;
@@ -1651,6 +1656,7 @@
 
   <!-- ▓▓▓ MISSION ▓▓▓ -->
   <section id="mission" class="mission-section">
+    <canvas id="mission-particles" aria-hidden="true"></canvas>
 
     <!-- Verse -->
     <div class="mission-verse-wrap">
@@ -2246,6 +2252,59 @@
         });
       }, { threshold: 0.12 });
       targets.forEach(el => revealObs.observe(el));
+    })();
+
+    /* ── Mission: drifting particle field ── */
+    (function missionParticles() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const canvas = document.getElementById('mission-particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles;
+
+      function resize() {
+        const section = document.getElementById('mission');
+        W = canvas.width  = section.offsetWidth;
+        H = canvas.height = section.offsetHeight;
+      }
+
+      function mkParticle(forceBottom) {
+        return {
+          x:       Math.random() * (W || 1200),
+          y:       forceBottom ? (H || 2000) + Math.random() * 200 : Math.random() * (H || 2000),
+          r:       Math.random() * 1.1 + 0.4,
+          speed:   Math.random() * 0.18 + 0.07,
+          drift:   (Math.random() - 0.5) * 0.055,
+          opacity: Math.random() * 0.20 + 0.06,
+          phase:   Math.random() * Math.PI * 2,
+        };
+      }
+
+      function init() {
+        resize();
+        particles = Array.from({ length: 22 }, () => mkParticle(false));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const t = performance.now() / 1000;
+        particles.forEach(p => {
+          p.y -= p.speed;
+          p.x += p.drift;
+          if (p.y < -4) Object.assign(p, mkParticle(true));
+          const alpha = p.opacity * (0.55 + 0.45 * Math.sin(t * 0.38 + p.phase));
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(237,224,144,${alpha.toFixed(3)})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+
+      const ro = new ResizeObserver(resize);
+      ro.observe(document.getElementById('mission'));
+      init();
+      draw();
     })();
 
     // Hamburger menu
