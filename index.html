@@ -633,6 +633,10 @@
       border-top: 1px solid rgba(153,153,101,0.12);
       border-bottom: 1px solid rgba(153,153,101,0.12);
     }
+    @keyframes mission-breathe {
+      0%, 100% { opacity: 1;    transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.07); }
+    }
     /* Persistent atmospheric layer */
     .mission-section::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -640,6 +644,9 @@
         radial-gradient(ellipse 55% 35% at 50% 0%, rgba(237,224,144,0.055) 0%, transparent 55%),
         radial-gradient(ellipse 45% 55% at 8% 88%, rgba(237,224,144,0.03) 0%, transparent 48%),
         radial-gradient(ellipse 35% 40% at 94% 55%, rgba(43,235,154,0.02) 0%, transparent 42%);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .mission-section::before { animation: mission-breathe 11s ease-in-out infinite; }
     }
     #mission-particles {
       position: absolute; inset: 0;
