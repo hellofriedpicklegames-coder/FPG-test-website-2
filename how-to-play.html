@@ -108,48 +108,41 @@
 
     /* ── Page Hero ── */
     .htp-hero {
-      position: relative; padding: 120px 48px 88px; background: #0c0e0a; overflow: hidden;
+      position: relative; width: 100%; height: 90vh; min-height: 560px;
+      overflow: hidden; display: flex; align-items: flex-end; background: #0c0e0a;
     }
-    .htp-hero::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 80% 70% at 50% -10%, rgba(153,153,101,0.09) 0%, transparent 55%),
-        radial-gradient(ellipse 35% 45% at 85% 80%, rgba(139,201,139,0.04) 0%, transparent 50%);
+    .htp-hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 40%;
+      filter: sepia(0.12) brightness(0.68) contrast(1.08) saturate(0.85);
     }
-    .htp-hero-inner {
-      max-width: 1440px; margin: 0 auto; position: relative; z-index: 1;
-      display: flex; align-items: center; gap: 72px;
+    .htp-hero-grad-lr {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to right, rgba(12,14,10,0.97) 0%, rgba(12,14,10,0.82) 38%, rgba(12,14,10,0.35) 65%, transparent 100%);
     }
-    .htp-hero-text { flex: 1; min-width: 0; }
-    .htp-hero-img-wrap {
-      flex: 0 0 44%; position: relative; overflow: hidden;
-      border: 1px solid rgba(153,153,101,0.12);
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.4);
+    .htp-hero-grad-bt {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(12,14,10,1) 0%, rgba(12,14,10,0.65) 18%, transparent 45%);
     }
-    .htp-hero-img-wrap img {
-      width: 100%; height: auto; display: block;
-      filter: sepia(0.1) brightness(0.88) contrast(1.06) saturate(0.9);
-    }
-    .htp-hero-img-wrap::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(135deg, rgba(14,12,8,0.18) 0%, transparent 60%),
-                  linear-gradient(to bottom, transparent 60%, rgba(14,12,8,0.35) 100%);
+    .htp-hero-content {
+      position: relative; z-index: 2;
+      max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 48px 88px;
     }
     .htp-eyebrow {
       font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.22em;
       color: rgba(153,153,101,0.5); margin-bottom: 18px;
       display: flex; align-items: center; gap: 16px;
     }
-    .htp-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(153,153,101,0.1); }
+    .htp-eyebrow::after { content: ''; width: 48px; height: 1px; background: rgba(153,153,101,0.2); }
     .htp-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 12vw, 144px);
-      letter-spacing: -0.03em; line-height: 0.88; color: #e7e8e6;
-      filter: drop-shadow(0 4px 28px rgba(0,0,0,0.55));
+      font-size: clamp(60px, 8vw, 108px);
+      letter-spacing: -0.025em; line-height: 0.9; color: #e7e8e6;
+      filter: drop-shadow(0 6px 28px rgba(0,0,0,0.75));
     }
     .htp-sub {
       font-size: clamp(15px, 1.6vw, 19px); font-weight: 300;
-      color: rgba(231,232,230,0.45); margin-top: 22px; max-width: 440px; line-height: 1.65;
+      color: rgba(231,232,230,0.55); margin-top: 18px; max-width: 440px; line-height: 1.65;
     }
 
     /* ── Game sections ── */
@@ -275,9 +268,9 @@
       .logo-group span { font-size: 20px; }
       nav { display: none; }
       .hamburger { display: flex; }
-      .htp-hero { padding: 72px 20px 56px; }
-      .htp-hero-inner { flex-direction: column; gap: 40px; }
-      .htp-hero-img-wrap { flex: none; width: 100%; }
+      .htp-hero { height: 70vh; min-height: 480px; }
+      .htp-hero-content { padding: 0 20px 64px; }
+      .htp-hero-grad-lr { background: linear-gradient(to right, rgba(12,14,10,0.92) 0%, rgba(12,14,10,0.6) 50%, transparent 100%); }
       .htp-section-inner { padding: 60px 20px; }
       .htp-grid { grid-template-columns: 1fr; gap: 40px; }
       .htp-coming-soon { padding: 48px 24px; }
@@ -339,15 +332,13 @@
 
   <!-- Hero -->
   <section class="htp-hero">
-    <div class="htp-hero-inner">
-      <div class="htp-hero-text">
-        <div class="htp-eyebrow">FRIED PICKLE GAMES</div>
-        <div class="htp-title">HOW<br/>TO PLAY</div>
-        <p class="htp-sub">Learn in minutes. Master the chaos in moments. Pick your game below.</p>
-      </div>
-      <div class="htp-hero-img-wrap">
-        <img src="brand_assets/cards-htp.jpg" alt="Fart of War cards laid out on a wooden table" width="1100" height="619" loading="eager" fetchpriority="high"/>
-      </div>
+    <img src="brand_assets/cards-htp.jpg" alt="" class="htp-hero-bg" aria-hidden="true" fetchpriority="high" width="1100" height="619" loading="eager"/>
+    <div class="htp-hero-grad-lr"></div>
+    <div class="htp-hero-grad-bt"></div>
+    <div class="htp-hero-content">
+      <div class="htp-eyebrow">FRIED PICKLE GAMES</div>
+      <div class="htp-title">HOW<br/>TO PLAY</div>
+      <p class="htp-sub">Learn in minutes. Master the chaos in moments. Pick your game below.</p>
     </div>
   </section>
 
