@@ -673,8 +673,8 @@
       <span class="cart-total-label">TOTAL</span>
       <span class="cart-total-amount" id="cart-total">$0.00</span>
     </div>
-    <button class="btn-checkout">PROCEED TO CHECKOUT</button>
-    <p class="cart-note">Taxes and shipping calculated at checkout</p>
+    <button class="btn-checkout" onclick="goToShopifyCheckout()">PROCEED TO CHECKOUT</button>
+    <p class="cart-note">Ships immediately or within 8 weeks depending on order date. Taxes and shipping calculated at checkout.</p>
   </div>
 </div>
 
@@ -748,7 +748,20 @@
     fow:       { name: 'Fart of War',          price: 19.99, icon: '💨' },
     dispelled: { name: 'Dispelled',            price: 19.99, icon: '🧙' },
     exp:       { name: 'Fresh Air Expansion',  price: 9.99,  icon: '☢️' },
+    bundle:    { name: 'Fart of War Bundle',   price: 27.99, icon: '🎁' },
   };
+  const SHOPIFY_VARIANTS = {
+    fow:    '47169828454589',
+    exp:    '47169833828541',
+    bundle: '47169900085437',
+  };
+  function goToShopifyCheckout() {
+    const items = Object.entries(cart)
+      .filter(([id]) => SHOPIFY_VARIANTS[id])
+      .map(([id, qty]) => `${SHOPIFY_VARIANTS[id]}:${qty}`);
+    if (!items.length) return;
+    window.location.href = 'https://hp7jiz-ca.myshopify.com/cart/' + items.join(',');
+  }
   let cart = JSON.parse(localStorage.getItem('fpg_cart') || '{}');
   function saveCart() { localStorage.setItem('fpg_cart', JSON.stringify(cart)); }
 
