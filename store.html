@@ -456,10 +456,12 @@
     .box-deck-ghost img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
 
     /* ── BUNDLE 3D SCENE ── */
-    .bundle-visual { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
-    .bundle-scene  { width: 390px; height: 320px; perspective: 820px; perspective-origin: 50% 42%; position: relative; display: flex; align-items: center; justify-content: center; }
-    .bundle-group  { position: relative; width: 340px; height: 240px; transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-25deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); cursor: grab; }
-    .bundle-group.dragging { transition: none; cursor: grabbing; }
+    .bundle-visual  { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+    .bundle-scene   { width: 390px; height: 320px; perspective: 820px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; gap: 28px; }
+    .bundle-box-3d  { position: relative; flex-shrink: 0; width: 210px; height: 210px; transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-28deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); cursor: grab; }
+    .bundle-box-3d.dragging  { transition: none; cursor: grabbing; }
+    .bundle-deck-3d { position: relative; flex-shrink: 0; width: 110px; height: 154px; transform-style: preserve-3d; transform: rotateX(8deg) rotateY(-20deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); cursor: grab; }
+    .bundle-deck-3d.dragging { transition: none; cursor: grabbing; }
     .bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
   </style>
 </head>
@@ -656,58 +658,52 @@
 
 <!-- BUNDLE TEASER -->
 <div class="bundle-teaser">
-  <!-- 3D visual: FOW box + Fresh Air deck -->
+  <!-- 3D visual: FOW box + Fresh Air deck, independently rotatable -->
   <div class="bundle-visual">
     <div class="bundle-scene" id="bundle-scene">
-      <div class="bundle-group" id="bundle-group" data-rot-y="-25" data-rot-x="10">
 
-        <!-- Fart of War box (210×210×60) at left:0 top:15 -->
-        <div style="position:absolute;left:0;top:15px;width:210px;height:210px;transform-style:preserve-3d;">
-          <div class="bface" style="width:210px;height:210px;transform:translateZ(30px);">
-            <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-          <div class="bface" style="width:210px;height:210px;transform:rotateY(180deg) translateZ(30px);">
-            <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-          <div class="bface" style="width:60px;height:210px;left:180px;top:0;transform:rotateY(90deg);">
-            <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-          <div class="bface" style="width:60px;height:210px;left:-30px;top:0;transform:rotateY(-90deg);">
-            <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-          <div class="bface" style="width:210px;height:60px;left:0;top:-30px;transform:rotateX(90deg);">
-            <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-          <div class="bface" style="width:210px;height:60px;left:0;top:180px;transform:rotateX(-90deg);">
-            <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
+      <!-- Fart of War box — normal friction -->
+      <div class="bundle-box-3d" id="bundle-box" data-rot-y="-28" data-rot-x="10">
+        <div class="bface" style="width:210px;height:210px;transform:translateZ(30px);">
+          <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
-
-        <!-- Fresh Air card deck (110×154×14) at left:228 top:38 -->
-        <div style="position:absolute;left:228px;top:38px;width:110px;height:154px;transform-style:preserve-3d;">
-          <!-- ghost cards -->
-          <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(4px) translateX(3px) translateY(-2px);">
-            <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
-          </div>
-          <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(1px) translateX(-2px) translateY(3px);">
-            <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
-          </div>
-          <!-- front -->
-          <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:translateZ(7px);backface-visibility:hidden;">
-            <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
-          </div>
-          <!-- back -->
-          <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:rotateY(180deg) translateZ(7px);backface-visibility:hidden;">
-            <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
-          </div>
-          <!-- edges -->
-          <div style="position:absolute;width:14px;height:154px;left:103px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:6px 0 0 6px;backface-visibility:hidden;"></div>
-          <div style="position:absolute;width:14px;height:154px;left:-7px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 6px 6px 0;backface-visibility:hidden;"></div>
-          <div style="position:absolute;width:110px;height:14px;left:0;top:-7px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 6px 6px;backface-visibility:hidden;"></div>
-          <div style="position:absolute;width:110px;height:14px;left:0;top:147px;background:#313416;transform:rotateX(-90deg);border-radius:6px 6px 0 0;backface-visibility:hidden;"></div>
+        <div class="bface" style="width:210px;height:210px;transform:rotateY(180deg) translateZ(30px);">
+          <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
-
+        <div class="bface" style="width:60px;height:210px;left:180px;top:0;transform:rotateY(90deg);">
+          <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="bface" style="width:60px;height:210px;left:-30px;top:0;transform:rotateY(-90deg);">
+          <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="bface" style="width:210px;height:60px;left:0;top:-30px;transform:rotateX(90deg);">
+          <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="bface" style="width:210px;height:60px;left:0;top:180px;transform:rotateX(-90deg);">
+          <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
       </div>
+
+      <!-- Fresh Air deck — more friction -->
+      <div class="bundle-deck-3d" id="bundle-deck" data-rot-y="-20" data-rot-x="8">
+        <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(4px) translateX(3px) translateY(-2px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        </div>
+        <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(1px) translateX(-2px) translateY(3px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        </div>
+        <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:translateZ(7px);backface-visibility:hidden;">
+          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        </div>
+        <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:rotateY(180deg) translateZ(7px);backface-visibility:hidden;">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        </div>
+        <div style="position:absolute;width:14px;height:154px;left:103px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:6px 0 0 6px;backface-visibility:hidden;"></div>
+        <div style="position:absolute;width:14px;height:154px;left:-7px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 6px 6px 0;backface-visibility:hidden;"></div>
+        <div style="position:absolute;width:110px;height:14px;left:0;top:-7px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 6px 6px;backface-visibility:hidden;"></div>
+        <div style="position:absolute;width:110px;height:14px;left:0;top:147px;background:#313416;transform:rotateX(-90deg);border-radius:6px 6px 0 0;backface-visibility:hidden;"></div>
+      </div>
+
     </div>
   </div>
 
@@ -808,49 +804,50 @@
     document.addEventListener('touchend', end);
   });
 
-  /* ── BUNDLE GROUP DRAG ── */
+  /* ── BUNDLE INDEPENDENT DRAG ── */
   (function() {
-    const group = document.getElementById('bundle-group');
-    if (!group) return;
-    let dragging = false, lastX = 0, lastY = 0;
-    let rotY = parseFloat(group.dataset.rotY);
-    let rotX = parseFloat(group.dataset.rotX);
-    const apply = () => { group.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
-    const start = e => {
-      dragging = true;
-      group.classList.add('dragging');
-      const p = e.touches ? e.touches[0] : e;
-      lastX = p.clientX; lastY = p.clientY;
-      e.preventDefault();
-    };
-    const move = e => {
-      if (!dragging) return;
-      const p = e.touches ? e.touches[0] : e;
-      const dx = p.clientX - lastX, dy = p.clientY - lastY;
-      rotY += dx * 0.65; rotX -= dy * 0.4;
-      rotX = Math.max(-35, Math.min(35, rotX));
-      apply();
-      lastX = p.clientX; lastY = p.clientY;
-    };
-    const end = () => {
-      if (!dragging) return;
-      dragging = false;
-      group.classList.remove('dragging');
-      clearTimeout(group._snap);
-      group._snap = setTimeout(() => {
-        group.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
-        rotY = parseFloat(group.dataset.rotY);
-        rotX = parseFloat(group.dataset.rotX);
+    function makeDraggable(el, sens) {
+      if (!el) return;
+      let dragging = false, lastX = 0, lastY = 0;
+      let rotY = parseFloat(el.dataset.rotY);
+      let rotX = parseFloat(el.dataset.rotX);
+      const apply = () => { el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
+      const start = e => {
+        dragging = true; el.classList.add('dragging');
+        const p = e.touches ? e.touches[0] : e;
+        lastX = p.clientX; lastY = p.clientY;
+        e.preventDefault(); e.stopPropagation();
+      };
+      const move = e => {
+        if (!dragging) return;
+        const p = e.touches ? e.touches[0] : e;
+        const dx = p.clientX - lastX, dy = p.clientY - lastY;
+        rotY += dx * sens; rotX -= dy * (sens * 0.62);
+        rotX = Math.max(-35, Math.min(35, rotX));
         apply();
-        setTimeout(() => { group.style.transition = ''; }, 850);
-      }, 1800);
-    };
-    group.addEventListener('mousedown', start);
-    group.addEventListener('touchstart', start, { passive: false });
-    document.addEventListener('mousemove', move);
-    document.addEventListener('touchmove', move, { passive: false });
-    document.addEventListener('mouseup', end);
-    document.addEventListener('touchend', end);
+        lastX = p.clientX; lastY = p.clientY;
+      };
+      const end = () => {
+        if (!dragging) return;
+        dragging = false; el.classList.remove('dragging');
+        clearTimeout(el._snap);
+        el._snap = setTimeout(() => {
+          el.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
+          rotY = parseFloat(el.dataset.rotY);
+          rotX = parseFloat(el.dataset.rotX);
+          apply();
+          setTimeout(() => { el.style.transition = ''; }, 850);
+        }, 1800);
+      };
+      el.addEventListener('mousedown', start);
+      el.addEventListener('touchstart', start, { passive: false });
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, { passive: false });
+      document.addEventListener('mouseup', end);
+      document.addEventListener('touchend', end);
+    }
+    makeDraggable(document.getElementById('bundle-box'),  0.65); // normal
+    makeDraggable(document.getElementById('bundle-deck'), 0.30); // more friction
   })();
 
   /* Intercept clicks on cards — suppress navigation if a drag just finished */
