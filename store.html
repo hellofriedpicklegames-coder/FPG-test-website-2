@@ -457,11 +457,22 @@
 
     /* ── BUNDLE 3D SCENE ── */
     .bundle-visual  { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
-    .bundle-scene   { width: 390px; height: 320px; perspective: 820px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; gap: 28px; }
-    .bundle-box-3d  { position: relative; flex-shrink: 0; width: 210px; height: 210px; transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-28deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); cursor: grab; }
-    .bundle-box-3d.dragging  { transition: none; cursor: grabbing; }
-    .bundle-deck-3d { position: relative; flex-shrink: 0; width: 110px; height: 154px; transform-style: preserve-3d; transform: rotateX(8deg) rotateY(-20deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); cursor: grab; }
-    .bundle-deck-3d.dragging { transition: none; cursor: grabbing; }
+    .bundle-scene   { width: 390px; height: 320px; perspective: 820px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; gap: 28px; position: relative; cursor: grab; }
+    .bundle-scene.grabbing { cursor: grabbing; }
+    .bundle-scene::before {
+      content: ''; position: absolute; bottom: 12px; left: 28%;
+      transform: translateX(-50%); width: 42%; height: 32%; border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(139,201,139,1) 0%, transparent 70%);
+      filter: blur(26px); opacity: 0.42; pointer-events: none;
+    }
+    .bundle-scene::after {
+      content: ''; position: absolute; bottom: 14px; left: 74%;
+      transform: translateX(-50%); width: 26%; height: 28%; border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(208,235,128,1) 0%, transparent 70%);
+      filter: blur(20px); opacity: 0.42; pointer-events: none;
+    }
+    .bundle-box-3d  { position: relative; flex-shrink: 0; width: 210px; height: 210px; transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-28deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); }
+    .bundle-deck-3d { position: relative; flex-shrink: 0; width: 110px; height: 154px; transform-style: preserve-3d; transform: rotateX(8deg) rotateY(-20deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); }
     .bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
   </style>
 </head>
@@ -804,50 +815,56 @@
     document.addEventListener('touchend', end);
   });
 
-  /* ── BUNDLE INDEPENDENT DRAG ── */
+  /* ── BUNDLE DRAG — both rotate together, deck at half speed ── */
   (function() {
-    function makeDraggable(el, sens) {
-      if (!el) return;
-      let dragging = false, lastX = 0, lastY = 0;
-      let rotY = parseFloat(el.dataset.rotY);
-      let rotX = parseFloat(el.dataset.rotX);
-      const apply = () => { el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
-      const start = e => {
-        dragging = true; el.classList.add('dragging');
-        const p = e.touches ? e.touches[0] : e;
-        lastX = p.clientX; lastY = p.clientY;
-        e.preventDefault(); e.stopPropagation();
-      };
-      const move = e => {
-        if (!dragging) return;
-        const p = e.touches ? e.touches[0] : e;
-        const dx = p.clientX - lastX, dy = p.clientY - lastY;
-        rotY += dx * sens; rotX -= dy * (sens * 0.62);
-        rotX = Math.max(-35, Math.min(35, rotX));
-        apply();
-        lastX = p.clientX; lastY = p.clientY;
-      };
-      const end = () => {
-        if (!dragging) return;
-        dragging = false; el.classList.remove('dragging');
-        clearTimeout(el._snap);
-        el._snap = setTimeout(() => {
-          el.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
-          rotY = parseFloat(el.dataset.rotY);
-          rotX = parseFloat(el.dataset.rotX);
-          apply();
-          setTimeout(() => { el.style.transition = ''; }, 850);
-        }, 1800);
-      };
-      el.addEventListener('mousedown', start);
-      el.addEventListener('touchstart', start, { passive: false });
-      document.addEventListener('mousemove', move);
-      document.addEventListener('touchmove', move, { passive: false });
-      document.addEventListener('mouseup', end);
-      document.addEventListener('touchend', end);
-    }
-    makeDraggable(document.getElementById('bundle-box'),  0.65); // normal
-    makeDraggable(document.getElementById('bundle-deck'), 0.30); // more friction
+    const scene = document.getElementById('bundle-scene');
+    const box   = document.getElementById('bundle-box');
+    const deck  = document.getElementById('bundle-deck');
+    if (!scene || !box || !deck) return;
+
+    let dragging = false, lastX = 0, lastY = 0;
+    let bRotY = parseFloat(box.dataset.rotY),  bRotX = parseFloat(box.dataset.rotX);
+    let dRotY = parseFloat(deck.dataset.rotY), dRotX = parseFloat(deck.dataset.rotX);
+
+    const applyBox  = () => { box.style.transform  = `rotateX(${bRotX}deg) rotateY(${bRotY}deg)`;  };
+    const applyDeck = () => { deck.style.transform = `rotateX(${dRotX}deg) rotateY(${dRotY}deg)`; };
+
+    const start = e => {
+      dragging = true; scene.classList.add('grabbing');
+      const p = e.touches ? e.touches[0] : e;
+      lastX = p.clientX; lastY = p.clientY;
+      e.preventDefault();
+    };
+    const move = e => {
+      if (!dragging) return;
+      const p = e.touches ? e.touches[0] : e;
+      const dx = p.clientX - lastX, dy = p.clientY - lastY;
+      bRotY += dx * 0.65;  bRotX -= dy * 0.40;
+      dRotY += dx * 0.32;  dRotX -= dy * 0.20;
+      bRotX = Math.max(-35, Math.min(35, bRotX));
+      dRotX = Math.max(-35, Math.min(35, dRotX));
+      applyBox(); applyDeck();
+      lastX = p.clientX; lastY = p.clientY;
+    };
+    const end = () => {
+      if (!dragging) return;
+      dragging = false; scene.classList.remove('grabbing');
+      clearTimeout(scene._snap);
+      scene._snap = setTimeout(() => {
+        box.style.transition = deck.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
+        bRotY = parseFloat(box.dataset.rotY);   bRotX = parseFloat(box.dataset.rotX);
+        dRotY = parseFloat(deck.dataset.rotY);  dRotX = parseFloat(deck.dataset.rotX);
+        applyBox(); applyDeck();
+        setTimeout(() => { box.style.transition = deck.style.transition = ''; }, 850);
+      }, 1800);
+    };
+
+    scene.addEventListener('mousedown', start);
+    scene.addEventListener('touchstart', start, { passive: false });
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move, { passive: false });
+    document.addEventListener('mouseup', end);
+    document.addEventListener('touchend', end);
   })();
 
   /* Intercept clicks on cards — suppress navigation if a drag just finished */
