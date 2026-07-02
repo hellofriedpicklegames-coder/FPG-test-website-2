@@ -182,10 +182,10 @@
     .buy-box-col { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 52px 20px 52px 48px; min-height: 540px; }
     .buy-info-col { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 52px 48px 52px 40px; }
     .buy-scene { perspective: 820px; perspective-origin: 50% 42%; width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; position: relative; user-select: none; }
-    .buy-box { --w: 400px; --h: 340px; --d: 95px; width: var(--w); height: var(--h); position: relative; transform-style: preserve-3d; cursor: grab; transform: rotateX(10deg) rotateY(-32deg); transition: transform 0.55s cubic-bezier(0.34, 1.46, 0.64, 1); }
+    .buy-box { --w: 240px; --h: 336px; --d: 14px; width: var(--w); height: var(--h); position: relative; transform-style: preserve-3d; cursor: grab; transform: rotateX(10deg) rotateY(-32deg); transition: transform 0.55s cubic-bezier(0.34, 1.46, 0.64, 1); }
     .buy-box.dragging { transition: none; cursor: grabbing; }
     .buy-face { position: absolute; backface-visibility: hidden; }
-    .buy-front { width: var(--w); height: var(--h); transform: translateZ(calc(var(--d)/2)); overflow: hidden; border-radius: 2px 0 0 2px; }
+    .buy-front { width: var(--w); height: var(--h); transform: translateZ(calc(var(--d)/2)); overflow: hidden; border-radius: 8px; }
     .buy-back  { width: var(--w); height: var(--h); transform: rotateY(180deg) translateZ(calc(var(--d)/2)); overflow: hidden; }
     .buy-right { width: var(--d); height: var(--h); left: calc(var(--w) - var(--d)/2); top: 0; transform: rotateY(90deg); }
     .buy-left  { width: var(--d); height: var(--h); left: calc(-1*var(--d)/2); top: 0; transform: rotateY(-90deg); }
@@ -242,7 +242,7 @@
     .cart-note { font-size: 11px; color: rgba(153,153,101,0.45); text-align: center; letter-spacing: 0.05em; }
     @media (max-width: 900px) {
       .buy-card { grid-template-columns: 1fr; }
-      .buy-box { --w: 280px; --h: 238px; --d: 68px; }
+      .buy-box { --w: 200px; --h: 280px; --d: 14px; }
       .buy-scene { height: 320px; }
       .buy-box-col { padding: 44px 20px 20px; min-height: auto; }
       .buy-info-col { padding: 24px 20px 48px; }
@@ -342,15 +342,16 @@
       <div class="buy-box-col">
         <div class="buy-scene">
           <div class="buy-box" id="buy-box" data-rot-y="-32" data-rot-x="10">
-            <div class="buy-face buy-front" style="background:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.18)),linear-gradient(145deg,#38380e 0%,#222206 100%);border:1px solid rgba(208,235,128,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;">
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:0.22em;color:#d0eb80;opacity:0.7;">FRESH AIR EXPANSION</div>
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:#e7e8e6;line-height:1.1;text-align:center;">COMING<br>SOON</div>
+            <div class="buy-face buy-front" style="display:block;padding:0;border-radius:8px;overflow:hidden;">
+              <img src="brand_assets/FRESH AIR.png" alt="Fresh Air Expansion" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
-            <div class="buy-face buy-back"  style="background:linear-gradient(rgba(0,0,0,0.28),rgba(0,0,0,0.28)),linear-gradient(145deg,#2c2c0a 0%,#1a1a04 100%);"></div>
-            <div class="buy-face buy-right" style="background:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.38)),linear-gradient(180deg,#2c2c0a 0%,#1c1c06 100%);"></div>
-            <div class="buy-face buy-left"  style="background:linear-gradient(rgba(0,0,0,0.48),rgba(0,0,0,0.48)),#161604;"></div>
-            <div class="buy-face buy-top"   style="background:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),linear-gradient(90deg,#38380e 0%,#2c2c0a 100%);"></div>
-            <div class="buy-face buy-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#0e0e04;"></div>
+            <div class="buy-face buy-back" style="display:block;padding:0;border-radius:8px;overflow:hidden;">
+              <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt="Card back" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+            <div class="buy-face buy-right" style="background:#d0eb80;"></div>
+            <div class="buy-face buy-left"  style="background:#d0eb80;"></div>
+            <div class="buy-face buy-top"   style="background:#c8e060;"></div>
+            <div class="buy-face buy-bottom" style="background:#b8d050;"></div>
           </div>
         </div>
       </div>
