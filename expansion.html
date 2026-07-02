@@ -185,7 +185,7 @@
     .buy-box { --w: 240px; --h: 336px; --d: 14px; width: var(--w); height: var(--h); position: relative; transform-style: preserve-3d; cursor: grab; transform: rotateX(10deg) rotateY(-32deg); transition: transform 0.55s cubic-bezier(0.34, 1.46, 0.64, 1); }
     .buy-box.dragging { transition: none; cursor: grabbing; }
     .buy-face { position: absolute; backface-visibility: hidden; }
-    .buy-front { width: var(--w); height: var(--h); transform: translateZ(calc(var(--d)/2)); overflow: hidden; border-radius: 8px; }
+    .buy-front { width: var(--w); height: var(--h); transform: translateZ(calc(var(--d)/2)); overflow: visible; border-radius: 0; background: #3f4120; }
     .buy-back  { width: var(--w); height: var(--h); transform: rotateY(180deg) translateZ(calc(var(--d)/2)); overflow: hidden; }
     .buy-right { width: var(--d); height: var(--h); left: calc(var(--w) - var(--d)/2); top: 0; transform: rotateY(90deg); }
     .buy-left  { width: var(--d); height: var(--h); left: calc(-1*var(--d)/2); top: 0; transform: rotateY(-90deg); }
@@ -267,8 +267,8 @@
     .cart-nav-badge.visible { display: flex; }
     .stock-banner { width: 100%; background: #999965; color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.12em; text-align: center; padding: 10px 20px; box-sizing: border-box; margin-top: 68px; }
     @media (max-width: 900px) { .stock-banner { margin-top: 64px; } }
-    .buy-deck-ghost { position: absolute; width: var(--w); height: var(--h); border-radius: 8px; overflow: hidden; backface-visibility: hidden; }
-    .buy-deck-ghost img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .buy-deck-ghost { position: absolute; width: var(--w); height: var(--h); background: #3f4120; backface-visibility: hidden; }
+    .buy-deck-ghost img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -347,11 +347,11 @@
             <div class="buy-deck-ghost" style="transform:translateZ(4px) translateX(4px) translateY(-3px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
             <div class="buy-deck-ghost" style="transform:translateZ(0px) translateX(-3px) translateY(4px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
             <div class="buy-deck-ghost" style="transform:translateZ(-4px) translateX(3px) translateY(2px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
-            <div class="buy-face buy-front" style="display:block;padding:0;border-radius:8px;overflow:hidden;">
-              <img src="brand_assets/FRESH AIR.png" alt="Fresh Air Expansion" style="width:100%;height:100%;object-fit:cover;display:block;">
+            <div class="buy-face buy-front" style="display:block;padding:0;">
+              <img src="brand_assets/FRESH AIR.png" alt="Fresh Air Expansion" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
             </div>
-            <div class="buy-face buy-back" style="display:block;padding:0;border-radius:8px;overflow:hidden;">
-              <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt="Card back" style="width:100%;height:100%;object-fit:cover;display:block;">
+            <div class="buy-face buy-back" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;">
+              <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt="Card back" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
             </div>
             <div class="buy-face buy-right" style="background:#3f4120;border-radius:8px 0 0 8px;"></div>
             <div class="buy-face buy-left"  style="background:#3f4120;border-radius:0 8px 8px 0;"></div>
