@@ -265,6 +265,7 @@
       display: none; align-items: center; justify-content: center; border-radius: 2px;
     }
     .cart-nav-badge.visible { display: flex; }
+    .stock-banner { width: 100%; background: #999965; color: #0c0e0a; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.12em; text-align: center; padding: 10px 20px; box-sizing: border-box; }
   </style>
 </head>
 <body>
@@ -310,6 +311,7 @@
     <a href="store.html">STORE</a>
     <a href="contact.html">CONTACT</a>
   </div>
+  <div class="stock-banner">In stock now — first batch ships right away. Further orders could ship within 8 weeks. We fulfill as soon as we get hands on it.</div>
 
   <section class="game-hero">
     <picture>
@@ -364,7 +366,7 @@
           <div class="ks-dot">K</div>
           <span class="ks-text">BACKED IN 19 HOURS ON KICKSTARTER</span>
         </div>
-        <button class="buy-cta" onclick="addToCart('exp')">NOTIFY ME WHEN IT DROPS &nbsp;<span class="buy-cta-arrow">→</span></button>
+        <button class="buy-cta" onclick="addToCart('exp')">ORDER NOW &nbsp;<span class="buy-cta-arrow">→</span></button>
       </div>
     </div>
   </section>
@@ -506,8 +508,8 @@
         <span class="cart-total-label">TOTAL</span>
         <span class="cart-total-amount" id="cart-total">$0.00</span>
       </div>
-      <button class="btn-checkout">PROCEED TO CHECKOUT</button>
-      <p class="cart-note">Taxes and shipping calculated at checkout</p>
+      <button class="btn-checkout" onclick="goToShopifyCheckout()">PROCEED TO CHECKOUT</button>
+      <p class="cart-note">Ships immediately or within 8 weeks depending on order date. Taxes and shipping calculated at checkout.</p>
     </div>
   </div>
 
@@ -648,6 +650,14 @@
 
     /* ── CART ── */
     const PRODUCTS = { exp: { name: 'Fresh Air Expansion', price: 9.99, icon: '☢️' } };
+    const SHOPIFY_VARIANTS = { exp: '47169833828541' };
+    function goToShopifyCheckout() {
+      const items = Object.entries(cart)
+        .filter(([id]) => SHOPIFY_VARIANTS[id])
+        .map(([id, qty]) => `${SHOPIFY_VARIANTS[id]}:${qty}`);
+      if (!items.length) return;
+      window.location.href = 'https://hp7jiz-ca.myshopify.com/cart/' + items.join(',');
+    }
     let cart = {};
     function addToCart(id) { cart[id] = (cart[id]||0) + 1; renderCart(); openCart(); }
     function changeQty(id, d) { cart[id] = Math.max(0,(cart[id]||0)+d); if(!cart[id]) delete cart[id]; renderCart(); }
