@@ -347,6 +347,17 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
       background-size: 180px; pointer-events: none; z-index: 1;
     }
+    .split-sunburst {
+      position: absolute; width: 820px; height: 820px;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: repeating-conic-gradient(
+        rgba(180,200,100,0.07) 0deg 11.25deg,
+        transparent 11.25deg 22.5deg
+      );
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 42%, transparent 68%);
+      mask-image: radial-gradient(circle, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 42%, transparent 68%);
+      pointer-events: none; z-index: 0;
+    }
     .split-glow {
       position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
       width: 480px; height: 72px; border-radius: 50%;
@@ -715,6 +726,7 @@
 
   <!-- Left: 3D visual panel -->
   <div class="split-visual">
+    <div class="split-sunburst"></div>
     <div class="split-glow"></div>
     <div class="split-divider"></div>
 
