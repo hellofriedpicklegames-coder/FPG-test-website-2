@@ -30,58 +30,20 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   background-size: 180px; pointer-events: none; z-index: 1;
 }
 
-/* ── RIM LIGHT: intense beam from upper-left, nearly white at core ── */
+/* ── RIM LIGHT: very subtle left-edge atmospheric glow ── */
 .rim-source {
   position: absolute;
-  width: 90px; height: 440px;
-  top: 50%; left: -10px;
-  transform: translateY(-54%);
-  background: radial-gradient(ellipse at right center,
-    rgba(255,255,220,1.0) 0%,
-    rgba(248,255,195,0.80) 15%,
-    rgba(230,248,155,0.45) 38%,
-    rgba(200,228,115,0.15) 60%,
-    transparent 80%);
-  filter: blur(14px);
-  pointer-events: none; z-index: 0;
-}
-
-/* Wide warm spill that bleeds behind the objects */
-.rim-spill {
-  position: absolute;
-  width: 380px; height: 520px;
-  top: 50%; left: -60px;
+  width: 260px; height: 600px;
+  top: 50%; left: -100px;
   transform: translateY(-50%);
   background: radial-gradient(ellipse at right center,
-    rgba(215,238,130,0.28) 0%,
-    rgba(185,215,95,0.10) 45%,
+    rgba(255,252,230,0.22) 0%,
+    rgba(252,248,215,0.10) 35%,
     transparent 72%);
-  filter: blur(42px);
+  filter: blur(55px);
   pointer-events: none; z-index: 0;
 }
 
-/* Tight secondary hotspot — catches where box left edge sits */
-.rim-hotspot {
-  position: absolute;
-  width: 40px; height: 300px;
-  top: 50%; left: 23%;
-  transform: translateY(-52%);
-  background: radial-gradient(ellipse at center,
-    rgba(255,255,200,0.70) 0%,
-    rgba(240,255,175,0.30) 35%,
-    transparent 70%);
-  filter: blur(10px);
-  pointer-events: none; z-index: 0;
-}
-
-/* Ground shadow beneath objects */
-.split-glow {
-  position: absolute; bottom: 18px; left: 52%; transform: translateX(-50%);
-  width: 460px; height: 60px; border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.70) 0%, transparent 70%);
-  filter: blur(14px);
-  pointer-events: none; z-index: 0;
-}
 
 .split-divider {
   position: absolute; right: 0; top: 10%; bottom: 10%; width: 1px;
@@ -108,48 +70,34 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   margin-bottom: 54px;
 }
 
-/* ── RIM HALO — partial ring elements, conic-masked to LEFT+TOP arc only ── */
-.rim-halo {
+/* Floor spill — warm light pooling below the objects (reflects rim source) */
+.split-glow {
   position: absolute;
+  top: 62%; left: 36%;
+  transform: translate(-50%, 0);
+  width: 520px; height: 70px;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  /* conic mask: visible on left (270°) + top (0°) arc, invisible on right+bottom */
-  -webkit-mask-image: conic-gradient(
-    white 0deg, white 50deg,
-    transparent 85deg, transparent 215deg,
-    white 255deg, white 360deg
-  );
-  mask-image: conic-gradient(
-    white 0deg, white 50deg,
-    transparent 85deg, transparent 215deg,
-    white 255deg, white 360deg
-  );
+  background: radial-gradient(ellipse at center,
+    rgba(220,230,150,0.09) 0%,
+    rgba(200,215,120,0.04) 50%,
+    transparent 72%);
+  filter: blur(22px);
+  mix-blend-mode: screen;
+  pointer-events: none; z-index: 1;
 }
-.box-halo {
-  width: 370px; height: 370px;
-  top: 54%; left: 36%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 50% 50%,
-    transparent 30%,
-    rgba(245,255,158,0.90) 33%,
-    rgba(235,252,140,0.55) 40%,
-    rgba(218,242,115,0.18) 48%,
-    transparent 55%);
-  filter: blur(7px);
+
+/* Vignette — corners and top pulled darker to focus attention on objects */
+.split-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% -5%,  rgba(0,0,0,0.65) 0%, transparent 62%),
+    radial-gradient(ellipse at 50% 108%, rgba(0,0,0,0.50) 0%, transparent 52%),
+    radial-gradient(ellipse at -5% 50%,  rgba(0,0,0,0.28) 0%, transparent 40%),
+    radial-gradient(ellipse at 105% 50%, rgba(0,0,0,0.22) 0%, transparent 38%);
+  pointer-events: none; z-index: 0;
 }
-.deck-halo {
-  width: 240px; height: 240px;
-  top: 52%; left: 67%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 50% 50%,
-    transparent 30%,
-    rgba(245,255,158,0.78) 33%,
-    rgba(232,250,136,0.46) 40%,
-    rgba(215,240,112,0.14) 48%,
-    transparent 55%);
-  filter: blur(5px);
-}
+
 /* ── BLOOM — soft glow corona radiating outward from rim-lit edges ── */
 .bloom-cloud {
   position: absolute;
@@ -211,14 +159,9 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
 <div class="bundle-split">
   <div class="split-visual">
 
-    <!-- Rim light source + spill + hotspot -->
+    <!-- Subtle left-edge atmospheric glow (motivates rim light direction) -->
     <div class="rim-source"></div>
-    <div class="rim-spill"></div>
-    <div class="rim-hotspot"></div>
-    <!-- Partial-ring halos: conic-masked to left+top arc only -->
-    <div class="rim-halo box-halo"></div>
-    <div class="rim-halo deck-halo"></div>
-    <!-- Bloom clouds: soft glow corona radiating from rim-lit edges -->
+    <!-- Bloom clouds: JS-positioned each frame, tracks rim-lit silhouette -->
     <div class="bloom-cloud box-bloom"></div>
     <div class="bloom-cloud deck-bloom"></div>
     <div class="split-glow"></div>
