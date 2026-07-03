@@ -613,12 +613,29 @@
     <span class="product-tag">BESTSELLER</span>
     <div class="box-scene" id="scene-fow">
       <div class="box-3d" id="box-fow" data-rot-y="-32" data-rot-x="10">
-        <div class="box-face box-front" style="background-image:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.18)),url('brand_assets/front%20face.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-back"  style="background-image:linear-gradient(rgba(0,0,0,0.28),rgba(0,0,0,0.28)),url('brand_assets/back%20face.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-right" style="background-image:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.38)),url('brand_assets/right%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-left"  style="background-image:linear-gradient(rgba(0,0,0,0.48),rgba(0,0,0,0.48)),url('brand_assets/left%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-top"   style="background-image:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),url('brand_assets/top%20side.png');background-size:cover;background-position:center;"></div>
-        <div class="box-face box-bottom" style="background-image:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),url('brand_assets/bottom%20side.png');background-size:cover;background-position:center;"></div>
+        <div class="box-face box-front" style="background-image:url('brand_assets/front%20face.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="f1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="f1ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(180,245,180,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-back" style="background-image:url('brand_assets/back%20face.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="b1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="b1ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(180,245,180,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-right" style="background-image:url('brand_assets/right%20side.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="r1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="r1ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(180,245,180,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-left" style="background-image:url('brand_assets/left%20side.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="l1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="l1ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(180,245,180,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-top" style="background-image:url('brand_assets/top%20side.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="t1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="t1ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(180,245,180,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-bottom" style="background-image:url('brand_assets/bottom%20side.png');background-size:cover;background-position:center;isolation:isolate;">
+          <div id="bot1sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+        </div>
       </div>
       <div class="card-fan">
         <div class="fan-card"><img src="brand_assets/posters_banners/fart_of_war/base_game/base_cards/Airplane%20Fart.jpg" alt="Airplane Fart" loading="lazy"/></div>
@@ -645,15 +662,31 @@
   <a class="product-card card-dispelled" href="dispelled.html">
     <div class="box-scene" id="scene-dispelled">
       <div class="box-3d" id="box-dispelled" data-rot-y="-32" data-rot-x="10" style="--w:185px;--h:255px;--d:50px;">
-        <div class="box-face box-front" style="background:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.18)),linear-gradient(145deg,#253a52 0%,#162438 100%);border:1px solid rgba(149,202,224,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;">
+        <div class="box-face box-front" style="background:linear-gradient(145deg,#253a52 0%,#162438 100%);border:1px solid rgba(149,202,224,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;isolation:isolate;">
           <div style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:0.3em;color:var(--dis-acc);opacity:0.7;">DISPELLED</div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:var(--text);line-height:1.1;text-align:center;">COMING<br>SOON</div>
+          <div id="f2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="f2ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(160,220,255,0);pointer-events:none;"></div>
         </div>
-        <div class="box-face box-back"  style="background:linear-gradient(rgba(0,0,0,0.28),rgba(0,0,0,0.28)),linear-gradient(145deg,#1e3048 0%,#101c30 100%);"></div>
-        <div class="box-face box-right" style="background:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.38)),linear-gradient(180deg,#1e3048 0%,#101c30 100%);"></div>
-        <div class="box-face box-left"  style="background:linear-gradient(rgba(0,0,0,0.48),rgba(0,0,0,0.48)),#0c1828;"></div>
-        <div class="box-face box-top"   style="background:linear-gradient(rgba(0,0,0,0.12),rgba(0,0,0,0.12)),linear-gradient(90deg,#253a52 0%,#1e3048 100%);"></div>
-        <div class="box-face box-bottom" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),#080e18;"></div>
+        <div class="box-face box-back" style="background:linear-gradient(145deg,#1e3048 0%,#101c30 100%);isolation:isolate;">
+          <div id="b2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="b2ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(160,220,255,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-right" style="background:linear-gradient(180deg,#1e3048 0%,#101c30 100%);isolation:isolate;">
+          <div id="r2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="r2ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(160,220,255,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-left" style="background:#0c1828;isolation:isolate;">
+          <div id="l2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="l2ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(160,220,255,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-top" style="background:linear-gradient(90deg,#253a52 0%,#1e3048 100%);isolation:isolate;">
+          <div id="t2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="t2ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(160,220,255,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-bottom" style="background:#080e18;isolation:isolate;">
+          <div id="bot2sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+        </div>
       </div>
       <div class="card-fan">
         <div class="fan-card" style="background:#162232;"></div>
@@ -683,16 +716,31 @@
         <div class="box-deck-ghost" style="transform:translateZ(4px) translateX(4px) translateY(-3px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
         <div class="box-deck-ghost" style="transform:translateZ(0px) translateX(-3px) translateY(4px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
         <div class="box-deck-ghost" style="transform:translateZ(-4px) translateX(3px) translateY(2px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
-        <div class="box-face box-front" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;">
+        <div class="box-face box-front" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;isolation:isolate;">
           <img src="brand_assets/FRESH AIR.png" alt="Fresh Air Expansion" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+          <div id="f3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;border-radius:8px;"></div>
+          <div id="f3ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(210,255,170,0);pointer-events:none;border-radius:8px;"></div>
         </div>
-        <div class="box-face box-back" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;">
+        <div class="box-face box-back" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;isolation:isolate;">
           <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt="Card back" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+          <div id="b3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;border-radius:8px;"></div>
+          <div id="b3ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(210,255,170,0);pointer-events:none;border-radius:8px;"></div>
         </div>
-        <div class="box-face box-right" style="background:#3f4120;border-radius:8px 0 0 8px;"></div>
-        <div class="box-face box-left"  style="background:#3f4120;border-radius:0 8px 8px 0;"></div>
-        <div class="box-face box-top"   style="background:#383b1c;border-radius:0 0 8px 8px;"></div>
-        <div class="box-face box-bottom" style="background:#313416;border-radius:8px 8px 0 0;"></div>
+        <div class="box-face box-right" style="background:#3f4120;border-radius:8px 0 0 8px;isolation:isolate;">
+          <div id="r3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="r3ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(210,255,170,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-left" style="background:#3f4120;border-radius:0 8px 8px 0;isolation:isolate;">
+          <div id="l3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="l3ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(210,255,170,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-top" style="background:#383b1c;border-radius:0 0 8px 8px;isolation:isolate;">
+          <div id="t3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="t3ri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(210,255,170,0);pointer-events:none;"></div>
+        </div>
+        <div class="box-face box-bottom" style="background:#313416;border-radius:8px 8px 0 0;isolation:isolate;">
+          <div id="bot3sh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+        </div>
       </div>
       <div class="card-fan">
         <div class="fan-card"><img src="brand_assets/posters_banners/expansionpack/fartcannon.png" alt=""></div>
@@ -860,62 +908,130 @@
 </div>
 
 <script>
-  /* ── DRAG-TO-ROTATE ── */
-  document.querySelectorAll('.box-3d').forEach(box => {
-    const scene = box.closest('.box-scene');
-    const card  = box.closest('.product-card');
-    let dragging = false, lastX = 0, lastY = 0, totalDrag = 0;
-    let rotY = parseFloat(box.dataset.rotY);
-    let rotX = parseFloat(box.dataset.rotX);
+  /* ── PRODUCT CARD DRAG-TO-ROTATE with per-box Fresnel rim lighting ── */
+  (function() {
+    function norm(x, y, z) { const l = Math.sqrt(x*x+y*y+z*z); return [x/l,y/l,z/l]; }
+    function dot(a, b) { return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]; }
+    const RIM_DIR = norm(-1.0, -0.5, 0.2);
+    const KEY_DIR = norm(-0.2, -0.3, 1.0);
 
-    const apply = () => { box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
+    function worldNormal(n, rX, rY) {
+      const rx=rX*Math.PI/180, ry=rY*Math.PI/180;
+      const cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry);
+      const x1=n[0]*cy+n[2]*sy,y1=n[1],z1=-n[0]*sy+n[2]*cy;
+      return [x1,y1*cx+z1*sx,-y1*sx+z1*cx];
+    }
 
-    const start = e => {
-      dragging = true; totalDrag = 0;
-      box.classList.add('dragging');
-      scene.classList.add('has-dragged');
-      const p = e.touches ? e.touches[0] : e;
-      lastX = p.clientX; lastY = p.clientY;
-      e.preventDefault(); e.stopPropagation();
-    };
-    const move = e => {
-      if (!dragging) return;
-      const p = e.touches ? e.touches[0] : e;
-      const dx = p.clientX - lastX, dy = p.clientY - lastY;
-      totalDrag += Math.abs(dx) + Math.abs(dy);
-      rotY += dx * 0.65;
-      rotX -= dy * 0.4;
-      rotX = Math.max(-35, Math.min(35, rotX));
-      apply();
-      lastX = p.clientX; lastY = p.clientY;
-    };
-    const end = () => {
-      if (!dragging) return;
-      dragging = false;
-      box.classList.remove('dragging');
-      /* If user dragged meaningfully, block the next click so the card
-         link does not fire when they lift their finger/mouse. */
-      if (totalDrag > 8 && card) {
-        card._blockClick = true;
-        setTimeout(() => { card._blockClick = false; }, 400);
+    function applyShading(faces, rimC, rX, rY) {
+      for (const f of faces) {
+        if (!f.shEl) continue;
+        const wn = worldNormal(f.n, rX, rY);
+        const NdotV = Math.max(0, wn[2]);
+        const NdotL_rim = Math.max(0, dot(wn, RIM_DIR));
+        const fresnel = Math.pow(1.0-NdotV, 1.8);
+        const rim = Math.min(0.95, fresnel*NdotL_rim*3.5);
+        const lit = 0.22 + Math.max(0, dot(wn, KEY_DIR))*0.65 + NdotL_rim*0.06;
+        const shadow = Math.max(0, Math.min(0.95, 1.0-Math.min(1.0, lit)));
+        f.shEl.style.background = `rgba(0,0,0,${shadow.toFixed(3)})`;
+        if (f.riEl) f.riEl.style.background = `rgba(${rimC[0]},${rimC[1]},${rimC[2]},${rim.toFixed(3)})`;
       }
-      clearTimeout(box._snap);
-      box._snap = setTimeout(() => {
-        box.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
-        rotY = parseFloat(box.dataset.rotY);
-        rotX = parseFloat(box.dataset.rotX);
-        apply();
-        setTimeout(() => { box.style.transition = ''; }, 850);
-      }, 1800);
-    };
+    }
 
-    box.addEventListener('mousedown', start);
-    box.addEventListener('touchstart', start, { passive: false });
-    document.addEventListener('mousemove', move);
-    document.addEventListener('touchmove', move, { passive: false });
-    document.addEventListener('mouseup', end);
-    document.addEventListener('touchend', end);
-  });
+    const CARD_DEFS = [
+      {
+        id: 'box-fow', rimC: [180, 245, 180],
+        faces: [
+          { n: [0,0,1],  sh: 'f1sh',   ri: 'f1ri'   },
+          { n: [0,0,-1], sh: 'b1sh',   ri: 'b1ri'   },
+          { n: [1,0,0],  sh: 'r1sh',   ri: 'r1ri'   },
+          { n: [-1,0,0], sh: 'l1sh',   ri: 'l1ri'   },
+          { n: [0,-1,0], sh: 't1sh',   ri: 't1ri'   },
+          { n: [0,1,0],  sh: 'bot1sh', ri: null      },
+        ],
+      },
+      {
+        id: 'box-dispelled', rimC: [160, 220, 255],
+        faces: [
+          { n: [0,0,1],  sh: 'f2sh',   ri: 'f2ri'   },
+          { n: [0,0,-1], sh: 'b2sh',   ri: 'b2ri'   },
+          { n: [1,0,0],  sh: 'r2sh',   ri: 'r2ri'   },
+          { n: [-1,0,0], sh: 'l2sh',   ri: 'l2ri'   },
+          { n: [0,-1,0], sh: 't2sh',   ri: 't2ri'   },
+          { n: [0,1,0],  sh: 'bot2sh', ri: null      },
+        ],
+      },
+      {
+        id: 'box-exp', rimC: [210, 255, 170],
+        faces: [
+          { n: [0,0,1],  sh: 'f3sh',   ri: 'f3ri'   },
+          { n: [0,0,-1], sh: 'b3sh',   ri: 'b3ri'   },
+          { n: [1,0,0],  sh: 'r3sh',   ri: 'r3ri'   },
+          { n: [-1,0,0], sh: 'l3sh',   ri: 'l3ri'   },
+          { n: [0,-1,0], sh: 't3sh',   ri: 't3ri'   },
+          { n: [0,1,0],  sh: 'bot3sh', ri: null      },
+        ],
+      },
+    ];
+
+    CARD_DEFS.forEach(def => {
+      const box = document.getElementById(def.id);
+      if (!box) return;
+      const scene = box.closest('.box-scene');
+      const card  = box.closest('.product-card');
+      def.faces.forEach(f => { f.shEl = document.getElementById(f.sh); f.riEl = f.ri ? document.getElementById(f.ri) : null; });
+
+      let dragging = false, lastX = 0, lastY = 0, totalDrag = 0;
+      let rotY = parseFloat(box.dataset.rotY);
+      let rotX = parseFloat(box.dataset.rotX);
+
+      const apply = () => {
+        box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        applyShading(def.faces, def.rimC, rotX, rotY);
+      };
+      apply();
+
+      const start = e => {
+        dragging = true; totalDrag = 0;
+        box.classList.add('dragging');
+        scene.classList.add('has-dragged');
+        const p = e.touches ? e.touches[0] : e;
+        lastX = p.clientX; lastY = p.clientY;
+        e.preventDefault(); e.stopPropagation();
+      };
+      const move = e => {
+        if (!dragging) return;
+        const p = e.touches ? e.touches[0] : e;
+        const dx = p.clientX - lastX, dy = p.clientY - lastY;
+        totalDrag += Math.abs(dx) + Math.abs(dy);
+        rotY += dx * 0.65; rotX -= dy * 0.4;
+        rotX = Math.max(-35, Math.min(35, rotX));
+        apply(); lastX = p.clientX; lastY = p.clientY;
+      };
+      const end = () => {
+        if (!dragging) return;
+        dragging = false;
+        box.classList.remove('dragging');
+        if (totalDrag > 8 && card) {
+          card._blockClick = true;
+          setTimeout(() => { card._blockClick = false; }, 400);
+        }
+        clearTimeout(box._snap);
+        box._snap = setTimeout(() => {
+          box.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
+          rotY = parseFloat(box.dataset.rotY); rotX = parseFloat(box.dataset.rotX);
+          apply();
+          setTimeout(() => { box.style.transition = ''; }, 850);
+        }, 1800);
+      };
+
+      box.addEventListener('mousedown', start);
+      box.addEventListener('touchstart', start, { passive: false });
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, { passive: false });
+      document.addEventListener('mouseup', end);
+      document.addEventListener('touchend', end);
+    });
+  })();
 
   /* ── BUNDLE — world-space Fresnel rim lighting + bloom edge strips ── */
   (function() {
