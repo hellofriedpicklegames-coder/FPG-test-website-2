@@ -98,37 +98,15 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   pointer-events: none; z-index: 0;
 }
 
-/* ── BLOOM — soft glow corona radiating outward from rim-lit edges ── */
-.bloom-cloud {
+/* ── BLOOM — linear edge strips that follow the rim-lit silhouette ── */
+/* JS sizes, positions, and gradients these every frame */
+.bloom-strip {
   position: absolute;
   pointer-events: none;
   mix-blend-mode: screen;
   z-index: 1;
-}
-/* Position set by JS each frame — centered gradients, JS controls left/top */
-.box-bloom {
-  width: 200px; height: 300px;
-  top: 0; left: 0;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 50% 50%,
-    rgba(255,255,222,0.86) 0%,
-    rgba(250,255,192,0.52) 28%,
-    rgba(240,255,165,0.22) 56%,
-    transparent 76%
-  );
-  filter: blur(26px);
-}
-.deck-bloom {
-  width: 120px; height: 230px;
-  top: 0; left: 0;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 50% 50%,
-    rgba(255,255,222,0.68) 0%,
-    rgba(250,255,192,0.40) 30%,
-    rgba(240,255,165,0.16) 58%,
-    transparent 78%
-  );
-  filter: blur(20px);
+  filter: blur(18px);
+  opacity: 0;
 }
 .bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
 
@@ -161,9 +139,11 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
 
     <!-- Subtle left-edge atmospheric glow (motivates rim light direction) -->
     <div class="rim-source"></div>
-    <!-- Bloom clouds: JS-positioned each frame, tracks rim-lit silhouette -->
-    <div class="bloom-cloud box-bloom"></div>
-    <div class="bloom-cloud deck-bloom"></div>
+    <!-- Bloom strips: JS sizes/positions/colors each frame to trace lit edges -->
+    <div class="bloom-strip box-bloom-v"></div>
+    <div class="bloom-strip box-bloom-h"></div>
+    <div class="bloom-strip deck-bloom-v"></div>
+    <div class="bloom-strip deck-bloom-h"></div>
     <div class="split-glow"></div>
     <div class="split-divider"></div>
 
@@ -366,21 +346,23 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
     }
   }
 
-  // ── Bloom positioning (JS-driven, moves with the rim centroid) ───────────
-  const boxBloom  = document.querySelector('.box-bloom');
-  const deckBloom = document.querySelector('.deck-bloom');
-  const visualEl  = document.querySelector('.split-visual');
+  // ── Bloom strips (JS-driven, follow the rim-lit silhouette edges) ─────────
+  const boxBloomV  = document.querySelector('.box-bloom-v');
+  const boxBloomH  = document.querySelector('.box-bloom-h');
+  const deckBloomV = document.querySelector('.deck-bloom-v');
+  const deckBloomH = document.querySelector('.deck-bloom-h');
+  const visualEl   = document.querySelector('.split-visual');
 
-  // Returns {dx, dy, strength} — the screen-space direction toward the
-  // rim-lit silhouette edge (world XY = screen XY in CSS 3D).
+  // Returns {dx, dy, strength} — screen-space direction toward the rim-lit
+  // silhouette (world XY = screen XY in CSS 3D).
   function rimCentroid(faces, rotX, rotY) {
     let wx = 0, wy = 0, totalRim = 0;
     for (const f of faces) {
       const wn = worldNormal(f.n, rotX, rotY);
-      const NdotV      = Math.max(0, wn[2]);
-      const NdotL_rim  = Math.max(0, dot(wn, RIM_DIR));
-      const fresnel    = Math.pow(1.0 - NdotV, RIM_POWER);
-      const rim        = Math.min(0.95, fresnel * NdotL_rim * RIM_STRENGTH);
+      const NdotV     = Math.max(0, wn[2]);
+      const NdotL_rim = Math.max(0, dot(wn, RIM_DIR));
+      const fresnel   = Math.pow(1.0 - NdotV, RIM_POWER);
+      const rim       = Math.min(0.95, fresnel * NdotL_rim * RIM_STRENGTH);
       wx += wn[0] * rim;
       wy += wn[1] * rim;
       totalRim += rim;
@@ -390,19 +372,60 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
     return { dx: wx / len, dy: wy / len, strength: Math.min(1, totalRim * 0.55) };
   }
 
-  function positionBloom(bloomEl, objectEl, faces, rotX, rotY) {
+  // Replaces single ellipse with two edge-following strips:
+  //   vEl — vertical strip hugging the left/right silhouette edge
+  //   hEl — horizontal strip hugging the top/bottom silhouette edge
+  function positionBloomStrips(vEl, hEl, objectEl, faces, rotX, rotY) {
     const c = rimCentroid(faces, rotX, rotY);
-    if (!c) { bloomEl.style.opacity = '0'; return; }
-    const vr  = visualEl.getBoundingClientRect();
-    const or  = objectEl.getBoundingClientRect();
-    // Object center relative to split-visual
-    const cx  = or.left - vr.left + or.width  * 0.5;
-    const cy  = or.top  - vr.top  + or.height * 0.5;
-    // Offset bloom toward the rim-lit silhouette edge
-    const R = Math.min(or.width, or.height) * 0.55;
-    bloomEl.style.left    = (cx + c.dx * R) + 'px';
-    bloomEl.style.top     = (cy + c.dy * R) + 'px';
-    bloomEl.style.opacity = c.strength.toFixed(3);
+    if (!c) { vEl.style.opacity = '0'; hEl.style.opacity = '0'; return; }
+
+    const vr   = visualEl.getBoundingClientRect();
+    const or   = objectEl.getBoundingClientRect();
+    const objL = or.left - vr.left;
+    const objT = or.top  - vr.top;
+    const objR = objL + or.width;
+    const objB = objT + or.height;
+
+    const BASE   = c.strength;
+    const C      = '255,255,218';
+    const VW     = 72;   // vertical strip width
+    const HH     = 48;   // horizontal strip height
+    const VBLUR  = 22;   // px
+    const HBLUR  = 18;
+
+    // Vertical strip: strength proportional to horizontal rim component
+    const vStr = Math.min(1.0, BASE * Math.abs(c.dx) * 1.1).toFixed(2);
+    if (c.dx <= 0) {
+      // rim to the left — left edge
+      vEl.style.left       = (objL - VW * 0.5) + 'px';
+      vEl.style.background = `linear-gradient(to right, rgba(${C},${vStr}) 0%, transparent 100%)`;
+    } else {
+      // rim to the right — right edge
+      vEl.style.left       = (objR - VW * 0.5) + 'px';
+      vEl.style.background = `linear-gradient(to left, rgba(${C},${vStr}) 0%, transparent 100%)`;
+    }
+    vEl.style.top    = objT + 'px';
+    vEl.style.width  = VW + 'px';
+    vEl.style.height = or.height + 'px';
+    vEl.style.filter = `blur(${VBLUR}px)`;
+    vEl.style.opacity = vStr;
+
+    // Horizontal strip: strength proportional to vertical rim component
+    const hStr = Math.min(1.0, BASE * Math.abs(c.dy) * 0.85).toFixed(2);
+    if (c.dy <= 0) {
+      // rim above — top edge
+      hEl.style.top        = (objT - HH * 0.5) + 'px';
+      hEl.style.background = `linear-gradient(to bottom, rgba(${C},${hStr}) 0%, transparent 100%)`;
+    } else {
+      // rim below — bottom edge
+      hEl.style.top        = (objB - HH * 0.5) + 'px';
+      hEl.style.background = `linear-gradient(to top, rgba(${C},${hStr}) 0%, transparent 100%)`;
+    }
+    hEl.style.left   = objL + 'px';
+    hEl.style.width  = or.width + 'px';
+    hEl.style.height = HH + 'px';
+    hEl.style.filter = `blur(${HBLUR}px)`;
+    hEl.style.opacity = hStr;
   }
 
   let bX = 10, bY = 25, dX = 8, dY = 18;
@@ -414,8 +437,8 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
     deck.style.transform = `rotateX(${dX}deg) rotateY(${dY}deg)`;
     applyShading(BOX_FACES,  bX, bY);
     applyShading(DECK_FACES, dX, dY);
-    positionBloom(boxBloom,  box,  BOX_FACES,  bX, bY);
-    positionBloom(deckBloom, deck, DECK_FACES, dX, dY);
+    positionBloomStrips(boxBloomV,  boxBloomH,  box,  BOX_FACES,  bX, bY);
+    positionBloomStrips(deckBloomV, deckBloomH, deck, DECK_FACES, dX, dY);
   }
 
   tick(); // initial render
