@@ -157,29 +157,28 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   mix-blend-mode: screen;
   z-index: 1;
 }
-/* Box: bloom peaks at left spine + top edge (upper-right of this div) */
+/* Position set by JS each frame — centered gradients, JS controls left/top */
 .box-bloom {
-  width: 200px; height: 320px;
-  top: 50%; left: 18%;
+  width: 200px; height: 300px;
+  top: 0; left: 0;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 85% 28%,
-    rgba(255,255,222,0.82) 0%,
-    rgba(250,255,192,0.50) 26%,
-    rgba(240,255,165,0.22) 54%,
-    transparent 74%
+  background: radial-gradient(ellipse at 50% 50%,
+    rgba(255,255,222,0.86) 0%,
+    rgba(250,255,192,0.52) 28%,
+    rgba(240,255,165,0.22) 56%,
+    transparent 76%
   );
   filter: blur(26px);
 }
-/* Deck: bloom peaks at left spine + top edge */
 .deck-bloom {
-  width: 120px; height: 240px;
-  top: 45%; left: 59%;
+  width: 120px; height: 230px;
+  top: 0; left: 0;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at 80% 24%,
-    rgba(255,255,222,0.62) 0%,
-    rgba(250,255,192,0.36) 28%,
-    rgba(240,255,165,0.15) 57%,
-    transparent 76%
+  background: radial-gradient(ellipse at 50% 50%,
+    rgba(255,255,222,0.68) 0%,
+    rgba(250,255,192,0.40) 30%,
+    rgba(240,255,165,0.16) 58%,
+    transparent 78%
   );
   filter: blur(20px);
 }
@@ -236,9 +235,10 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
           <div id="bfri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
         </div>
         <!-- back -->
-        <div class="bface" style="width:300px;height:300px;transform:rotateY(180deg) translateZ(35px);">
+        <div class="bface" style="width:300px;height:300px;transform:rotateY(180deg) translateZ(35px);isolation:isolate;">
           <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
           <div id="bksh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="bkri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(255,255,210,0);pointer-events:none;"></div>
         </div>
         <!-- right -->
         <div class="bface" style="width:70px;height:300px;left:265px;top:0;transform:rotateY(90deg);isolation:isolate;">
@@ -283,9 +283,10 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
           <div id="dfri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);border-radius:8px;pointer-events:none;"></div>
         </div>
         <!-- back -->
-        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;">
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;isolation:isolate;">
           <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;">
-          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.70);border-radius:8px;"></div>
+          <div id="dksh" style="position:absolute;inset:0;background:rgba(0,0,0,0);border-radius:8px;pointer-events:none;"></div>
+          <div id="dkri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(255,255,210,0);border-radius:8px;pointer-events:none;"></div>
         </div>
         <!-- right -->
         <div style="position:absolute;width:16px;height:214px;left:144px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:8px 0 0 8px;backface-visibility:hidden;isolation:isolate;">
@@ -336,7 +337,7 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   // CSS coord system: X right, Y down, Z toward viewer
   const BOX_FACES = [
     { n: [ 0,  0,  1], sh: 'bfsh', ri: 'bfri' }, // front
-    { n: [ 0,  0, -1], sh: 'bksh', ri: null    }, // back
+    { n: [ 0,  0, -1], sh: 'bksh', ri: 'bkri'  }, // back
     { n: [ 1,  0,  0], sh: 'brsh', ri: 'brri'  }, // right
     { n: [-1,  0,  0], sh: 'blsh', ri: 'blri'  }, // left
     { n: [ 0, -1,  0], sh: 'btsh', ri: 'btri'  }, // top  (Y down → -Y = up)
@@ -344,6 +345,7 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
   ];
   const DECK_FACES = [
     { n: [ 0,  0,  1], sh: 'dfsh', ri: 'dfri' }, // front
+    { n: [ 0,  0, -1], sh: 'dksh', ri: 'dkri'  }, // back
     { n: [ 1,  0,  0], sh: 'drsh', ri: 'drri' }, // right
     { n: [-1,  0,  0], sh: 'dlsh', ri: 'dlri' }, // left
     { n: [ 0, -1,  0], sh: 'dtsh', ri: 'dtri' }, // top
@@ -421,6 +423,45 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
     }
   }
 
+  // ── Bloom positioning (JS-driven, moves with the rim centroid) ───────────
+  const boxBloom  = document.querySelector('.box-bloom');
+  const deckBloom = document.querySelector('.deck-bloom');
+  const visualEl  = document.querySelector('.split-visual');
+
+  // Returns {dx, dy, strength} — the screen-space direction toward the
+  // rim-lit silhouette edge (world XY = screen XY in CSS 3D).
+  function rimCentroid(faces, rotX, rotY) {
+    let wx = 0, wy = 0, totalRim = 0;
+    for (const f of faces) {
+      const wn = worldNormal(f.n, rotX, rotY);
+      const NdotV      = Math.max(0, wn[2]);
+      const NdotL_rim  = Math.max(0, dot(wn, RIM_DIR));
+      const fresnel    = Math.pow(1.0 - NdotV, RIM_POWER);
+      const rim        = Math.min(0.95, fresnel * NdotL_rim * RIM_STRENGTH);
+      wx += wn[0] * rim;
+      wy += wn[1] * rim;
+      totalRim += rim;
+    }
+    if (totalRim < 0.02) return null;
+    const len = Math.sqrt(wx*wx + wy*wy);
+    return { dx: wx / len, dy: wy / len, strength: Math.min(1, totalRim * 0.55) };
+  }
+
+  function positionBloom(bloomEl, objectEl, faces, rotX, rotY) {
+    const c = rimCentroid(faces, rotX, rotY);
+    if (!c) { bloomEl.style.opacity = '0'; return; }
+    const vr  = visualEl.getBoundingClientRect();
+    const or  = objectEl.getBoundingClientRect();
+    // Object center relative to split-visual
+    const cx  = or.left - vr.left + or.width  * 0.5;
+    const cy  = or.top  - vr.top  + or.height * 0.5;
+    // Offset bloom toward the rim-lit silhouette edge
+    const R = Math.min(or.width, or.height) * 0.55;
+    bloomEl.style.left    = (cx + c.dx * R) + 'px';
+    bloomEl.style.top     = (cy + c.dy * R) + 'px';
+    bloomEl.style.opacity = c.strength.toFixed(3);
+  }
+
   let bX = 10, bY = 25, dX = 8, dY = 18;
   let dragging = false, lastX = 0, lastY = 0;
   let snapTimeout = null, snapRaf = null;
@@ -430,6 +471,8 @@ body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
     deck.style.transform = `rotateX(${dX}deg) rotateY(${dY}deg)`;
     applyShading(BOX_FACES,  bX, bY);
     applyShading(DECK_FACES, dX, dY);
+    positionBloom(boxBloom,  box,  BOX_FACES,  bX, bY);
+    positionBloom(deckBloom, deck, DECK_FACES, dX, dY);
   }
 
   tick(); // initial render
