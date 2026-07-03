@@ -327,31 +327,90 @@
     .btn-arrow { transition: transform 0.2s; }
     .btn-buy:hover .btn-arrow { transform: translateX(5px); }
 
-    /* ── BUNDLE TEASER ── */
-    .bundle-teaser {
-      max-width: 1440px; margin: 0 auto; padding: 80px 48px;
-      display: flex; align-items: center; justify-content: space-between; gap: 40px;
-      border-top: 1px solid rgba(153,153,101,0.07);
+    /* ── BUNDLE TEASER — SPLIT IMMERSIVE ── */
+    .bundle-split { position: relative; width: 100%; overflow: hidden; min-height: 560px; display: flex; border-top: 1px solid rgba(153,153,101,0.07); }
+    .split-visual {
+      position: relative; flex: 0 0 58%; background: #0d0f0b;
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px 0; overflow: hidden;
     }
-    .bundle-text h2 {
+    .split-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 85% 75% at 52% 52%, rgba(139,201,139,0.11) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 80% at 20% 90%, rgba(80,80,40,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 80% 10%, rgba(200,218,120,0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .split-visual::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+      background-size: 180px; pointer-events: none; z-index: 1;
+    }
+    .split-glow {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 480px; height: 72px; border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(180,210,100,0.30) 0%, transparent 70%);
+      filter: blur(22px); pointer-events: none; z-index: 0;
+    }
+    .split-divider {
+      position: absolute; right: 0; top: 10%; bottom: 10%; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(153,153,101,0.18) 30%, rgba(153,153,101,0.18) 70%, transparent);
+    }
+    .split-scene {
+      position: relative; z-index: 2;
+      width: 560px; height: 420px;
+      perspective: 1100px; perspective-origin: 50% 44%;
+      display: flex; align-items: flex-end; justify-content: center; gap: 44px;
+      cursor: grab;
+    }
+    .split-scene.grabbing { cursor: grabbing; }
+    .s-box {
+      position: relative; flex-shrink: 0; width: 300px; height: 300px;
+      transform-style: preserve-3d; transform: rotateX(10deg) rotateY(25deg);
+      transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); margin-bottom: 22px;
+    }
+    .s-deck {
+      position: relative; flex-shrink: 0; width: 152px; height: 214px;
+      transform-style: preserve-3d; transform: rotateX(8deg) rotateY(18deg);
+      transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); margin-bottom: 54px;
+    }
+    .bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
+    .split-info {
+      flex: 0 0 42%; display: flex; flex-direction: column; justify-content: center;
+      padding: 64px 56px 64px 52px; background: #0c0e0a; position: relative;
+    }
+    .split-info::before {
+      content: ''; position: absolute; top: 0; right: 0; width: 260px; height: 260px;
+      background: radial-gradient(ellipse at top right, rgba(153,153,101,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .split-eyebrow {
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.34em;
+      color: rgba(153,153,101,0.55); margin-bottom: 18px;
+    }
+    .split-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(40px, 5vw, 72px); letter-spacing: -0.01em;
-      line-height: 0.95; margin-bottom: 14px; color: var(--text);
+      font-size: clamp(44px, 5vw, 68px); letter-spacing: -0.01em;
+      line-height: 0.92; color: var(--text); margin-bottom: 18px;
     }
-    .bundle-text h2 span { color: var(--brand); }
-    .bundle-text p { font-size: 15px; color: var(--text-dim); font-weight: 300; max-width: 400px; line-height: 1.75; }
-    .bundle-price-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
-    .bundle-was { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: rgba(231,232,230,0.28); text-decoration: line-through; letter-spacing: 0.04em; }
-    .bundle-now { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -0.03em; line-height: 1; color: var(--brand); }
+    .split-title span { color: var(--brand); }
+    .split-desc { font-size: 14px; color: rgba(231,232,230,0.42); font-weight: 300; line-height: 1.78; margin-bottom: 36px; max-width: 340px; }
+    .split-price-row { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
+    .split-price-col { display: flex; flex-direction: column; }
+    .split-was { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: rgba(231,232,230,0.22); text-decoration: line-through; letter-spacing: 0.06em; margin-bottom: 2px; }
+    .split-now { font-family: 'Bebas Neue', sans-serif; font-size: 88px; letter-spacing: -0.03em; line-height: 1; color: var(--brand); }
+    .split-now sup { font-size: 34px; vertical-align: super; }
+    .split-save { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.12em; color: #0c0e0a; background: #999965; padding: 4px 10px; margin-bottom: 10px; }
     .btn-bundle {
-      font-family: 'Bebas Neue', sans-serif; font-size: 17px;
-      letter-spacing: 0.12em; background: var(--brand); color: #0c0e0a;
-      border: none; padding: 0 40px; height: 52px;
-      cursor: pointer; white-space: nowrap;
-      box-shadow: 0 2px 18px rgba(var(--brand-rgb),0.38), 0 0 32px rgba(var(--brand-rgb),0.18);
+      font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.14em;
+      background: var(--brand); color: #0c0e0a; border: none; height: 56px;
+      padding: 0 48px; cursor: pointer; align-self: flex-start; white-space: nowrap;
+      box-shadow: 0 2px 18px rgba(var(--brand-rgb),0.38), 0 0 36px rgba(var(--brand-rgb),0.16);
       transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
     }
-    .btn-bundle:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 32px rgba(var(--brand-rgb),0.65), 0 0 48px rgba(var(--brand-rgb),0.28); }
+    .btn-bundle:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 32px rgba(var(--brand-rgb),0.65), 0 0 52px rgba(var(--brand-rgb),0.26); }
+    .split-ships { font-size: 11px; color: rgba(231,232,230,0.22); font-weight: 300; margin-top: 14px; letter-spacing: 0.02em; }
 
     /* ── TRUST STRIP ── */
     .trust-strip {
@@ -433,12 +492,15 @@
       .product-name { white-space: normal; }
       .box-3d { --w: 240px; --h: 205px; --d: 62px; }
 
-      /* Bundle: stack vertically */
-      .bundle-visual { display: none; }
-      .bundle-teaser { flex-direction: column; align-items: flex-start; padding: 52px 24px; gap: 28px; }
-      .bundle-price-wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .bundle-now { font-size: 56px; }
-      .btn-bundle { white-space: nowrap; width: 100%; }
+      /* Bundle: stack vertically on mobile */
+      .bundle-split { flex-direction: column; min-height: auto; }
+      .split-visual { flex: none; min-height: 320px; }
+      .split-scene { width: 340px; height: 260px; gap: 24px; }
+      .s-box { width: 190px; height: 190px; margin-bottom: 14px; }
+      .s-deck { width: 96px; height: 134px; margin-bottom: 34px; }
+      .split-info { flex: none; padding: 44px 24px; }
+      .split-now { font-size: 64px; }
+      .btn-bundle { width: 100%; align-self: stretch; text-align: center; }
 
       /* Trust strip */
       .trust-strip { padding: 40px 24px; gap: 28px; justify-content: flex-start; }
@@ -455,19 +517,6 @@
     .box-deck-ghost { position: absolute; width: var(--w); height: var(--h); background: #3f4120; backface-visibility: hidden; }
     .box-deck-ghost img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
 
-    /* ── BUNDLE 3D SCENE ── */
-    .bundle-visual  { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
-    .bundle-scene   { width: 390px; height: 320px; perspective: 820px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; gap: 28px; position: relative; cursor: grab; }
-    .bundle-scene.grabbing { cursor: grabbing; }
-    .bundle-scene::before {
-      content: ''; position: absolute; bottom: 0; left: 50%;
-      transform: translateX(-50%); width: 100%; height: 52%; border-radius: 50%;
-      background: radial-gradient(ellipse at center, rgba(200,218,120,1) 0%, transparent 68%);
-      filter: blur(48px); opacity: 0.18; pointer-events: none;
-    }
-    .bundle-box-3d  { position: relative; flex-shrink: 0; width: 210px; height: 210px; transform-style: preserve-3d; transform: rotateX(10deg) rotateY(25deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); }
-    .bundle-deck-3d { position: relative; flex-shrink: 0; width: 110px; height: 154px; transform-style: preserve-3d; transform: rotateX(8deg) rotateY(18deg); transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1); }
-    .bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
   </style>
 </head>
 <body>
@@ -661,66 +710,94 @@
 
 </div>
 
-<!-- BUNDLE TEASER -->
-<div class="bundle-teaser">
-  <!-- 3D visual: FOW box + Fresh Air deck, independently rotatable -->
-  <div class="bundle-visual">
-    <div class="bundle-scene" id="bundle-scene">
+<!-- BUNDLE TEASER — SPLIT IMMERSIVE -->
+<div class="bundle-split">
 
-      <!-- Fart of War box — normal friction -->
-      <div class="bundle-box-3d" id="bundle-box" data-rot-y="25" data-rot-x="10">
-        <div class="bface" style="width:210px;height:210px;transform:translateZ(30px);">
+  <!-- Left: 3D visual panel -->
+  <div class="split-visual">
+    <div class="split-glow"></div>
+    <div class="split-divider"></div>
+
+    <div class="split-scene" id="bundle-scene">
+
+      <!-- FOW Box (300×300, depth 70) -->
+      <div class="s-box" id="bundle-box" data-rot-y="25" data-rot-x="10">
+        <div class="bface" style="width:300px;height:300px;transform:translateZ(35px);">
           <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.16);pointer-events:none;"></div>
         </div>
-        <div class="bface" style="width:210px;height:210px;transform:rotateY(180deg) translateZ(30px);">
+        <div class="bface" style="width:300px;height:300px;transform:rotateY(180deg) translateZ(35px);">
           <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.28);pointer-events:none;"></div>
         </div>
-        <div class="bface" style="width:60px;height:210px;left:180px;top:0;transform:rotateY(90deg);">
+        <div class="bface" style="width:70px;height:300px;left:265px;top:0;transform:rotateY(90deg);">
           <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.38);pointer-events:none;"></div>
         </div>
-        <div class="bface" style="width:60px;height:210px;left:-30px;top:0;transform:rotateY(-90deg);">
+        <div class="bface" style="width:70px;height:300px;left:-35px;top:0;transform:rotateY(-90deg);">
           <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-left" style="position:absolute;inset:0;background:rgba(0,0,0,0.50);pointer-events:none;"></div>
         </div>
-        <div class="bface" style="width:210px;height:60px;left:0;top:-30px;transform:rotateX(90deg);">
+        <div class="bface" style="width:300px;height:70px;left:0;top:-35px;transform:rotateX(90deg);">
           <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-top" style="position:absolute;inset:0;background:rgba(0,0,0,0.08);pointer-events:none;"></div>
         </div>
-        <div class="bface" style="width:210px;height:60px;left:0;top:180px;transform:rotateX(-90deg);">
+        <div class="bface" style="width:300px;height:70px;left:0;top:265px;transform:rotateX(-90deg);">
           <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.60);pointer-events:none;"></div>
         </div>
       </div>
 
-      <!-- Fresh Air deck — more friction -->
-      <div class="bundle-deck-3d" id="bundle-deck" data-rot-y="18" data-rot-x="8">
-        <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(4px) translateX(3px) translateY(-2px);">
-          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+      <!-- Fresh Air deck (152×214, depth 16) -->
+      <div class="s-deck" id="bundle-deck" data-rot-y="18" data-rot-x="8">
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;backface-visibility:hidden;transform:translateZ(5px) translateX(4px) translateY(-2px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:8px;pointer-events:none;"></div>
         </div>
-        <div style="position:absolute;width:110px;height:154px;background:#3f4120;backface-visibility:hidden;transform:translateZ(1px) translateX(-2px) translateY(3px);">
-          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;backface-visibility:hidden;transform:translateZ(2px) translateX(-2px) translateY(3px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:8px;pointer-events:none;"></div>
         </div>
-        <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:translateZ(7px);backface-visibility:hidden;">
-          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+          <div id="sd-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.12);border-radius:8px;pointer-events:none;"></div>
         </div>
-        <div style="position:absolute;width:110px;height:154px;background:#3f4120;transform:rotateY(180deg) translateZ(7px);backface-visibility:hidden;">
-          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;">
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
         </div>
-        <div style="position:absolute;width:14px;height:154px;left:103px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:6px 0 0 6px;backface-visibility:hidden;"></div>
-        <div style="position:absolute;width:14px;height:154px;left:-7px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 6px 6px 0;backface-visibility:hidden;"></div>
-        <div style="position:absolute;width:110px;height:14px;left:0;top:-7px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 6px 6px;backface-visibility:hidden;"></div>
-        <div style="position:absolute;width:110px;height:14px;left:0;top:147px;background:#313416;transform:rotateX(-90deg);border-radius:6px 6px 0 0;backface-visibility:hidden;"></div>
+        <div style="position:absolute;width:16px;height:214px;left:144px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:8px 0 0 8px;backface-visibility:hidden;">
+          <div id="sd-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.40);pointer-events:none;"></div>
+        </div>
+        <div style="position:absolute;width:16px;height:214px;left:-8px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 8px 8px 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);pointer-events:none;"></div>
+        </div>
+        <div style="position:absolute;width:152px;height:16px;left:0;top:-8px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 8px 8px;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.08);pointer-events:none;"></div>
+        </div>
+        <div style="position:absolute;width:152px;height:16px;left:0;top:206px;background:#313416;transform:rotateX(-90deg);border-radius:8px 8px 0 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.65);pointer-events:none;"></div>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <div class="bundle-text">
-    <h2>THE FULL<br><span>ARSENAL BUNDLE</span></h2>
-    <p>Fart of War base game + Fresh Air Expansion in one package. Everything you need to destroy friendships, alienate relatives, and have a genuinely good time.</p>
-  </div>
-  <div class="bundle-price-wrap">
-    <span class="bundle-was">$29.98 separately</span>
-    <span class="bundle-now">$27<sup style="font-size:28px;vertical-align:super;">.99</sup></span>
+  <!-- Right: info panel -->
+  <div class="split-info">
+    <p class="split-eyebrow">FRIED PICKLE GAMES — BUNDLE DEAL</p>
+    <h2 class="split-title">THE FULL<br><span>ARSENAL</span><br>BUNDLE</h2>
+    <p class="split-desc">Fart of War base game + Fresh Air Expansion in one package. Everything you need to destroy friendships, alienate relatives, and have a genuinely good time.</p>
+    <div class="split-price-row">
+      <div class="split-price-col">
+        <span class="split-was">$29.98 separately</span>
+        <span class="split-now">$27<sup>.99</sup></span>
+      </div>
+      <span class="split-save">SAVE 7%</span>
+    </div>
     <button class="btn-bundle" onclick="addBundle()">ORDER BUNDLE →</button>
+    <p class="split-ships">Ships immediately or within 8 weeks depending on order date.</p>
   </div>
+
 </div>
 
 <!-- TRUST STRIP -->
@@ -809,32 +886,53 @@
     document.addEventListener('touchend', end);
   });
 
-  /* ── BUNDLE DRAG — both rotate together, deck at half speed ── */
+  /* ── BUNDLE DRAG — dynamic shading + dual-speed rotation ── */
   (function() {
-    const scene = document.getElementById('bundle-scene');
-    const box   = document.getElementById('bundle-box');
-    const deck  = document.getElementById('bundle-deck');
+    const scene   = document.getElementById('bundle-scene');
+    const box     = document.getElementById('bundle-box');
+    const deck    = document.getElementById('bundle-deck');
     if (!scene || !box || !deck) return;
+
+    const sfFront = document.getElementById('sf-front');
+    const sfRight = document.getElementById('sf-right');
+    const sfLeft  = document.getElementById('sf-left');
+    const sfTop   = document.getElementById('sf-top');
+    const sdFront = document.getElementById('sd-front');
+    const sdRight = document.getElementById('sd-right');
 
     let dragging = false, lastX = 0, lastY = 0;
     let bRotY = parseFloat(box.dataset.rotY),  bRotX = parseFloat(box.dataset.rotX);
     let dRotY = parseFloat(deck.dataset.rotY), dRotX = parseFloat(deck.dataset.rotX);
 
-    const applyBox  = () => { box.style.transform  = `rotateX(${bRotX}deg) rotateY(${bRotY}deg)`;  };
+    function updateShading(rotY) {
+      const yr = ((rotY % 360) + 360) % 360;
+      const fc = Math.cos((yr * Math.PI) / 180);
+      const rc = Math.sin((yr * Math.PI) / 180);
+      if (sfFront) sfFront.style.background = `rgba(0,0,0,${Math.max(0.04, Math.min(0.55, 0.16 - fc * 0.12))})`;
+      if (sfRight) sfRight.style.background = `rgba(0,0,0,${Math.max(0.08, Math.min(0.78, 0.38 + rc * 0.20))})`;
+      if (sfLeft)  sfLeft.style.background  = `rgba(0,0,0,${Math.max(0.08, Math.min(0.78, 0.50 - rc * 0.16))})`;
+      if (sfTop)   sfTop.style.background   = `rgba(0,0,0,${Math.max(0.03, 0.08 - fc * 0.05)})`;
+      if (sdFront) sdFront.style.background = `rgba(0,0,0,${Math.max(0.03, 0.12 - fc * 0.10)})`;
+      if (sdRight) sdRight.style.background = `rgba(0,0,0,${Math.max(0.10, 0.40 + rc * 0.18)})`;
+    }
+
+    const applyBox  = () => { box.style.transform  = `rotateX(${bRotX}deg) rotateY(${bRotY}deg)`; updateShading(bRotY); };
     const applyDeck = () => { deck.style.transform = `rotateX(${dRotX}deg) rotateY(${dRotY}deg)`; };
+    updateShading(bRotY);
 
     const start = e => {
       dragging = true; scene.classList.add('grabbing');
       const p = e.touches ? e.touches[0] : e;
       lastX = p.clientX; lastY = p.clientY;
+      clearTimeout(scene._snap);
       e.preventDefault();
     };
     const move = e => {
       if (!dragging) return;
       const p = e.touches ? e.touches[0] : e;
       const dx = p.clientX - lastX, dy = p.clientY - lastY;
-      bRotY += dx * 0.65;  bRotX -= dy * 0.40;
-      dRotY += dx * 0.32;  dRotX -= dy * 0.20;
+      bRotY += dx * 0.65; bRotX -= dy * 0.40;
+      dRotY += dx * 0.32; dRotX -= dy * 0.20;
       bRotX = Math.max(-35, Math.min(35, bRotX));
       dRotX = Math.max(-35, Math.min(35, dRotX));
       applyBox(); applyDeck();
@@ -843,13 +941,12 @@
     const end = () => {
       if (!dragging) return;
       dragging = false; scene.classList.remove('grabbing');
-      clearTimeout(scene._snap);
       scene._snap = setTimeout(() => {
-        box.style.transition = deck.style.transition = 'transform 0.8s cubic-bezier(0.34,1.26,0.64,1)';
-        bRotY = parseFloat(box.dataset.rotY);   bRotX = parseFloat(box.dataset.rotX);
-        dRotY = parseFloat(deck.dataset.rotY);  dRotX = parseFloat(deck.dataset.rotX);
+        box.style.transition = deck.style.transition = 'transform 0.85s cubic-bezier(0.34,1.46,0.64,1)';
+        bRotY = parseFloat(box.dataset.rotY); bRotX = parseFloat(box.dataset.rotX);
+        dRotY = parseFloat(deck.dataset.rotY); dRotX = parseFloat(deck.dataset.rotX);
         applyBox(); applyDeck();
-        setTimeout(() => { box.style.transition = deck.style.transition = ''; }, 850);
+        setTimeout(() => { box.style.transition = deck.style.transition = ''; }, 900);
       }, 1800);
     };
 

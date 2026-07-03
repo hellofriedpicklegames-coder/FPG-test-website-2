@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bundle Concept A — Stage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
+
+/* ── CONCEPT A: STAGE ──
+   Scene centered with spotlight from above. Objects large.
+   Text + price + button arranged below in a single compact row.
+   Label above scene. Full-width atmospheric section.
+*/
+.bundle-stage {
+  position: relative; width: 100%; overflow: hidden;
+  padding: 0 0 72px;
+  background: #0c0e0a;
+}
+
+/* Atmospheric layered gradients */
+.bundle-stage::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 30%, rgba(153,153,101,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 30% 70%, rgba(139,201,139,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 70% 80%, rgba(80,80,40,0.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Grain texture */
+.bundle-stage::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none; z-index: 1;
+}
+
+.stage-label {
+  position: relative; z-index: 2;
+  text-align: center; padding: 56px 0 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.32em;
+  color: rgba(153,153,101,0.6);
+}
+
+/* The 3D scene */
+.stage-scene-wrap {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; align-items: flex-end;
+  height: 340px; margin-top: -8px;
+}
+
+/* Spotlight glow from above */
+.stage-spotlight {
+  position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+  width: 540px; height: 320px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(200,218,120,0.16) 0%, rgba(139,201,139,0.06) 35%, transparent 68%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* Ground shadow */
+.stage-ground {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 440px; height: 28px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.stage-scene {
+  width: 460px; height: 300px;
+  perspective: 900px; perspective-origin: 50% 44%;
+  display: flex; align-items: flex-end; justify-content: center; gap: 32px;
+  position: relative; cursor: grab;
+}
+.stage-scene.grabbing { cursor: grabbing; }
+
+/* 3D Box */
+.s-box {
+  position: relative; flex-shrink: 0;
+  width: 240px; height: 240px;
+  transform-style: preserve-3d;
+  transform: rotateX(10deg) rotateY(25deg);
+  transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1);
+  margin-bottom: 10px;
+}
+.s-deck {
+  position: relative; flex-shrink: 0;
+  width: 126px; height: 176px;
+  transform-style: preserve-3d;
+  transform: rotateX(8deg) rotateY(18deg);
+  transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1);
+  margin-bottom: 32px;
+}
+
+.bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
+
+/* Stage bottom row: price left, button right */
+.stage-bottom {
+  position: relative; z-index: 2;
+  max-width: 820px; margin: 28px auto 0;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 0 40px; gap: 40px;
+  border-top: 1px solid rgba(153,153,101,0.10);
+  padding-top: 32px;
+}
+
+.stage-copy h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 4vw, 54px); letter-spacing: -0.01em;
+  line-height: 0.95; color: #e7e8e6;
+  margin-bottom: 10px;
+}
+.stage-copy h2 span { color: #ede090; }
+.stage-copy p {
+  font-size: 13px; color: rgba(231,232,230,0.45);
+  font-weight: 300; line-height: 1.75; max-width: 320px;
+}
+
+.stage-price-btn {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  flex-shrink: 0;
+}
+.stage-was {
+  font-family: 'Bebas Neue', sans-serif; font-size: 15px;
+  color: rgba(231,232,230,0.22); text-decoration: line-through; letter-spacing: 0.06em;
+}
+.stage-now {
+  font-family: 'Bebas Neue', sans-serif; font-size: 80px;
+  letter-spacing: -0.03em; line-height: 1; color: #ede090;
+}
+.stage-now sup { font-size: 30px; vertical-align: super; }
+.stage-btn {
+  font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.14em;
+  background: #ede090; color: #0c0e0a; border: none; padding: 0 44px; height: 52px;
+  cursor: pointer;
+  box-shadow: 0 2px 18px rgba(237,224,144,0.38), 0 0 36px rgba(237,224,144,0.16);
+  transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.stage-btn:hover {
+  filter: brightness(1.1); transform: translateY(-2px);
+  box-shadow: 0 6px 32px rgba(237,224,144,0.65), 0 0 52px rgba(237,224,144,0.26);
+}
+</style>
+</head>
+<body>
+
+<div class="bundle-stage">
+  <p class="stage-label">FRIED PICKLE GAMES — BUNDLE DEAL</p>
+
+  <div class="stage-scene-wrap">
+    <div class="stage-spotlight"></div>
+    <div class="stage-ground"></div>
+
+    <div class="stage-scene" id="stage-scene">
+
+      <!-- FOW Box -->
+      <div class="s-box" id="s-box" data-rot-y="25" data-rot-x="10">
+        <!-- front -->
+        <div class="bface" style="width:240px;height:240px;transform:translateZ(34px);">
+          <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.18);"></div>
+        </div>
+        <!-- back -->
+        <div class="bface" style="width:240px;height:240px;transform:rotateY(180deg) translateZ(34px);">
+          <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.28);"></div>
+        </div>
+        <!-- right -->
+        <div class="bface" style="width:68px;height:240px;left:206px;top:0;transform:rotateY(90deg);">
+          <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.38);"></div>
+        </div>
+        <!-- left -->
+        <div class="bface" style="width:68px;height:240px;left:-34px;top:0;transform:rotateY(-90deg);">
+          <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-left" style="position:absolute;inset:0;background:rgba(0,0,0,0.48);"></div>
+        </div>
+        <!-- top -->
+        <div class="bface" style="width:240px;height:68px;left:0;top:-34px;transform:rotateX(90deg);">
+          <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-top" style="position:absolute;inset:0;background:rgba(0,0,0,0.10);"></div>
+        </div>
+        <!-- bottom -->
+        <div class="bface" style="width:240px;height:68px;left:0;top:206px;transform:rotateX(-90deg);">
+          <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.58);"></div>
+        </div>
+      </div>
+
+      <!-- Deck -->
+      <div class="s-deck" id="s-deck" data-rot-y="18" data-rot-x="8">
+        <div style="position:absolute;width:126px;height:176px;background:#3f4120;backface-visibility:hidden;transform:translateZ(5px) translateX(4px) translateY(-2px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:126px;height:176px;background:#3f4120;backface-visibility:hidden;transform:translateZ(2px) translateX(-2px) translateY(3px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:126px;height:176px;background:#3f4120;transform:translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div id="sd-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.14);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:126px;height:176px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+        </div>
+        <div style="position:absolute;width:14px;height:176px;left:119px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:7px 0 0 7px;backface-visibility:hidden;">
+          <div id="sd-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.40);"></div>
+        </div>
+        <div style="position:absolute;width:14px;height:176px;left:-7px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 7px 7px 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.52);"></div>
+        </div>
+        <div style="position:absolute;width:126px;height:14px;left:0;top:-7px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 7px 7px;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.08);"></div>
+        </div>
+        <div style="position:absolute;width:126px;height:14px;left:0;top:169px;background:#313416;transform:rotateX(-90deg);border-radius:7px 7px 0 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.62);"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="stage-bottom">
+    <div class="stage-copy">
+      <h2>THE FULL<br><span>ARSENAL BUNDLE</span></h2>
+      <p>Fart of War base game + Fresh Air Expansion.<br>Everything you need to destroy friendships.</p>
+    </div>
+    <div class="stage-price-btn">
+      <span class="stage-was">$29.98 separately</span>
+      <span class="stage-now">$27<sup>.99</sup></span>
+      <button class="stage-btn">ORDER BUNDLE →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const scene = document.getElementById('stage-scene');
+  const box   = document.getElementById('s-box');
+  const deck  = document.getElementById('s-deck');
+  const sfFront = document.getElementById('sf-front');
+  const sfRight = document.getElementById('sf-right');
+  const sfLeft  = document.getElementById('sf-left');
+  const sfTop   = document.getElementById('sf-top');
+  const sdFront = document.getElementById('sd-front');
+  const sdRight = document.getElementById('sd-right');
+
+  let dragging = false, lastX = 0, lastY = 0;
+  let bRotY = 25, bRotX = 10, dRotY = 18, dRotX = 8;
+
+  function updateShading(rotY) {
+    // Normalize rotY to determine face lighting
+    // Light from top-right: front face brightest near 0deg, right face brightens as rotY goes negative
+    const yr = ((rotY % 360) + 360) % 360;
+    // Front face: darkest when facing away (180deg), lightest at 0
+    const frontFactor = Math.cos((yr * Math.PI) / 180);
+    const rightFactor = Math.sin((yr * Math.PI) / 180);
+
+    const baseFront = 0.18 - frontFactor * 0.12;
+    const baseRight = 0.38 + rightFactor * 0.15;
+    const baseLeft  = 0.48 - rightFactor * 0.12;
+
+    sfFront.style.background = `rgba(0,0,0,${Math.max(0.05, Math.min(0.55, baseFront))})`;
+    sfRight.style.background = `rgba(0,0,0,${Math.max(0.10, Math.min(0.72, baseRight))})`;
+    sfLeft.style.background  = `rgba(0,0,0,${Math.max(0.10, Math.min(0.72, baseLeft))})`;
+    sfTop.style.background   = `rgba(0,0,0,${Math.max(0.04, 0.10 - frontFactor * 0.06)})`;
+
+    sdFront.style.background = `rgba(0,0,0,${Math.max(0.04, baseFront + 0.04)})`;
+    sdRight.style.background = `rgba(0,0,0,${Math.max(0.12, baseRight + 0.04)})`;
+  }
+
+  const applyBox  = () => { box.style.transform  = `rotateX(${bRotX}deg) rotateY(${bRotY}deg)`; updateShading(bRotY); };
+  const applyDeck = () => { deck.style.transform = `rotateX(${dRotX}deg) rotateY(${dRotY}deg)`; };
+
+  updateShading(bRotY);
+
+  let snapTimer = null;
+  const start = e => {
+    dragging = true; scene.classList.add('grabbing');
+    const p = e.touches ? e.touches[0] : e;
+    lastX = p.clientX; lastY = p.clientY;
+    clearTimeout(snapTimer);
+    e.preventDefault();
+  };
+  const move = e => {
+    if (!dragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - lastX, dy = p.clientY - lastY;
+    lastX = p.clientX; lastY = p.clientY;
+    bRotY += dx * 0.65; bRotX -= dy * 0.40;
+    dRotY += dx * 0.32; dRotX -= dy * 0.20;
+    applyBox(); applyDeck();
+  };
+  const end = () => {
+    if (!dragging) return;
+    dragging = false; scene.classList.remove('grabbing');
+    snapTimer = setTimeout(() => {
+      bRotY = 25; bRotX = 10; dRotY = 18; dRotX = 8;
+      box.style.transition  = 'transform 0.85s cubic-bezier(0.34,1.46,0.64,1)';
+      deck.style.transition = 'transform 0.85s cubic-bezier(0.34,1.46,0.64,1)';
+      applyBox(); applyDeck();
+      setTimeout(() => {
+        box.style.transition  = 'transform 0.55s cubic-bezier(0.34,1.46,0.64,1)';
+        deck.style.transition = 'transform 0.55s cubic-bezier(0.34,1.46,0.64,1)';
+      }, 900);
+    }, 1800);
+  };
+
+  scene.addEventListener('mousedown', start);
+  scene.addEventListener('touchstart', start, { passive: false });
+  window.addEventListener('mousemove', move);
+  window.addEventListener('touchmove', move, { passive: false });
+  window.addEventListener('mouseup', end);
+  window.addEventListener('touchend', end);
+})();
+</script>
+</body>
+</html>

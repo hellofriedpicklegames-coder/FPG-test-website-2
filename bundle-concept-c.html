@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bundle Concept C — Ghost Typography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
+
+/* ── CONCEPT C: GHOST TYPOGRAPHY ──
+   Massive "ARSENAL" ghost text behind the scene — becomes the background art.
+   Objects sit on top of this text. Price badge floats top-right.
+   Single centered CTA below. Full-width. Very bold and graphic.
+*/
+.bundle-ghost {
+  position: relative; width: 100%; overflow: hidden;
+  padding: 52px 0 72px;
+  background: #0c0e0a;
+  border-top: 1px solid rgba(153,153,101,0.07);
+}
+
+/* Atmospheric gradient */
+.bundle-ghost::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 55% at 50% 48%, rgba(153,153,101,0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 50% 85%, rgba(0,0,0,0.5) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Ghost headline — clipped behind objects via z-index stacking */
+.ghost-headline {
+  position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -48%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(180px, 22vw, 280px);
+  letter-spacing: -0.02em; line-height: 0.88;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(153,153,101,0.11);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Top strip: eyebrow label left, price badge right */
+.ghost-top {
+  position: relative; z-index: 3;
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 0 48px 40px;
+}
+.ghost-eyebrow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px; letter-spacing: 0.32em;
+  color: rgba(153,153,101,0.5);
+  padding-top: 4px;
+}
+.ghost-price-badge {
+  text-align: right;
+}
+.ghost-badge-was {
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+  color: rgba(231,232,230,0.22); text-decoration: line-through;
+  letter-spacing: 0.06em; display: block; margin-bottom: 2px;
+}
+.ghost-badge-now {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 88px; letter-spacing: -0.03em; line-height: 0.92; color: #ede090;
+  display: block;
+}
+.ghost-badge-now sup { font-size: 34px; vertical-align: super; }
+
+/* 3D Scene in center */
+.ghost-scene-wrap {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; align-items: flex-end;
+  height: 320px;
+}
+
+/* Subtle under-glow */
+.ghost-glow {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 80px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(180,210,100,0.22) 0%, transparent 68%);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.ghost-scene {
+  position: relative; z-index: 2;
+  width: 500px; height: 300px;
+  perspective: 940px; perspective-origin: 50% 42%;
+  display: flex; align-items: flex-end; justify-content: center; gap: 40px;
+  cursor: grab;
+}
+.ghost-scene.grabbing { cursor: grabbing; }
+
+.s-box {
+  position: relative; flex-shrink: 0;
+  width: 250px; height: 250px;
+  transform-style: preserve-3d;
+  transform: rotateX(10deg) rotateY(25deg);
+  transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1);
+  margin-bottom: 16px;
+}
+.s-deck {
+  position: relative; flex-shrink: 0;
+  width: 130px; height: 182px;
+  transform-style: preserve-3d;
+  transform: rotateX(8deg) rotateY(18deg);
+  transition: transform 0.55s cubic-bezier(0.34,1.46,0.64,1);
+  margin-bottom: 40px;
+}
+.bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
+
+/* Bottom strip: copy left, button right */
+.ghost-bottom {
+  position: relative; z-index: 3;
+  max-width: 960px; margin: 36px auto 0;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 32px 48px 0;
+  border-top: 1px solid rgba(153,153,101,0.08);
+  gap: 40px;
+}
+.ghost-copy {
+  max-width: 360px;
+}
+.ghost-copy h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 3.5vw, 48px); letter-spacing: -0.01em;
+  line-height: 0.95; color: #e7e8e6; margin-bottom: 10px;
+}
+.ghost-copy h2 span { color: #ede090; }
+.ghost-copy p {
+  font-size: 13px; color: rgba(231,232,230,0.40);
+  font-weight: 300; line-height: 1.75;
+}
+
+.ghost-btn {
+  font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.14em;
+  background: #ede090; color: #0c0e0a; border: none; height: 56px;
+  padding: 0 52px; cursor: pointer; flex-shrink: 0;
+  box-shadow: 0 2px 18px rgba(237,224,144,0.40), 0 0 36px rgba(237,224,144,0.16);
+  transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.ghost-btn:hover {
+  filter: brightness(1.1); transform: translateY(-2px);
+  box-shadow: 0 6px 32px rgba(237,224,144,0.68), 0 0 52px rgba(237,224,144,0.28);
+}
+</style>
+</head>
+<body>
+
+<div class="bundle-ghost">
+  <!-- Giant ghost text behind everything -->
+  <div class="ghost-headline">ARSENAL</div>
+
+  <!-- Top: eyebrow + price badge -->
+  <div class="ghost-top">
+    <p class="ghost-eyebrow">FRIED PICKLE GAMES — BUNDLE DEAL</p>
+    <div class="ghost-price-badge">
+      <span class="ghost-badge-was">$29.98 separately</span>
+      <span class="ghost-badge-now">$27<sup>.99</sup></span>
+    </div>
+  </div>
+
+  <!-- 3D Scene -->
+  <div class="ghost-scene-wrap">
+    <div class="ghost-glow"></div>
+
+    <div class="ghost-scene" id="ghost-scene">
+
+      <!-- FOW Box -->
+      <div class="s-box" id="s-box" data-rot-y="25" data-rot-x="10">
+        <div class="bface" style="width:250px;height:250px;transform:translateZ(35px);">
+          <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.16);"></div>
+        </div>
+        <div class="bface" style="width:250px;height:250px;transform:rotateY(180deg) translateZ(35px);">
+          <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.28);"></div>
+        </div>
+        <div class="bface" style="width:70px;height:250px;left:215px;top:0;transform:rotateY(90deg);">
+          <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.38);"></div>
+        </div>
+        <div class="bface" style="width:70px;height:250px;left:-35px;top:0;transform:rotateY(-90deg);">
+          <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-left" style="position:absolute;inset:0;background:rgba(0,0,0,0.50);"></div>
+        </div>
+        <div class="bface" style="width:250px;height:70px;left:0;top:-35px;transform:rotateX(90deg);">
+          <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="sf-top" style="position:absolute;inset:0;background:rgba(0,0,0,0.08);"></div>
+        </div>
+        <div class="bface" style="width:250px;height:70px;left:0;top:215px;transform:rotateX(-90deg);">
+          <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.60);"></div>
+        </div>
+      </div>
+
+      <!-- Deck -->
+      <div class="s-deck" id="s-deck" data-rot-y="18" data-rot-x="8">
+        <div style="position:absolute;width:130px;height:182px;background:#3f4120;backface-visibility:hidden;transform:translateZ(5px) translateX(4px) translateY(-2px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:130px;height:182px;background:#3f4120;backface-visibility:hidden;transform:translateZ(2px) translateX(-2px) translateY(3px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.22);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:130px;height:182px;background:#3f4120;transform:translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+          <div id="sd-front" style="position:absolute;inset:0;background:rgba(0,0,0,0.12);border-radius:7px;"></div>
+        </div>
+        <div style="position:absolute;width:130px;height:182px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;">
+        </div>
+        <div style="position:absolute;width:14px;height:182px;left:123px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:7px 0 0 7px;backface-visibility:hidden;">
+          <div id="sd-right" style="position:absolute;inset:0;background:rgba(0,0,0,0.40);"></div>
+        </div>
+        <div style="position:absolute;width:14px;height:182px;left:-7px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 7px 7px 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
+        </div>
+        <div style="position:absolute;width:130px;height:14px;left:0;top:-7px;background:#383b1c;transform:rotateX(90deg);border-radius:0 0 7px 7px;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.08);"></div>
+        </div>
+        <div style="position:absolute;width:130px;height:14px;left:0;top:175px;background:#313416;transform:rotateX(-90deg);border-radius:7px 7px 0 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.65);"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="ghost-bottom">
+    <div class="ghost-copy">
+      <h2>THE FULL<br><span>ARSENAL BUNDLE</span></h2>
+      <p>Fart of War base game + Fresh Air Expansion in one package. Everything you need to destroy friendships, alienate relatives, and have a genuinely good time.</p>
+    </div>
+    <button class="ghost-btn">ORDER BUNDLE →</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const scene = document.getElementById('ghost-scene');
+  const box   = document.getElementById('s-box');
+  const deck  = document.getElementById('s-deck');
+  const sfFront = document.getElementById('sf-front');
+  const sfRight = document.getElementById('sf-right');
+  const sfLeft  = document.getElementById('sf-left');
+  const sfTop   = document.getElementById('sf-top');
+  const sdFront = document.getElementById('sd-front');
+  const sdRight = document.getElementById('sd-right');
+
+  let dragging = false, lastX = 0, lastY = 0;
+  let bRotY = 25, bRotX = 10, dRotY = 18, dRotX = 8;
+
+  function updateShading(rotY) {
+    const yr = ((rotY % 360) + 360) % 360;
+    const frontFactor = Math.cos((yr * Math.PI) / 180);
+    const rightFactor = Math.sin((yr * Math.PI) / 180);
+    sfFront.style.background = `rgba(0,0,0,${Math.max(0.04, Math.min(0.55, 0.16 - frontFactor * 0.12))})`;
+    sfRight.style.background = `rgba(0,0,0,${Math.max(0.08, Math.min(0.75, 0.38 + rightFactor * 0.18))})`;
+    sfLeft.style.background  = `rgba(0,0,0,${Math.max(0.08, Math.min(0.75, 0.50 - rightFactor * 0.14))})`;
+    sfTop.style.background   = `rgba(0,0,0,${Math.max(0.03, 0.08 - frontFactor * 0.05)})`;
+    sdFront.style.background = `rgba(0,0,0,${Math.max(0.03, 0.12 - frontFactor * 0.10)})`;
+    sdRight.style.background = `rgba(0,0,0,${Math.max(0.10, 0.40 + rightFactor * 0.16)})`;
+  }
+
+  const applyBox  = () => { box.style.transform  = `rotateX(${bRotX}deg) rotateY(${bRotY}deg)`; updateShading(bRotY); };
+  const applyDeck = () => { deck.style.transform = `rotateX(${dRotX}deg) rotateY(${dRotY}deg)`; };
+  updateShading(bRotY);
+
+  let snapTimer = null;
+  const start = e => {
+    dragging = true; scene.classList.add('grabbing');
+    const p = e.touches ? e.touches[0] : e;
+    lastX = p.clientX; lastY = p.clientY;
+    clearTimeout(snapTimer); e.preventDefault();
+  };
+  const move = e => {
+    if (!dragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - lastX, dy = p.clientY - lastY;
+    lastX = p.clientX; lastY = p.clientY;
+    bRotY += dx * 0.65; bRotX -= dy * 0.40;
+    dRotY += dx * 0.32; dRotX -= dy * 0.20;
+    applyBox(); applyDeck();
+  };
+  const end = () => {
+    if (!dragging) return;
+    dragging = false; scene.classList.remove('grabbing');
+    snapTimer = setTimeout(() => {
+      bRotY = 25; bRotX = 10; dRotY = 18; dRotX = 8;
+      box.style.transition  = 'transform 0.85s cubic-bezier(0.34,1.46,0.64,1)';
+      deck.style.transition = 'transform 0.85s cubic-bezier(0.34,1.46,0.64,1)';
+      applyBox(); applyDeck();
+      setTimeout(() => {
+        box.style.transition  = 'transform 0.55s cubic-bezier(0.34,1.46,0.64,1)';
+        deck.style.transition = 'transform 0.55s cubic-bezier(0.34,1.46,0.64,1)';
+      }, 900);
+    }, 1800);
+  };
+
+  scene.addEventListener('mousedown', start);
+  scene.addEventListener('touchstart', start, { passive: false });
+  window.addEventListener('mousemove', move);
+  window.addEventListener('touchmove', move, { passive: false });
+  window.addEventListener('mouseup', end);
+  window.addEventListener('touchend', end);
+})();
+</script>
+</body>
+</html>
