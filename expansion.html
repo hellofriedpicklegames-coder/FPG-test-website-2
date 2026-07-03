@@ -347,16 +347,31 @@
             <div class="buy-deck-ghost" style="transform:translateZ(4px) translateX(4px) translateY(-3px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
             <div class="buy-deck-ghost" style="transform:translateZ(0px) translateX(-3px) translateY(4px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
             <div class="buy-deck-ghost" style="transform:translateZ(-4px) translateX(3px) translateY(2px);"><img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt=""></div>
-            <div class="buy-face buy-front" style="display:block;padding:0;">
+            <div class="buy-face buy-front" style="display:block;padding:0;isolation:isolate;">
               <img src="brand_assets/FRESH AIR.png" alt="Fresh Air Expansion" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+              <div id="fsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;border-radius:8px;"></div>
+              <div id="fri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;border-radius:8px;"></div>
             </div>
-            <div class="buy-face buy-back" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;">
+            <div class="buy-face buy-back" style="display:block;padding:0;background:#3f4120;border-radius:0;overflow:visible;isolation:isolate;">
               <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" alt="Card back" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;">
+              <div id="bksh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;border-radius:8px;"></div>
+              <div id="bkri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;border-radius:8px;"></div>
             </div>
-            <div class="buy-face buy-right" style="background:#3f4120;border-radius:8px 0 0 8px;"></div>
-            <div class="buy-face buy-left"  style="background:#3f4120;border-radius:0 8px 8px 0;"></div>
-            <div class="buy-face buy-top"   style="background:#383b1c;border-radius:0 0 8px 8px;"></div>
-            <div class="buy-face buy-bottom" style="background:#313416;border-radius:8px 8px 0 0;"></div>
+            <div class="buy-face buy-right" style="background:#3f4120;border-radius:8px 0 0 8px;isolation:isolate;">
+              <div id="rsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+              <div id="rri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+            </div>
+            <div class="buy-face buy-left" style="background:#3f4120;border-radius:0 8px 8px 0;isolation:isolate;">
+              <div id="lsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+              <div id="lri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+            </div>
+            <div class="buy-face buy-top" style="background:#383b1c;border-radius:0 0 8px 8px;isolation:isolate;">
+              <div id="tsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+              <div id="tri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+            </div>
+            <div class="buy-face buy-bottom" style="background:#313416;border-radius:8px 8px 0 0;isolation:isolate;">
+              <div id="bbsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -615,14 +630,56 @@
       });
     })();
 
-    /* ── BUY BOX DRAG-TO-ROTATE ── */
+    /* ── BUY BOX DRAG-TO-ROTATE with Fresnel rim lighting ── */
     (function() {
       const box = document.getElementById('buy-box');
       if (!box) return;
+
+      const FACES = [
+        { n: [ 0,  0,  1], sh: 'fsh',  ri: 'fri'  },
+        { n: [ 0,  0, -1], sh: 'bksh', ri: 'bkri' },
+        { n: [ 1,  0,  0], sh: 'rsh',  ri: 'rri'  },
+        { n: [-1,  0,  0], sh: 'lsh',  ri: 'lri'  },
+        { n: [ 0, -1,  0], sh: 'tsh',  ri: 'tri'  },
+        { n: [ 0,  1,  0], sh: 'bbsh', ri: null   },
+      ];
+      FACES.forEach(f => { f.shEl = document.getElementById(f.sh); f.riEl = f.ri ? document.getElementById(f.ri) : null; });
+
+      function norm(x, y, z) { const l = Math.sqrt(x*x+y*y+z*z); return [x/l,y/l,z/l]; }
+      function dot(a, b) { return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]; }
+      const RIM_DIR = norm(-1.0, -0.5, 0.2);
+      const KEY_DIR = norm(-0.2, -0.3, 1.0);
+      const RIM_C = [255, 255, 210];
+
+      function worldNormal(n, rX, rY) {
+        const rx=rX*Math.PI/180, ry=rY*Math.PI/180;
+        const cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry);
+        const x1=n[0]*cy+n[2]*sy,y1=n[1],z1=-n[0]*sy+n[2]*cy;
+        return [x1,y1*cx+z1*sx,-y1*sx+z1*cx];
+      }
+
+      function applyShading(rX, rY) {
+        for (const f of FACES) {
+          if (!f.shEl) continue;
+          const wn = worldNormal(f.n, rX, rY);
+          const NdotV = Math.max(0, wn[2]);
+          const NdotL_rim = Math.max(0, dot(wn, RIM_DIR));
+          const fresnel = Math.pow(1.0-NdotV, 1.8);
+          const rim = Math.min(0.95, fresnel*NdotL_rim*3.5);
+          const lit = 0.22 + Math.max(0, dot(wn, KEY_DIR))*0.65 + NdotL_rim*0.06;
+          const shadow = Math.max(0, Math.min(0.95, 1.0-Math.min(1.0, lit)));
+          f.shEl.style.background = `rgba(0,0,0,${shadow.toFixed(3)})`;
+          if (f.riEl) f.riEl.style.background = `rgba(${RIM_C[0]},${RIM_C[1]},${RIM_C[2]},${rim.toFixed(3)})`;
+        }
+      }
+
       let dragging = false, lastX = 0, lastY = 0;
       let rotY = parseFloat(box.dataset.rotY);
       let rotX = parseFloat(box.dataset.rotX);
-      const apply = () => { box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; };
+
+      const apply = () => { box.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`; applyShading(rotX, rotY); };
+      apply();
+
       const start = e => {
         dragging = true; box.classList.add('dragging');
         const p = e.touches ? e.touches[0] : e;
