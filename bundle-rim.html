@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bundle — Rim Light</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0c0e0a; color: #e7e8e6; font-family: 'Inter', sans-serif; }
+
+.bundle-split {
+  position: relative; width: 100%; overflow: hidden;
+  min-height: 560px; display: flex;
+  border-top: 1px solid rgba(153,153,101,0.07);
+  box-shadow: inset 0 18px 40px rgba(0,0,0,0.55);
+}
+
+/* ── LEFT PANEL ── */
+.split-visual {
+  position: relative; flex: 0 0 58%;
+  background: #060807;  /* very dark — let the rim light do all the work */
+  display: flex; align-items: center; justify-content: center;
+  padding: 60px 0; overflow: hidden;
+}
+
+/* Grain */
+.split-visual::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  background-size: 180px; pointer-events: none; z-index: 1;
+}
+
+/* ── RIM LIGHT: intense beam from upper-left, nearly white at core ── */
+.rim-source {
+  position: absolute;
+  width: 90px; height: 440px;
+  top: 50%; left: -10px;
+  transform: translateY(-54%);
+  background: radial-gradient(ellipse at right center,
+    rgba(255,255,220,1.0) 0%,
+    rgba(248,255,195,0.80) 15%,
+    rgba(230,248,155,0.45) 38%,
+    rgba(200,228,115,0.15) 60%,
+    transparent 80%);
+  filter: blur(14px);
+  pointer-events: none; z-index: 0;
+}
+
+/* Wide warm spill that bleeds behind the objects */
+.rim-spill {
+  position: absolute;
+  width: 380px; height: 520px;
+  top: 50%; left: -60px;
+  transform: translateY(-50%);
+  background: radial-gradient(ellipse at right center,
+    rgba(215,238,130,0.28) 0%,
+    rgba(185,215,95,0.10) 45%,
+    transparent 72%);
+  filter: blur(42px);
+  pointer-events: none; z-index: 0;
+}
+
+/* Tight secondary hotspot — catches where box left edge sits */
+.rim-hotspot {
+  position: absolute;
+  width: 40px; height: 300px;
+  top: 50%; left: 23%;
+  transform: translateY(-52%);
+  background: radial-gradient(ellipse at center,
+    rgba(255,255,200,0.70) 0%,
+    rgba(240,255,175,0.30) 35%,
+    transparent 70%);
+  filter: blur(10px);
+  pointer-events: none; z-index: 0;
+}
+
+/* Ground shadow beneath objects */
+.split-glow {
+  position: absolute; bottom: 18px; left: 52%; transform: translateX(-50%);
+  width: 460px; height: 60px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.70) 0%, transparent 70%);
+  filter: blur(14px);
+  pointer-events: none; z-index: 0;
+}
+
+.split-divider {
+  position: absolute; right: 0; top: 10%; bottom: 10%; width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(153,153,101,0.18) 30%, rgba(153,153,101,0.18) 70%, transparent);
+}
+
+.split-scene {
+  position: relative; z-index: 2;
+  width: 560px; height: 420px;
+  perspective: 1100px; perspective-origin: 50% 44%;
+  display: flex; align-items: flex-end; justify-content: center; gap: 44px;
+  cursor: grab;
+}
+.split-scene.grabbing { cursor: grabbing; }
+
+.s-box {
+  position: relative; flex-shrink: 0; width: 300px; height: 300px;
+  transform-style: preserve-3d; transform: rotateX(10deg) rotateY(25deg);
+  margin-bottom: 22px;
+}
+.s-deck {
+  position: relative; flex-shrink: 0; width: 152px; height: 214px;
+  transform-style: preserve-3d; transform: rotateX(8deg) rotateY(18deg);
+  margin-bottom: 54px;
+}
+
+/* ── RIM HALO — partial ring elements, conic-masked to LEFT+TOP arc only ── */
+.rim-halo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  /* conic mask: visible on left (270°) + top (0°) arc, invisible on right+bottom */
+  -webkit-mask-image: conic-gradient(
+    white 0deg, white 50deg,
+    transparent 85deg, transparent 215deg,
+    white 255deg, white 360deg
+  );
+  mask-image: conic-gradient(
+    white 0deg, white 50deg,
+    transparent 85deg, transparent 215deg,
+    white 255deg, white 360deg
+  );
+}
+.box-halo {
+  width: 370px; height: 370px;
+  top: 54%; left: 36%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%,
+    transparent 30%,
+    rgba(245,255,158,0.90) 33%,
+    rgba(235,252,140,0.55) 40%,
+    rgba(218,242,115,0.18) 48%,
+    transparent 55%);
+  filter: blur(7px);
+}
+.deck-halo {
+  width: 240px; height: 240px;
+  top: 52%; left: 67%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%,
+    transparent 30%,
+    rgba(245,255,158,0.78) 33%,
+    rgba(232,250,136,0.46) 40%,
+    rgba(215,240,112,0.14) 48%,
+    transparent 55%);
+  filter: blur(5px);
+}
+/* ── BLOOM — soft glow corona radiating outward from rim-lit edges ── */
+.bloom-cloud {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+/* Box: bloom peaks at left spine + top edge (upper-right of this div) */
+.box-bloom {
+  width: 200px; height: 320px;
+  top: 50%; left: 18%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 85% 28%,
+    rgba(255,255,222,0.82) 0%,
+    rgba(250,255,192,0.50) 26%,
+    rgba(240,255,165,0.22) 54%,
+    transparent 74%
+  );
+  filter: blur(26px);
+}
+/* Deck: bloom peaks at left spine + top edge */
+.deck-bloom {
+  width: 120px; height: 240px;
+  top: 45%; left: 59%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 80% 24%,
+    rgba(255,255,222,0.62) 0%,
+    rgba(250,255,192,0.36) 28%,
+    rgba(240,255,165,0.15) 57%,
+    transparent 76%
+  );
+  filter: blur(20px);
+}
+.bface { position: absolute; backface-visibility: hidden; overflow: hidden; }
+
+/* ── RIGHT PANEL ── */
+.split-info {
+  flex: 0 0 42%; display: flex; flex-direction: column; justify-content: center;
+  padding: 64px 56px 64px 52px; background: #0c0e0a; position: relative;
+}
+.split-info::before {
+  content: ''; position: absolute; top: 0; right: 0; width: 260px; height: 260px;
+  background: radial-gradient(ellipse at top right, rgba(153,153,101,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.split-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.34em; color: rgba(153,153,101,0.55); margin-bottom: 18px; }
+.split-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px,5vw,68px); letter-spacing: -0.01em; line-height: 0.92; color: #e7e8e6; margin-bottom: 18px; }
+.split-title span { color: #ede090; }
+.split-desc { font-size: 14px; color: rgba(231,232,230,0.42); font-weight: 300; line-height: 1.78; margin-bottom: 36px; max-width: 340px; }
+.split-price-row { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
+.split-price-col { display: flex; flex-direction: column; }
+.split-was { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: rgba(231,232,230,0.22); text-decoration: line-through; letter-spacing: 0.06em; margin-bottom: 2px; }
+.split-now { font-family: 'Bebas Neue', sans-serif; font-size: 88px; letter-spacing: -0.03em; line-height: 1; color: #ede090; }
+.split-now sup { font-size: 34px; vertical-align: super; }
+.split-save { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.12em; color: #0c0e0a; background: #999965; padding: 4px 10px; margin-bottom: 10px; }
+.btn-bundle { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.14em; background: #ede090; color: #0c0e0a; border: none; height: 56px; padding: 0 48px; cursor: pointer; box-shadow: 0 2px 18px rgba(237,224,144,0.38), 0 0 36px rgba(237,224,144,0.16); }
+</style>
+</head>
+<body>
+<div class="bundle-split">
+  <div class="split-visual">
+
+    <!-- Rim light source + spill + hotspot -->
+    <div class="rim-source"></div>
+    <div class="rim-spill"></div>
+    <div class="rim-hotspot"></div>
+    <!-- Partial-ring halos: conic-masked to left+top arc only -->
+    <div class="rim-halo box-halo"></div>
+    <div class="rim-halo deck-halo"></div>
+    <!-- Bloom clouds: soft glow corona radiating from rim-lit edges -->
+    <div class="bloom-cloud box-bloom"></div>
+    <div class="bloom-cloud deck-bloom"></div>
+    <div class="split-glow"></div>
+    <div class="split-divider"></div>
+
+    <div class="split-scene" id="split-scene">
+
+      <!-- FOW Box — all shading driven by JS Fresnel rim model -->
+      <div class="s-box" id="s-box">
+        <!-- front -->
+        <div class="bface" style="width:300px;height:300px;transform:translateZ(35px);isolation:isolate;">
+          <img src="brand_assets/front face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="bfsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="bfri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- back -->
+        <div class="bface" style="width:300px;height:300px;transform:rotateY(180deg) translateZ(35px);">
+          <img src="brand_assets/back face.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="bksh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+        </div>
+        <!-- right -->
+        <div class="bface" style="width:70px;height:300px;left:265px;top:0;transform:rotateY(90deg);isolation:isolate;">
+          <img src="brand_assets/right side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="brsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="brri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- left -->
+        <div class="bface" style="width:70px;height:300px;left:-35px;top:0;transform:rotateY(-90deg);isolation:isolate;">
+          <img src="brand_assets/left side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="blsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="blri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- top -->
+        <div class="bface" style="width:300px;height:70px;left:0;top:-35px;transform:rotateX(90deg);isolation:isolate;">
+          <img src="brand_assets/top side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="btsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="btri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- bottom -->
+        <div class="bface" style="width:300px;height:70px;left:0;top:265px;transform:rotateX(-90deg);">
+          <img src="brand_assets/bottom side.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div id="bbsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+        </div>
+      </div>
+
+      <!-- Card deck — same Fresnel model -->
+      <div class="s-deck" id="s-deck">
+        <!-- ghost cards (static, slightly dark) -->
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;backface-visibility:hidden;transform:translateZ(5px) translateX(4px) translateY(-2px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.45);border-radius:8px;"></div>
+        </div>
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;backface-visibility:hidden;transform:translateZ(2px) translateX(-2px) translateY(3px);">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.45);border-radius:8px;"></div>
+        </div>
+        <!-- front -->
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:translateZ(8px);backface-visibility:hidden;isolation:isolate;">
+          <img src="brand_assets/FRESH AIR.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;">
+          <div id="dfsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);border-radius:8px;pointer-events:none;"></div>
+          <div id="dfri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);border-radius:8px;pointer-events:none;"></div>
+        </div>
+        <!-- back -->
+        <div style="position:absolute;width:152px;height:214px;background:#3f4120;transform:rotateY(180deg) translateZ(8px);backface-visibility:hidden;">
+          <img src="brand_assets/Fart of War_Sample_Cards_EN_V2-0511 (dragged)_page-0001.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.70);border-radius:8px;"></div>
+        </div>
+        <!-- right -->
+        <div style="position:absolute;width:16px;height:214px;left:144px;top:0;background:#3f4120;transform:rotateY(90deg);border-radius:8px 0 0 8px;backface-visibility:hidden;isolation:isolate;">
+          <div id="drsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="drri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- left -->
+        <div style="position:absolute;width:16px;height:214px;left:-8px;top:0;background:#3f4120;transform:rotateY(-90deg);border-radius:0 8px 8px 0;backface-visibility:hidden;isolation:isolate;">
+          <div id="dlsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="dlri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- top -->
+        <div style="position:absolute;width:152px;height:16px;left:0;top:-8px;background:#3f4120;transform:rotateX(90deg);border-radius:0 0 8px 8px;backface-visibility:hidden;isolation:isolate;">
+          <div id="dtsh" style="position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;"></div>
+          <div id="dtri" style="position:absolute;inset:0;mix-blend-mode:screen;background:rgba(245,255,172,0);pointer-events:none;"></div>
+        </div>
+        <!-- bottom -->
+        <div style="position:absolute;width:152px;height:16px;left:0;top:206px;background:#313416;transform:rotateX(-90deg);border-radius:8px 8px 0 0;backface-visibility:hidden;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.90);pointer-events:none;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="split-info">
+    <p class="split-eyebrow">FRIED PICKLE GAMES — BUNDLE DEAL</p>
+    <h2 class="split-title">THE FULL<br><span>ARSENAL</span><br>BUNDLE</h2>
+    <p class="split-desc">Fart of War base game + Fresh Air Expansion in one package. Everything you need to destroy friendships, alienate relatives, and have a genuinely good time.</p>
+    <div class="split-price-row">
+      <div class="split-price-col">
+        <span class="split-was">$29.98 separately</span>
+        <span class="split-now">$27<sup>.99</sup></span>
+      </div>
+      <span class="split-save">SAVE 7%</span>
+    </div>
+    <button class="btn-bundle">ORDER BUNDLE →</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const scene = document.getElementById('split-scene');
+  const box   = document.getElementById('s-box');
+  const deck  = document.getElementById('s-deck');
+
+  // Face descriptors: object-space normal + shadow/rim overlay element IDs
+  // CSS coord system: X right, Y down, Z toward viewer
+  const BOX_FACES = [
+    { n: [ 0,  0,  1], sh: 'bfsh', ri: 'bfri' }, // front
+    { n: [ 0,  0, -1], sh: 'bksh', ri: null    }, // back
+    { n: [ 1,  0,  0], sh: 'brsh', ri: 'brri'  }, // right
+    { n: [-1,  0,  0], sh: 'blsh', ri: 'blri'  }, // left
+    { n: [ 0, -1,  0], sh: 'btsh', ri: 'btri'  }, // top  (Y down → -Y = up)
+    { n: [ 0,  1,  0], sh: 'bbsh', ri: null    }, // bottom
+  ];
+  const DECK_FACES = [
+    { n: [ 0,  0,  1], sh: 'dfsh', ri: 'dfri' }, // front
+    { n: [ 1,  0,  0], sh: 'drsh', ri: 'drri' }, // right
+    { n: [-1,  0,  0], sh: 'dlsh', ri: 'dlri' }, // left
+    { n: [ 0, -1,  0], sh: 'dtsh', ri: 'dtri' }, // top
+  ];
+
+  // Resolve DOM refs
+  [...BOX_FACES, ...DECK_FACES].forEach(f => {
+    f.shEl = document.getElementById(f.sh);
+    f.riEl = f.ri ? document.getElementById(f.ri) : null;
+  });
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function norm(x, y, z) {
+    const l = Math.sqrt(x*x + y*y + z*z);
+    return [x/l, y/l, z/l];
+  }
+  function dot(a, b) { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]; }
+
+  // ── Light model ──────────────────────────────────────────────────────────
+  // Fixed world-space directions (CSS: X right, Y down, Z toward viewer)
+  const RIM_DIR  = norm(-1.0, -0.5,  0.2); // rim from upper-left
+  const KEY_DIR  = norm(-0.2, -0.3,  1.0); // key from front-left
+  const VIEW_DIR = [0, 0, 1];              // camera at +Z
+
+  const RIM_POWER    = 1.8;   // Fresnel exponent — lower = broader artistic rim
+  const RIM_STRENGTH = 3.5;   // brightness multiplier
+  const AMBIENT      = 0.22;
+  const KEY_WEIGHT   = 0.65;
+  const RIM_C        = [255, 255, 210]; // bright warm white
+
+  // Rotate object-space normal into world space.
+  // CSS transform: rotateX(rx) rotateY(ry) — rotateY applied first, then rotateX.
+  // CSS rotateY: [cos,0,sin; 0,1,0; -sin,0,cos]
+  // CSS rotateX: [1,0,0; 0,cos,sin; 0,-sin,cos]
+  function worldNormal(n, rotXdeg, rotYdeg) {
+    const rx = rotXdeg * Math.PI / 180;
+    const ry = rotYdeg * Math.PI / 180;
+    const cx = Math.cos(rx), sx = Math.sin(rx);
+    const cy = Math.cos(ry), sy = Math.sin(ry);
+    // rotateY first
+    const x1 =  n[0]*cy + n[2]*sy;
+    const y1 =  n[1];
+    const z1 = -n[0]*sy + n[2]*cy;
+    // then rotateX
+    return [ x1, y1*cx + z1*sx, -y1*sx + z1*cx ];
+  }
+
+  function shadeFace(objN, rotX, rotY) {
+    const wn = worldNormal(objN, rotX, rotY);
+
+    // NdotV: how much face points toward camera (view = [0,0,1])
+    const NdotV = Math.max(0, wn[2]);
+
+    // Fresnel rim: (1 − NdotV)^power × NdotL_rim
+    // — strongest at silhouette, zero on faces pointing toward camera
+    const NdotL_rim = Math.max(0, dot(wn, RIM_DIR));
+    const fresnel   = Math.pow(1.0 - NdotV, RIM_POWER);
+    const rim       = Math.min(0.95, fresnel * NdotL_rim * RIM_STRENGTH);
+
+    // Diffuse for base shading
+    const NdotL_key = Math.max(0, dot(wn, KEY_DIR));
+    const lit       = AMBIENT + NdotL_key * KEY_WEIGHT + NdotL_rim * 0.06;
+    const shadow    = Math.max(0, Math.min(0.95, 1.0 - Math.min(1.0, lit)));
+
+    return { shadow, rim };
+  }
+
+  function applyShading(faces, rotX, rotY) {
+    for (const f of faces) {
+      if (!f.shEl) continue;
+      const { shadow, rim } = shadeFace(f.n, rotX, rotY);
+      f.shEl.style.background = `rgba(0,0,0,${shadow.toFixed(3)})`;
+      if (f.riEl) f.riEl.style.background =
+        `rgba(${RIM_C[0]},${RIM_C[1]},${RIM_C[2]},${rim.toFixed(3)})`;
+    }
+  }
+
+  let bX = 10, bY = 25, dX = 8, dY = 18;
+  let dragging = false, lastX = 0, lastY = 0;
+  let snapTimeout = null, snapRaf = null;
+
+  function tick() {
+    box.style.transform  = `rotateX(${bX}deg) rotateY(${bY}deg)`;
+    deck.style.transform = `rotateX(${dX}deg) rotateY(${dY}deg)`;
+    applyShading(BOX_FACES,  bX, bY);
+    applyShading(DECK_FACES, dX, dY);
+  }
+
+  tick(); // initial render
+
+  // ── Drag ────────────────────────────────────────────────────────────────
+  function onDown(e) {
+    dragging = true;
+    scene.classList.add('grabbing');
+    const p = e.touches ? e.touches[0] : e;
+    lastX = p.clientX; lastY = p.clientY;
+    clearTimeout(snapTimeout);
+    if (snapRaf) { cancelAnimationFrame(snapRaf); snapRaf = null; }
+    e.preventDefault();
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - lastX, dy = p.clientY - lastY;
+    bY += dx * 0.65;  bX -= dy * 0.40;
+    dY += dx * 0.32;  dX -= dy * 0.20;
+    bX = Math.max(-35, Math.min(35, bX));
+    dX = Math.max(-35, Math.min(35, dX));
+    tick();
+    lastX = p.clientX; lastY = p.clientY;
+  }
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    scene.classList.remove('grabbing');
+    snapTimeout = setTimeout(snapBack, 1800);
+  }
+
+  scene.addEventListener('mousedown',  onDown, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup',   onUp);
+  scene.addEventListener('touchstart', onDown, { passive: false });
+  scene.addEventListener('touchmove',  onMove, { passive: false });
+  scene.addEventListener('touchend',   onUp);
+
+  // ── Snap-back (rAF, not CSS transition — so shading updates every frame) ─
+  function snapBack() {
+    const REST = { bX: 10, bY: 25, dX: 8, dY: 18 };
+    const from = { bX, bY, dX, dY };
+    const t0 = performance.now();
+    const DUR = 900;
+
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / DUR);
+      const e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; // ease in-out cubic
+      bX = from.bX + (REST.bX - from.bX) * e;
+      bY = from.bY + (REST.bY - from.bY) * e;
+      dX = from.dX + (REST.dX - from.dX) * e;
+      dY = from.dY + (REST.dY - from.dY) * e;
+      tick();
+      if (t < 1) {
+        snapRaf = requestAnimationFrame(frame);
+      } else {
+        bX = REST.bX; bY = REST.bY; dX = REST.dX; dY = REST.dY;
+        tick();
+        snapRaf = null;
+      }
+    }
+    snapRaf = requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>
