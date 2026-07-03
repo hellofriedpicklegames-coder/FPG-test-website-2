@@ -348,25 +348,17 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
       background-size: 180px; pointer-events: none; z-index: 1;
     }
-    .rim-source {
-      position: absolute; width: 260px; height: 600px;
-      top: 50%; left: -100px; transform: translateY(-50%);
-      background: radial-gradient(ellipse at right center,
-        rgba(255,252,230,0.22) 0%, rgba(252,248,215,0.10) 35%, transparent 72%);
-      filter: blur(55px); pointer-events: none; z-index: 0;
-    }
-    .split-glow {
-      position: absolute; top: 62%; left: 36%;
-      transform: translate(-50%, 0);
-      width: 520px; height: 70px; border-radius: 50%;
-      background: radial-gradient(ellipse at center,
-        rgba(220,230,150,0.09) 0%, rgba(200,215,120,0.04) 50%, transparent 72%);
-      filter: blur(22px); mix-blend-mode: screen; pointer-events: none; z-index: 1;
-    }
-    .bloom-strip {
-      position: absolute; pointer-events: none;
-      mix-blend-mode: screen; z-index: 1;
-      filter: blur(18px); opacity: 0;
+    .split-light-band {
+      position: absolute; left: 0; right: 0;
+      top: 50%; transform: translateY(-50%);
+      height: 340px;
+      background: linear-gradient(to right,
+        rgba(255,252,215,0.20) 0%,
+        rgba(255,249,208,0.10) 40%,
+        rgba(255,249,208,0.03) 70%,
+        transparent 100%
+      );
+      filter: blur(52px); pointer-events: none; z-index: 0;
     }
     .split-divider {
       position: absolute; right: 0; top: 10%; bottom: 10%; width: 1px;
@@ -730,12 +722,7 @@
 
   <!-- Left: 3D visual panel -->
   <div class="split-visual">
-    <div class="rim-source"></div>
-    <div class="bloom-strip box-bloom-v"></div>
-    <div class="bloom-strip box-bloom-h"></div>
-    <div class="bloom-strip deck-bloom-v"></div>
-    <div class="bloom-strip deck-bloom-h"></div>
-    <div class="split-glow"></div>
+    <div class="split-light-band"></div>
     <div class="split-divider"></div>
 
     <div class="split-scene" id="bundle-scene">
@@ -995,57 +982,6 @@
       }
     }
 
-    const visualEl   = document.querySelector('.split-visual');
-    const boxBloomV  = document.querySelector('.box-bloom-v');
-    const boxBloomH  = document.querySelector('.box-bloom-h');
-    const deckBloomV = document.querySelector('.deck-bloom-v');
-    const deckBloomH = document.querySelector('.deck-bloom-h');
-
-    function rimCentroid(faces, rotX, rotY) {
-      let wx = 0, wy = 0, totalRim = 0;
-      for (const f of faces) {
-        const wn = worldNormal(f.n, rotX, rotY);
-        const NdotV = Math.max(0, wn[2]);
-        const NdotL_rim = Math.max(0, dot(wn, RIM_DIR));
-        const fresnel = Math.pow(1.0-NdotV, RIM_POWER);
-        const rim = Math.min(0.95, fresnel*NdotL_rim*RIM_STRENGTH);
-        wx += wn[0]*rim; wy += wn[1]*rim; totalRim += rim;
-      }
-      if (totalRim < 0.02) return null;
-      const len = Math.sqrt(wx*wx+wy*wy);
-      return { dx: wx/len, dy: wy/len, strength: Math.min(1, totalRim*0.55) };
-    }
-
-    function positionBloomStrips(vEl, hEl, objectEl, faces, rotX, rotY) {
-      const c = rimCentroid(faces, rotX, rotY);
-      if (!c) { vEl.style.opacity='0'; hEl.style.opacity='0'; return; }
-      const vr = visualEl.getBoundingClientRect();
-      const or = objectEl.getBoundingClientRect();
-      const objL = or.left-vr.left, objT = or.top-vr.top;
-      const objR = objL+or.width,   objB = objT+or.height;
-      const BASE = c.strength, C = '255,255,218', VW = 72, HH = 48;
-      const vStr = Math.min(1.0, BASE*Math.abs(c.dx)*1.1).toFixed(2);
-      if (c.dx <= 0) {
-        vEl.style.left = (objL-VW*0.5)+'px';
-        vEl.style.background = `linear-gradient(to right, rgba(${C},${vStr}) 0%, transparent 100%)`;
-      } else {
-        vEl.style.left = (objR-VW*0.5)+'px';
-        vEl.style.background = `linear-gradient(to left, rgba(${C},${vStr}) 0%, transparent 100%)`;
-      }
-      vEl.style.top=objT+'px'; vEl.style.width=VW+'px'; vEl.style.height=or.height+'px';
-      vEl.style.filter='blur(22px)'; vEl.style.opacity=vStr;
-      const hStr = Math.min(1.0, BASE*Math.abs(c.dy)*0.85).toFixed(2);
-      if (c.dy <= 0) {
-        hEl.style.top = (objT-HH*0.5)+'px';
-        hEl.style.background = `linear-gradient(to bottom, rgba(${C},${hStr}) 0%, transparent 100%)`;
-      } else {
-        hEl.style.top = (objB-HH*0.5)+'px';
-        hEl.style.background = `linear-gradient(to top, rgba(${C},${hStr}) 0%, transparent 100%)`;
-      }
-      hEl.style.left=objL+'px'; hEl.style.width=or.width+'px'; hEl.style.height=HH+'px';
-      hEl.style.filter='blur(18px)'; hEl.style.opacity=hStr;
-    }
-
     let bX=10, bY=25, dX=8, dY=18;
     let dragging=false, lastX=0, lastY=0, snapTimeout=null, snapRaf=null;
 
@@ -1054,8 +990,6 @@
       deck.style.transform = `rotateX(${dX}deg) rotateY(${dY}deg)`;
       applyShading(BOX_FACES,  bX, bY);
       applyShading(DECK_FACES, dX, dY);
-      positionBloomStrips(boxBloomV,  boxBloomH,  box,  BOX_FACES,  bX, bY);
-      positionBloomStrips(deckBloomV, deckBloomH, deck, DECK_FACES, dX, dY);
     }
 
     tick();
